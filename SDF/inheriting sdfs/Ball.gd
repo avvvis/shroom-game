@@ -1,7 +1,10 @@
 extends SDF
+## A class representing a ball of any radius and origin as a signed distance function
 class_name Ball
 
+## Radius of the ball
 var radius
+## Origin of the ball
 var origin
 
 func _init(c_origin :Vector3 = Vector3(0.0, 0.0, 0.0), c_radius :float = 1.0):

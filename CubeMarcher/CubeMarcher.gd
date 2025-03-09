@@ -2,15 +2,34 @@
 class_name CubeMarcher
 extends Node
 
-var precision :Vector3 = Vector3(0.3, 0.3, 0.3)
-var sdf :SDF
-
+## Setting the signed distance function for rendering
 func set_SDF(f_sdf :SDF):
-	sdf = f_sdf
-	_negative_bound = sdf.get_negative_bound()
-	_positive_bound = sdf.get_positive_bound()
+	_sdf = f_sdf
+	_negative_bound = _sdf.get_negative_bound()
+	_positive_bound = _sdf.get_positive_bound()
+	_treshold = _sdf.get_treshold()
 
-var _treshold = 0.001
+## Returns a mesh of the SDF for further instantiation
+## For this function to work you need to set the SDF
+func get_mesh() -> ArrayMesh:
+	var surface_tool = SurfaceTool.new()
+	surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)
+	
+	var max_iterations = _iterations()
+	for x in range(0, max_iterations.x + 1):
+		for y in range(0, max_iterations.y + 1):
+			for z in range(0, max_iterations.z + 1):
+				var cube_type = _get_cube_edges(Vector3i(x, y, z))
+				
+				var absolute_cube_position = _vertex_to_absolute(Vector3i(x, y, z))
+				for edge in cube_type:
+					surface_tool.add_vertex(_edge_to_vertex[edge] * _precision + absolute_cube_position)
+	
+	return surface_tool.commit()
+
+var _treshold
+var _precision :Vector3 = Vector3(0.3, 0.3, 0.3)
+var _sdf :SDF
 var _negative_bound :Vector3
 var _positive_bound :Vector3
 
@@ -43,7 +62,7 @@ const _edge_to_vertex = [
 ];
 
 # For each MC case, a mask of edge indices that need to be split
-const EdgeMasks = [
+const _EdgeMasks = [
 	0x0, 0x109, 0x203, 0x30a, 0x80c, 0x905, 0xa0f, 0xb06, 
 	0x406, 0x50f, 0x605, 0x70c, 0xc0a, 0xd03, 0xe09, 0xf00, 
 	0x190, 0x99, 0x393, 0x29a, 0x99c, 0x895, 0xb9f, 0xa96, 
@@ -342,11 +361,11 @@ const _cubes_lookup = [
 #	return (_vertex_lookup[edge & 0x7] + _vertex_lookup[(edge & 0x70) >> 4]) / 2.0
 
 func _vertex_to_absolute(cube_position :Vector3i):
-	return _negative_bound + precision * Vector3(cube_position)
+	return _negative_bound + _precision * Vector3(cube_position)
 
 ## TODO: add assertions
 func _does_vertex_belong(cube_position :Vector3i, vertex :int) -> int:
-	if sdf.get_value_at(_vertex_to_absolute(cube_position + _vertex_lookup[vertex])) < _treshold:
+	if _sdf.get_value_at(_vertex_to_absolute(cube_position + _vertex_lookup[vertex])) < _treshold:
 		return 1
 	
 	return 0
@@ -362,21 +381,4 @@ func _get_cube_edges(cube_position :Vector3i):
 ## TODO: add assertions
 ## Returns the number of layers in each direction that the CubeMarcher has to iterate over
 func _iterations() -> Vector3i:
-	return Vector3i((_positive_bound - _negative_bound) / precision)
-
-## Returns a mesh of the SDF
-func get_mesh() -> ArrayMesh:
-	var surface_tool = SurfaceTool.new()
-	surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)
-	
-	var max_iterations = _iterations()
-	for x in range(0, max_iterations.x + 1):
-		for y in range(0, max_iterations.y + 1):
-			for z in range(0, max_iterations.z + 1):
-				var cube_type = _get_cube_edges(Vector3i(x, y, z))
-				
-				var absolute_cube_position = _vertex_to_absolute(Vector3i(x, y, z))
-				for edge in cube_type:
-					surface_tool.add_vertex(_edge_to_vertex[edge] * precision + absolute_cube_position)
-	
-	return surface_tool.commit()
+	return Vector3i((_positive_bound - _negative_bound) / _precision)
