@@ -12,7 +12,7 @@ func get_value_at(input_position :Vector3):
 	return (input_position - origin).length() - radius
 
 func get_negative_bound() -> Vector3:
-	return origin - radius * Vector3(1.0, 1.0, 1.0)
+	return origin - radius * Vector3(1.0, 1.0, 1.0) * 1.1
 	
 func get_positive_bound() -> Vector3:
-	return origin + radius * Vector3(1.0, 1.0, 1.0)
+	return origin + radius * Vector3(1.0, 1.0, 1.0) * 1.1
