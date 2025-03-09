@@ -2,8 +2,7 @@
 class_name SDF
 extends Node
 
-func get_value_at(input_position):
-	assert(input_position is Vector3, "Error: \"input_position\" must be a Vector3!")
+func get_value_at(input_position :Vector3):
 	return _calculate_value_at(input_position)
 	
 func _calculate_value_at(input_position):

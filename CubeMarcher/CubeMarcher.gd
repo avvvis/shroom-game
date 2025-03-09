@@ -2,7 +2,7 @@
 class_name CubeMarcher
 extends Node
 
-func get_mesh_of(sdf, width, height):
-	assert(sdf is SDF, "Error: \"sdf\" must be an SDF")
-	assert(width is float, "Error: \"width\" must be a float")
-	assert(height is float, "Error: \"height\" must be a float")
+# Positive and negative bounds describe the most negative corner and the most positive
+# corner of a bounding box that contains the implicit surface
+func get_mesh_of(sdf :SDF, negative_bound :Vector3 = Vector3(-10.0, -10.0, -10.0), positive_bound :Vector3 = Vector3(10.0, 10.0, 10.0)):
+	print_debug("Hi from mesh")
