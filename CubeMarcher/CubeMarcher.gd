@@ -23,12 +23,14 @@ func get_mesh() -> ArrayMesh:
 				
 				var absolute_cube_position = _vertex_to_absolute(Vector3i(x, y, z))
 				for edge in cube_type:
-					surface_tool.add_vertex(_edge_to_vertex[edge] * _precision + absolute_cube_position)
+					var vertex_position = _edge_to_vertex[edge] * _precision + absolute_cube_position
+					surface_tool.set_normal(_sdf.get_normal_at(vertex_position))
+					surface_tool.add_vertex(vertex_position)
 	
 	return surface_tool.commit()
 
 var _treshold
-var _precision :Vector3 = Vector3(0.3, 0.3, 0.3)
+var _precision :Vector3 = Vector3(0.1, 0.1, 0.1)
 var _sdf :SDF
 var _negative_bound :Vector3
 var _positive_bound :Vector3
