@@ -1,18 +1,5 @@
 @icon("res://CubeMarcher/cube_marcher_icon.png")
-## Class for getting meshes of sdfs. 
-## Example code drawing a mesh of a ball:
-## [codeblock]
-## func _ready():
-##		var cube_marcher = CubeMarcher.new()
-##		cube_marcher.set_SDF(Ball.new())
-##	
-##		var m = MeshInstance3D.new()
-##		m.mesh = cube_marcher.get_mesh()
-##		add_child(m)
-##
-## [/codeblock]
 class_name CubeMarcher
-
 extends Node
 
 ## Setting the signed distance function for rendering
@@ -21,10 +8,6 @@ func set_SDF(f_sdf :SDF):
 	_negative_bound = _sdf.get_negative_bound()
 	_positive_bound = _sdf.get_positive_bound()
 	_treshold = _sdf.get_treshold()
-
-## Setting the size of the marching cube
-func set_precision(f_precision: Vector3):
-	_precision = f_precision
 
 ## Returns a mesh of the SDF for further instantiation
 ## For this function to work you need to set the SDF
@@ -36,55 +19,20 @@ func get_mesh() -> ArrayMesh:
 	for x in range(0, max_iterations.x + 1):
 		for y in range(0, max_iterations.y + 1):
 			for z in range(0, max_iterations.z + 1):
-				var absolute_cube_position = _vertex_to_absolute(Vector3i(x, y, z))
-				var values_at_corners = _get_values_at_corners(absolute_cube_position)
-				var cube_type = _get_cube_case(values_at_corners)
+				var cube_type = _get_cube_edges(Vector3i(x, y, z))
 				
-				for edge_type in cube_type:
-					var edge = _edge_to_vertex[edge_type]
-					var first_corner_value = abs(values_at_corners[edge[0]])
-					var second_corner_value = abs(values_at_corners[edge[1]])
-					var first_corner_proximity = first_corner_value / (first_corner_value + second_corner_value)
-					var relative_vertex_position = \
-						_vertex_lookup[edge[1]] * first_corner_proximity + \
-						_vertex_lookup[edge[0]] * (1.0 - first_corner_proximity)
-					var absolute_vertex_position = relative_vertex_position * _precision + absolute_cube_position
-					surface_tool.set_normal(_sdf.get_normal_at(absolute_vertex_position))
-					surface_tool.add_vertex(absolute_vertex_position)
+				var absolute_cube_position = _vertex_to_absolute(Vector3i(x, y, z))
+				for edge in cube_type:
+					surface_tool.add_vertex(_edge_to_vertex[edge] * _precision + absolute_cube_position)
 	
 	return surface_tool.commit()
 
 var _treshold
-var _precision :Vector3 = Vector3(0.4, 0.4, 0.4)
+var _precision :Vector3 = Vector3(0.04, 0.04, 0.04)
 var _sdf :SDF
 var _negative_bound :Vector3
 var _positive_bound :Vector3
 
-
-func _get_values_at_corners(absolute_cube_position: Vector3):
-	var value_array = []
-	for vertex in _vertex_lookup:
-		value_array.append(_sdf.get_value_at(absolute_cube_position + _precision * Vector3(vertex)))
-	
-	return value_array
-
-func _vertex_to_absolute(cube_position :Vector3i):
-	return _negative_bound + _precision * Vector3(cube_position)
-
-func _get_cube_case(verticies_values):
-	var encoded_cube_case :int = 0
-	for vertex in range(7, -1, -1):
-		encoded_cube_case <<= 1
-		if verticies_values[vertex] < _treshold:
-			encoded_cube_case |= 1
-		
-	return _cubes_lookup[encoded_cube_case]
-
-## TODO: add assertions
-## Returns the number of layers in each direction that the CubeMarcher has to iterate over
-func _iterations() -> Vector3i:
-	return Vector3i((_positive_bound - _negative_bound) / _precision)
-	
 const _vertex_lookup = [
 	Vector3i(0, 0, 0),
 	Vector3i(0, 0, 1),
@@ -99,19 +47,19 @@ const _vertex_lookup = [
 # Lookup table credit: https://gist.github.com/dwilliamson/c041e3454a713e58baf6e4f8e5fffecd
 # Pair of vertex indices for each edge on the cube
 const _edge_to_vertex = [
-	[0, 1],
-	[1, 3],
-	[3, 2],
-	[2, 0],
-	[4, 5],
-	[5, 7],
-	[7, 6],
-	[6, 4],
-	[0, 4],
-	[1, 5],
-	[3, 7],
-	[2, 6],
-]
+	Vector3(0.0, 0.0, 0.5),
+	Vector3(0.0, 0.5, 1.0),
+	Vector3(0.0, 1.0, 0.5),
+	Vector3(0.0, 0.5, 0.0),
+	Vector3(1.0, 0.0, 0.5),
+	Vector3(1.0, 0.5, 1.0),
+	Vector3(1.0, 1.0, 0.5),
+	Vector3(1.0, 0.5, 0.0),
+	Vector3(0.5, 0.0, 0.0),
+	Vector3(0.5, 0.0, 1.0),
+	Vector3(0.5, 1.0, 1.0),
+	Vector3(0.5, 1.0, 0.0),
+];
 
 # For each MC case, a mask of edge indices that need to be split
 const _EdgeMasks = [
@@ -408,3 +356,29 @@ const _cubes_lookup = [
 	[ 8, 3, 0 ],
 	[ ],
 ];
+
+#func _edge_to_vertex(edge :int) -> Vector3:
+#	return (_vertex_lookup[edge & 0x7] + _vertex_lookup[(edge & 0x70) >> 4]) / 2.0
+
+func _vertex_to_absolute(cube_position :Vector3i):
+	return _negative_bound + _precision * Vector3(cube_position)
+
+## TODO: add assertions
+func _does_vertex_belong(cube_position :Vector3i, vertex :int) -> int:
+	if _sdf.get_value_at(_vertex_to_absolute(cube_position + _vertex_lookup[vertex])) < _treshold:
+		return 1
+	
+	return 0
+	
+func _get_cube_edges(cube_position :Vector3i):
+	var encoded_cube_type :int = 0
+	for vertex in range(7, -1, -1):
+		encoded_cube_type <<= 1
+		encoded_cube_type |= _does_vertex_belong(cube_position, vertex)
+		
+	return _cubes_lookup[encoded_cube_type]
+
+## TODO: add assertions
+## Returns the number of layers in each direction that the CubeMarcher has to iterate over
+func _iterations() -> Vector3i:
+	return Vector3i((_positive_bound - _negative_bound) / _precision)
