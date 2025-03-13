@@ -83,7 +83,10 @@ func get_value_at(input_point:Vector3):
 	return sdGzib(input_point, cap_pos, cap_height, cap_ratios, cap_properties, leg_pos, leg_mid, leg_elip, leg_r, leg_cap_offset)
 
 func get_negative_bound() -> Vector3:
-	return Vector3(-1.0,-1.0,-1.0)
+	var a  = max(cap_pos.x, cap_pos.x + cap_height * max(cap_ratios.x, cap_ratios.y), leg_pos.x * max(leg_r.x, leg_r.w, leg_pos.x + max(leg_elip.x, leg_elip.y)) )
+	return Vector3(-a, leg_pos.y - max(leg_r.x, leg_r.y, leg_r.z), -a)
 		
 func get_positive_bound() -> Vector3:
-	return Vector3(1.0,1.0,1.0)
+	var a  = max(cap_pos.x, cap_pos.x + cap_height * max(cap_ratios.x, cap_ratios.y), leg_pos.x * max(leg_r.x, leg_r.w, leg_pos.x + max(leg_elip.x, leg_elip.y)) )
+	return Vector3(a, cap_pos.y + cap_height + leg_cap_offset.y , a)
+
