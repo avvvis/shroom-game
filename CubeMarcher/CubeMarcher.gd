@@ -23,7 +23,9 @@ func set_SDF(f_sdf :SDF):
 	_sdf = f_sdf
 	_negative_bound = _sdf.get_negative_bound()
 	_positive_bound = _sdf.get_positive_bound()
-	_treshold = _sdf.get_treshold()
+	# NOTE: Delete _treshold and all of it's instances to zero
+	#_treshold = _sdf.get_treshold()
+	_treshold = 0.0
 
 ## Setting the size of the marching cube
 func set_precision(f_precision: Vector3):
@@ -68,13 +70,14 @@ func get_mesh() -> ArrayMesh:
 				z += 1
 	return surface_tool.commit()
 
+# The boring bowels of the cube marcher
+#region
 var _treshold
 var _precision :Vector3
 var _precision_length :float
 var _sdf :SDF
 var _negative_bound :Vector3
 var _positive_bound :Vector3
-
 
 func _get_values_at_corners(absolute_cube_position: Vector3):
 	var value_array = []
@@ -95,11 +98,12 @@ func _get_cube_case(verticies_values):
 		
 	return _cubes_lookup[encoded_cube_case]
 
-## TODO: add assertions
-## Returns the number of layers in each direction that the CubeMarcher has to iterate over
 func _iterations() -> Vector3i:
 	return Vector3i((_positive_bound - _negative_bound) / _precision)
-	
+#endregion
+
+# Boring cube_marchers lookups
+#region
 const _vertex_lookup = [
 	Vector3i(0, 0, 0),
 	Vector3i(0, 0, 1),
@@ -423,3 +427,4 @@ const _cubes_lookup = [
 	[ 8, 3, 0 ],
 	[ ],
 ];
+#endregion
