@@ -74,7 +74,6 @@ var _sdf :SDF
 var _negative_bound :Vector3
 var _positive_bound :Vector3
 
-
 func _get_values_at_corners(absolute_cube_position: Vector3):
 	var value_array = []
 	for vertex in _vertex_lookup:
