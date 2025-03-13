@@ -34,7 +34,7 @@ func set_precision(f_precision: Vector3):
 
 ## Returns a mesh of the SDF for further instantiation
 ## For this function to work you need to set the SDF
-func get_mesh() -> ArrayMesh:
+func get_mesh() -> SurfaceTool:
 	var surface_tool = SurfaceTool.new()
 	surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)
 	
@@ -68,7 +68,7 @@ func get_mesh() -> ArrayMesh:
 					surface_tool.add_vertex(absolute_vertex_position)
 				
 				z += 1
-	return surface_tool.commit()
+	return surface_tool
 
 # The boring bowels of the cube marcher
 #region

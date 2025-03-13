@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbq31i35q1evd"]
+
+[ext_resource type="Script" uid="uid://b73knf8a1pvf3" path="res://node_3d.gd" id="1_a202f"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_a202f")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.996123, 0, 0.0879729, 0, 1, 0, -0.0879729, 0, -0.996123, 0, 0, -4.67407)
+fov = 76.6664
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.73014, 0)
+size = Vector3(11.627, 1, 9.88306)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.835453, 0.467059, -0.289612, -0.149404, 0.700167, 0.698173, 0.528864, -0.540021, 0.654737, 0, 2.83893, 0)
+shadow_enabled = true
