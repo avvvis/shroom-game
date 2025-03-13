@@ -15,6 +15,9 @@ class_name CubeMarcher
 
 extends Node
 
+func _init():
+	set_precision(Vector3(0.4, 0.4, 0.4))
+
 ## Setting the signed distance function for rendering
 func set_SDF(f_sdf :SDF):
 	_sdf = f_sdf
@@ -25,6 +28,7 @@ func set_SDF(f_sdf :SDF):
 ## Setting the size of the marching cube
 func set_precision(f_precision: Vector3):
 	_precision = f_precision
+	_precision_length = f_precision.length()
 
 ## Returns a mesh of the SDF for further instantiation
 ## For this function to work you need to set the SDF
@@ -35,9 +39,18 @@ func get_mesh() -> ArrayMesh:
 	var max_iterations = _iterations()
 	for x in range(0, max_iterations.x + 1):
 		for y in range(0, max_iterations.y + 1):
-			for z in range(0, max_iterations.z + 1):
+			var z = 0
+			#for z in range(0, max_iterations.z + 1):
+			while (z < max_iterations.z + 1):
 				var absolute_cube_position = _vertex_to_absolute(Vector3i(x, y, z))
 				var values_at_corners = _get_values_at_corners(absolute_cube_position)
+				
+				# Ignoring following empty cubes
+				# The [1] corner is the furthest one in the z-axis
+				var free_radius = abs(values_at_corners[1])
+				if (free_radius > _precision_length):
+					z += floor(free_radius / _precision_length)
+				
 				var cube_type = _get_cube_case(values_at_corners)
 				
 				for edge_type in cube_type:
@@ -51,11 +64,13 @@ func get_mesh() -> ArrayMesh:
 					var absolute_vertex_position = relative_vertex_position * _precision + absolute_cube_position
 					surface_tool.set_normal(_sdf.get_normal_at(absolute_vertex_position))
 					surface_tool.add_vertex(absolute_vertex_position)
-	
+				
+				z += 1
 	return surface_tool.commit()
 
 var _treshold
-var _precision :Vector3 = Vector3(0.4, 0.4, 0.4)
+var _precision :Vector3
+var _precision_length :float
 var _sdf :SDF
 var _negative_bound :Vector3
 var _positive_bound :Vector3
