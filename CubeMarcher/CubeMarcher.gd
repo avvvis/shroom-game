@@ -30,42 +30,120 @@ func set_precision(f_precision: Vector3):
 	_precision = f_precision
 	_precision_length = f_precision.length()
 
+func _resolve_cubes():
+	while (!_cubes_stack.is_empty()):
+		var cube_position = _cubes_stack.pop_back()
+		_checked_cubes[cube_position] = 1
+		var absolute_cube_position = _precision * Vector3(cube_position) + _root_point
+		var values_at_corners = _get_values_at_corners(absolute_cube_position)
+		var cube_type = _get_cube_case(values_at_corners)
+		
+		if cube_type.size() == 0:
+			continue
+		
+		for edge_type in cube_type:
+			var edge = _edge_to_vertex[edge_type]
+			var first_corner_value = abs(values_at_corners[edge[0]])
+			var second_corner_value = abs(values_at_corners[edge[1]])
+			var first_corner_proximity = first_corner_value / (first_corner_value + second_corner_value)
+			var relative_vertex_position = \
+				_vertex_lookup[edge[1]] * first_corner_proximity + \
+				_vertex_lookup[edge[0]] * (1.0 - first_corner_proximity)
+			var absolute_vertex_position = relative_vertex_position * _precision + absolute_cube_position
+			_surface_tool.set_normal(_sdf.get_normal_at(absolute_vertex_position))
+			_surface_tool.add_vertex(absolute_vertex_position)
+			
+		if !_checked_cubes.has(cube_position + Vector3i(-1, -1, -1)):
+			_cubes_stack.push_back(cube_position + Vector3i(-1, -1, -1))
+		if !_checked_cubes.has(cube_position + Vector3i(-1, -1, 0)):
+			_cubes_stack.push_back(cube_position + Vector3i(-1, -1, 0))
+		if !_checked_cubes.has(cube_position + Vector3i(-1, -1, 1)):
+			_cubes_stack.push_back(cube_position + Vector3i(-1, -1, 1))
+		if !_checked_cubes.has(cube_position + Vector3i(-1, 0, -1)):
+			_cubes_stack.push_back(cube_position + Vector3i(-1, 0, -1))
+		if !_checked_cubes.has(cube_position + Vector3i(-1, 0, 0)):
+			_cubes_stack.push_back(cube_position + Vector3i(-1, 0, 0))
+		if !_checked_cubes.has(cube_position + Vector3i(-1, 0, 1)):
+			_cubes_stack.push_back(cube_position + Vector3i(-1, 0, 1))
+		if !_checked_cubes.has(cube_position + Vector3i(-1, 1, -1)):
+			_cubes_stack.push_back(cube_position + Vector3i(-1, 1, -1))
+		if !_checked_cubes.has(cube_position + Vector3i(-1, 1, 0)):
+			_cubes_stack.push_back(cube_position + Vector3i(-1, 1, 0))
+		if !_checked_cubes.has(cube_position + Vector3i(-1, 1, 1)):
+			_cubes_stack.push_back(cube_position + Vector3i(-1, 1, 1))
+		if !_checked_cubes.has(cube_position + Vector3i(0, -1, -1)):
+			_cubes_stack.push_back(cube_position + Vector3i(0, -1, -1))
+		if !_checked_cubes.has(cube_position + Vector3i(0, -1, 0)):
+			_cubes_stack.push_back(cube_position + Vector3i(0, -1, 0))
+		if !_checked_cubes.has(cube_position + Vector3i(0, -1, 1)):
+			_cubes_stack.push_back(cube_position + Vector3i(0, -1, 1))
+		if !_checked_cubes.has(cube_position + Vector3i(0, 0, -1)):
+			_cubes_stack.push_back(cube_position + Vector3i(0, 0, -1))
+		#if !_checked_cubes.has(cube_position + Vector3i(0, 0, 0)):
+		#	_cubes_stack.push_back(cube_position + Vector3i(0, 0, 0))
+		if !_checked_cubes.has(cube_position + Vector3i(0, 0, 1)):
+			_cubes_stack.push_back(cube_position + Vector3i(0, 0, 1))
+		if !_checked_cubes.has(cube_position + Vector3i(0, 1, -1)):
+			_cubes_stack.push_back(cube_position + Vector3i(0, 1, -1))
+		if !_checked_cubes.has(cube_position + Vector3i(0, 1, 0)):
+			_cubes_stack.push_back(cube_position + Vector3i(0, 1, 0))
+		if !_checked_cubes.has(cube_position + Vector3i(0, 1, 1)):
+			_cubes_stack.push_back(cube_position + Vector3i(0, 1, 1))
+		if !_checked_cubes.has(cube_position + Vector3i(1, -1, -1)):
+			_cubes_stack.push_back(cube_position + Vector3i(1, -1, -1))
+		if !_checked_cubes.has(cube_position + Vector3i(1, -1, 0)):
+			_cubes_stack.push_back(cube_position + Vector3i(1, -1, 0))
+		if !_checked_cubes.has(cube_position + Vector3i(1, -1, 1)):
+			_cubes_stack.push_back(cube_position + Vector3i(1, -1, 1))
+		if !_checked_cubes.has(cube_position + Vector3i(1, 0, -1)):
+			_cubes_stack.push_back(cube_position + Vector3i(1, 0, -1))
+		if !_checked_cubes.has(cube_position + Vector3i(1, 0, 0)):
+			_cubes_stack.push_back(cube_position + Vector3i(1, 0, 0))
+		if !_checked_cubes.has(cube_position + Vector3i(1, 0, 1)):
+			_cubes_stack.push_back(cube_position + Vector3i(1, 0, 1))
+		if !_checked_cubes.has(cube_position + Vector3i(1, 1, -1)):
+			_cubes_stack.push_back(cube_position + Vector3i(1, 1, -1))
+		if !_checked_cubes.has(cube_position + Vector3i(1, 1, 0)):
+			_cubes_stack.push_back(cube_position + Vector3i(1, 1, 0))
+		if !_checked_cubes.has(cube_position + Vector3i(1, 1, 1)):
+			_cubes_stack.push_back(cube_position + Vector3i(1, 1, 1))
+
+var _checked_cubes
+var _root_point
+var _surface_tool
+var _cubes_stack
 ## Returns a mesh of the SDF for further instantiation
 ## For this function to work you need to set the SDF
 func get_mesh() -> ArrayMesh:
-	var surface_tool = SurfaceTool.new()
-	surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)
+	_surface_tool = SurfaceTool.new()
+	_surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)
 	
-	var max_iterations = _iterations()
-	for x in range(0, max_iterations.x + 1):
-		for y in range(0, max_iterations.y + 1):
-			var z = 0
-			while (z < max_iterations.z + 1):
-				var absolute_cube_position = _vertex_to_absolute(Vector3i(x, y, z))
-				var values_at_corners = _get_values_at_corners(absolute_cube_position)
-				
-				# Ignoring following empty cubes
-				# The [1] corner is the furthest one in the z-axis
-				var free_radius = abs(values_at_corners[1])
-				if (free_radius > _precision_length):
-					z += floor(free_radius / _precision_length)
-				
-				var cube_type = _get_cube_case(values_at_corners)
-				
-				for edge_type in cube_type:
-					var edge = _edge_to_vertex[edge_type]
-					var first_corner_value = abs(values_at_corners[edge[0]])
-					var second_corner_value = abs(values_at_corners[edge[1]])
-					var first_corner_proximity = first_corner_value / (first_corner_value + second_corner_value)
-					var relative_vertex_position = \
-						_vertex_lookup[edge[1]] * first_corner_proximity + \
-						_vertex_lookup[edge[0]] * (1.0 - first_corner_proximity)
-					var absolute_vertex_position = relative_vertex_position * _precision + absolute_cube_position
-					surface_tool.set_normal(_sdf.get_normal_at(absolute_vertex_position))
-					surface_tool.add_vertex(absolute_vertex_position)
-				
-				z += 1
-	return surface_tool.commit()
+	# TODO: Fix the unsafe origin
+	_root_point = _raymarch(Vector3(0.0, 1.0, 0.0), Vector3(0.0, -100.0, 0.0)) -  Vector3(_precision.x / 2.0, 0.0, 0.0)
+	_checked_cubes = {
+		Vector3i(0, 0, 0) : 1,
+		Vector3i(0, 0, 1) : 1,
+		Vector3i(0, 1, 0) : 1,
+		Vector3i(0, 1, 1) : 1,
+		Vector3i(1, 0, 0) : 1,
+		Vector3i(1, 0, 1) : 1,
+		Vector3i(1, 1, 0) : 1,
+		Vector3i(1, 1, 1) : 1,
+	}
+	_cubes_stack = [
+		Vector3i(0, 0, 0),
+		Vector3i(0, 0, 1),
+		Vector3i(0, 1, 0),
+		Vector3i(0, 1, 1),
+		Vector3i(1, 0, 0),
+		Vector3i(1, 0, 1),
+		Vector3i(1, 1, 0),
+		Vector3i(1, 1, 1),
+	]
+	_resolve_cubes()
+	
+	#_surface_tool.generate_normals()
+	return _surface_tool.commit()
 
 var _treshold
 var _precision :Vector3
@@ -97,6 +175,19 @@ func _get_cube_case(verticies_values):
 ## Returns the number of layers in each direction that the CubeMarcher has to iterate over
 func _iterations() -> Vector3i:
 	return Vector3i((_positive_bound - _negative_bound) / _precision)
+	
+const _max_iterations = 100
+func _raymarch(direction :Vector3, origin :Vector3):
+	direction = direction.normalized()
+	var best_current_aproximation = origin
+	var distance_to_surface = _sdf.get_value_at(best_current_aproximation)
+	var iterations = 1
+	while (abs(distance_to_surface) < _treshold and iterations < _max_iterations):
+		best_current_aproximation = best_current_aproximation + (distance_to_surface + _treshold) * direction
+		distance_to_surface = _sdf.get_value_at(best_current_aproximation)
+		iterations += 1
+	
+	return best_current_aproximation + direction * distance_to_surface
 	
 const _vertex_lookup = [
 	Vector3i(0, 0, 0),
