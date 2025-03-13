@@ -9,4 +9,14 @@ script = ExtResource("1_aprth")
 transform = Transform3D(1, 0, 0, 0, 0.998226, 0.0595329, 0, -0.0595329, 0.998226, 0.0467935, 0.646978, 1.46447)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.39848, 3.51943, 1.27733)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.611993, 1.63756, 1.06446)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.25402, 0)
+size = Vector3(7.52051, 1, 8.11426)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.00239, 0.0581721, 0)
+light_color = Color(0.964706, 0.654902, 0.282353, 1)
+shadow_enabled = true
