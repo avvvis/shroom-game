@@ -6,13 +6,12 @@ static func _new():
 	return null  #
 
 ## A function that renders a parametrically defined solid to a mesh. The mesh must be defined as a function from
-## a circle in polar coordinates (namely, from [0, 1] x [0, 2π) ), to R^3. See [annotation ParametricSolid]
-## TODO: optimize by implementing the triangle tesselation[br][br]
+## a circle in polar coordinates (namely, from [0, 1] x [0, 2π) ), to R^3. See [annotation ParametricSolid][br][br]
 ##
 ## Arguments: [br]
 ## * solid ~ a parametrically defined solid[br]
-## * parameter_precision ~ the precision at which the domain in sampled (the circle in polar coordinates)[br]
-## * angle_precision ~ the 
+## * parameter_precision ~ the spacing at which the domain is sampled on the module axis (the circle in polar coordinates)[br]
+## * angle_precision ~ the spacing at which the domain is sampled on the angle axis (the circle in polar coordinates)[br]
 static func get_mesh(solid :ParametricSolid, parameter_precision :float = 0.01, angle_precision :int = 100):
 	var angle_increment = 2.0 * PI / float(angle_precision)
 	
