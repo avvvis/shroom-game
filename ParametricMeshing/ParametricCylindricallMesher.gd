@@ -6,8 +6,7 @@ static func _new():
 	return null  #
 
 ## A function that renders a parametrically defined solid to a mesh. The mesh must be defined as a function from
-## a circle in polar coordinates (namely, from [0, 1] x [0, 2π) ), to R^3. See [annotation ParametricSolid]
-## TODO: optimize by implementing the triangle tesselation[br][br]
+## a circle in polar coordinates (namely, from [0, 1] x [0, 2π) ), to R^3. See [annotation ParametricSolid][br][br]
 ##
 ## Arguments: [br]
 ## * solid ~ a parametrically defined solid[br]
