@@ -10,8 +10,8 @@ static func _new():
 ##
 ## Arguments: [br]
 ## * solid ~ a parametrically defined solid[br]
-## * parameter_precision ~ the precision at which the domain in sampled (the circle in polar coordinates)[br]
-## * angle_precision ~ the 
+## * parameter_precision ~ the spacing at which the domain is sampled on the module axis (the circle in polar coordinates)[br]
+## * angle_precision ~ the spacing at which the domain is sampled on the angle axis (the circle in polar coordinates)[br]
 static func get_mesh(solid :ParametricSolid, parameter_precision :float = 0.01, angle_precision :int = 100):
 	var angle_increment = 2.0 * PI / float(angle_precision)
 	
