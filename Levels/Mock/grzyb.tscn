@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dfuijhxr1f3uc"]
+[gd_scene load_steps=4 format=3 uid="uid://dfuijhxr1f3uc"]
 
 [ext_resource type="Script" uid="uid://bsv6utl6848fn" path="res://Levels/Mock/grzyb.gd" id="1_aprth"]
-[ext_resource type="Material" uid="uid://c1sf0ush8gejn" path="res://new_standard_material_3d.tres" id="2_3fgy1"]
 [ext_resource type="Script" uid="uid://cutb1wxt5qft4" path="res://ParametricMeshing/ShroomShape/ShroomShape.gd" id="3_4qdbg"]
 [ext_resource type="ArrayMesh" path="res://ParametricMeshing/saved/2025-03-15T17:31:23.res" id="4_xty2h"]
 
@@ -35,15 +34,8 @@ offset_right = 340.0
 offset_bottom = 610.0
 text = "Shroom henerathion"
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.11548, 0, 0)
-material = ExtResource("2_3fgy1")
-
-[node name="ShroomShape" type="Node3D" parent="."]
-script = ExtResource("3_4qdbg")
-metadata/_custom_type_script = "uid://cutb1wxt5qft4"
-
 [node name="GenerateAndSaveButton" type="Button" parent="."]
+visible = false
 offset_left = 400.0
 offset_top = 500.0
 offset_right = 700.0
@@ -53,6 +45,10 @@ text = "Save shroom"
 [node name="LastGribPreview" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.994852, 0.101334, 0, -0.101334, 0.994852, 0.71918, 0.440454, 0.739001)
 mesh = ExtResource("4_xty2h")
+
+[node name="ShroomShape" type="Node3D" parent="."]
+script = ExtResource("3_4qdbg")
+metadata/_custom_type_script = "uid://cutb1wxt5qft4"
 
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="pressed" from="GenerateAndSaveButton" to="." method="_on_generate_and_save_button_pressed"]

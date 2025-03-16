@@ -1,5 +1,5 @@
 extends ParametricSolid
 class_name Cap
 
-func get_cap_origin():
-	assert(false, "This is a virtual function, it may not be invoked directly")
+func get_cap_origin() -> Vector3:
+	return Vector3(0.0, 0.0, 0.0)

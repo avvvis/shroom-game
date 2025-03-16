@@ -12,7 +12,7 @@ static func _new():
 ## * solid ~ a parametrically defined solid[br]
 ## * parameter_precision ~ the precision at which the domain in sampled (the circle in polar coordinates)[br]
 ## * angle_precision ~ the 
-static func get_mesh(solid :ParametricSolid, parameter_precision :float = 0.01, angle_precision :int = 100):
+static func get_mesh(solid :ParametricSolid, parameter_precision :float = 0.05, angle_precision :int = 20):
 	var angle_increment = 2.0 * PI / float(angle_precision)
 	
 	var surface_constructor = SurfaceTool.new()
