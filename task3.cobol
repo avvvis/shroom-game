@@ -46,17 +46,17 @@ Gracz próbuje zebrać grzyba, ale ekwipunek jest pełny. System wyświetla komu
 Przypadek użycia: Warzenie mikstury
 Opis: Gracz powinien móc warzyć mikstury z zebranych grzybów.
 Aktorzy: Gracz
-Warunki wstępne: Gracz znajduje się w chatce i otworzył menu craftingu
-    1. Gracz wybiera menu craftowania 
-    2. System wyświetla menu wyboru komponentów mikstury 
-    3. Gracz wybiera składniki 
+Warunki wstępne: Gracz znajduje się w chatce
+    1. Gracz otwiera menu craftowania
+    2. System wyświetla menu wyboru grzybów 
+    3. Gracz wybiera składniki
     4. System warzy miksturę i dodaje ją do ekwipunku 
     5. System usuwa użyte składniki z ekwipunku gracza 
 Scenariusze alternatywne:
-Gracz próbuje stworzyć miksturę, ale nie ma wymaganych składników. System wyświetla komunikat „Brak składników” i nie warzy mikstury.
+Gracz próbuje stworzyć miksturę, ale jego ekwipunek jest pusty. System wyświetla komunikat „Brak składników” i nie warzy mikstury.
 
-Przypadek użycia: Użycie mikstury lub grzyba
-Opis: Gracz powinien móc używać grzybów i mikstur, które znajdują się w jego ekwipunku.
+Przypadek użycia: Spożycie mikstury lub grzyba
+Opis: Gracz powinien móc konsumować grzyby i mikstury, które znajdują się w jego ekwipunku.
 Aktorzy: Gracz
 Warunki wstępne: Gracz posiada co najmniej jedną miksturę lub grzyba w ekwipunku
     1. Gracz otwiera ekwipunek 
@@ -65,17 +65,25 @@ Warunki wstępne: Gracz posiada co najmniej jedną miksturę lub grzyba w ekwipu
     4. System aktywuje efekt przedmiotu 
     5. System usuwa zużytą miksturę lub grzyba z ekwipunku 
 Scenariusze alternatywne:
-Gracz próbuje użyć mikstury, gdy jej efekt już działa. System wyświetla komunikat „Efekt już aktywny” i nie zużywa mikstury.
+Brak
 
-Przypadek użycia: Wczytanie stanu rozgrywki
+Przypadek użycia: Wczytanie stanu ostatniej rozgrywki
 Opis: Gracz powinien móc wrócić do gry po przerwie.
 Aktorzy: Gracz
 Warunki wstępne: Gracz znajduje się w menu głównym i ma zapisany stan gry
     1. Gracz klika "Continue”
-    2. System wyświetla menu wyboru save slota
-    3. Gracz wybiera save slota 
-    4. System uruchamia rozgrywkę od miejsca zapisu 
+    2. System uruchamia rozgrywkę od miejsca zapisu 
 Scenariusze alternatywne:
+Save jest zepsuty. System wyświetla wtedy informację o błędzie.
+
+Przypadek użycia: Wczytanie stanu save-a
+Opis: Gracz powinien móc kontynuować grę z dowolnego save-a.
+Aktorzy: Gracz
+Warunki wstępne: Gracz znajduje się w menu głównym i ma zapisany stan gry
+    1. Gracz klika przycisk "Wczytaj grę"
+    2. System wczytuje save-a od miejsca zapisu 
+Scenariusze alternatywne:
+Save jest zepsuty. System wyświetla wtedy informację o błędzie.
 
 Przypadek użycia: Otworzenie menu pauzy w trakcie rozgrywki
 Opis: Gracz powinien móc otworzyć menu, aby uzyskać dostęp do różnych opcji.
@@ -121,21 +129,29 @@ Opis: Gracz powinien móc swobodnie poruszać się po mapie gry.
 Aktorzy: Gracz
 Warunki wstępne: Gracz znajduje się w świecie gry
     1. Gracz używa klawiszy ruchu lub kontrolera 
-    2. System przesuwa postać zgodnie z kierunkiem ruchu 
+    2. System zwiększa szybkość postaci zgodnie z funkcją przyspiesznia względem szybkości
 Scenariusze alternatywne:
-Gracz napotyka przeszkodę nie do przejścia. System uniemożliwia dalszy ruch w tym kierunku.
 
-Przypadek użycia: Atakowanie przeciwnika
-Opis: Gracz powinien móc zaatakować przeciwnika w zasięgu ataku.
-Aktorzy: Gracz, Przeciwnik
-Warunki wstępne: Gracz znajduje się w pobliżu przeciwnika
+Przypadek użycia: Atakowanie
+Opis: Gracz powinien móc wykonać atak
+Aktorzy: Gracz
+Warunki wstępne: Gracz znajduje się w świecie gry, gra nie jest zapałzowana, poza chatką
     1. Gracz naciska przycisk ataku 
     2. System odtwarza animację ataku 
     3. System sprawdza czy atak trafia
-    4. Jeśli atak trafił, system odejmuje przeciwnikowi punkty życia 
-    5. Przeciwnik "łapie agro" na gracza
+    4. Jeśli atak trafił, system wydaje sygnał do zaatakowanego obiektu z informacją o sile ataku i jego typie (być może) 
 Scenariusze alternatywne:
-Gracz atakuje, ale nie trafia. System nie odejmuje przeciwnikowi punktów życia.
+Brak
+
+Przypadek użycia: Bycie zaatakowanym
+Opis: Każdy obiekt który może zostać zaatakowany powinien móc obsługiwać sygnał zostania zaatakowanym
+Aktorzy: Obiek który może zostać zaatakowany (np. przeciwnik, gracz, pudełko, drzwi)
+Warunki wstępne: Gra nie jest zapałzowana, obiekt który można zaatakować odbiera sygnał o ataku.
+    1. System oblicza ilość rzeczywistych obrażeń otrzymanych przez obiekt
+    2. System nakłada na obiekt odpowiednie efekty w zależności od tego, czy mogą zostać nałożone (drzwi nie mogą zostać otrute, tak samo jak szkielet nie może krwawić)
+    3. System sprawdza obecny poziom życia obiektu, jeżeli jest mniejszy od zera, system zabija przeciwnika
+Scenariusze alternatywne:
+Jeżeli zaatakowanym obiektem jest gracz, to system wykonuje animację otrzymania obrażeń - ekran się trzęsie, maluje na czerwono, czy coś
 
 Przypadek użycia: Pokonanie przeciwnika
 Opis: Po pokonaniu przeciwnika gracz otrzymuje nagrody.
@@ -147,30 +163,36 @@ Warunki wstępne: Przeciwnik ma 0 punktów życia
 Scenariusze alternatywne:
 Brak
 
+Przypadek użycia: Postać gracza umiera
+Opis: Po otrzymaniu zbyt wielu obrażeń postać gracza może umrzeć
+Aktorzy: Gracz
+Warunki wstępne: Postać gracza otrzymała zbyt dużo obrażeń
+    1. System wyświetla na ekranie menu, z informacją o długości gry, pokonanych przeciwnikach, zbadanych grzybach etc.
+    2. System wyświetla na ekranie guziki: nowa gra, powrót do menu głównego, podziel się ze znajomymi
+    3. System obsługuje odpowiednie guziki
+Scenariusze alternatywne:
+Brak
+
 Przypadek użycia: Przeglądanie katalogu grzybów
 Opis: Gracz powinien móc sprawdzić informacje o znalezionych grzybach.
 Aktorzy: Gracz
-Warunki wstępne: Gracz zkatalogował co najmniej jeden gatunek grzyba
-    1. Gracz otwiera katalog grzybów 
-    2. System wyświetla listę odkrytych gatunków 
+Warunki wstępne: Gracz znajduje się w chatce, albo świecie gry
+    1. Gracz kilka przycisk do otwierania katalogu
+    2. System wyświetla listę napotkanych grzybów i efektów mikstur, które zostały z nich utworzone
 Scenariusze alternatywne:
-Gracz nie odkrył żadnych grzybów. System wyświetla pustą listę.
+Brak
 
 Przypadek użycia: określanie gatunków grzybów przez gracza
 Opis: Gracz powinien móc na podstawie swoich obserwacji określać gatunki grzybów i zapisywać swoje spostrzeżenia w katalogu
 Aktorzy: Gracz
 Warunki wstępne: Gracz znajduje się w menu katalogu
-
-1. Gracz wybiera interesującego go grzyba
-2. Gracz klika na guzik "określ gatunek"
-3. System wyświetla menu określenia gatunku
-4. Gracz wybiera gatunek z listy lub dodaje nową nazwę
-5. System przypisuje gatunek grzybowi
-
-
-Wyjątki i scenariusze alternatywne:
-5.a Gracz dodał nazwę, która już istnieje
- => System wyświetla informację o błędzie i pozwala graczowi jeszcze raz wybrać nazwę
+    1. Gracz wybiera interesującego go grzyba
+    2. Gracz klika na guzik "określ gatunek"
+    3. System wyświetla menu określenia gatunku
+    4. Gracz wybiera gatunek z listy lub dodaje nową nazwę
+    5. System przypisuje gatunek grzybowi
+Scenariusze alternatywne:
+Gracz dodał nazwę, która już istnieje, wtedy system wyświetla informację o błędzie i pozwala graczowi jeszcze raz wybrać nazwę
 
 
       
