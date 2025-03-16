@@ -5,21 +5,27 @@ var marcher
 var _new_mesh
 
 func _on_button_button_down() -> void:
-	_new_mesh = MeshInstance3D.new()
+	#_new_mesh = MeshInstance3D.new()
+	var shroom_shape_reference = get_node("ShroomShape")
+	print(shroom_shape_reference.get_script())
+	shroom_shape_reference.set_cap(BezierCap.new())
+	get_node("ShroomShape").set_leg(BezierLeg.new())
 	var time_beginning = Time.get_unix_time_from_system()
+	get_node("ShroomShape").commit()
 	#_new_mesh.mesh = marcher.get_mesh()
 	#_new_mesh.mesh = ParametricPolarMesher.get_mesh(SampleSolid.new(), 0.01, 30)
 	#_new_mesh.mesh = ParametricPolarMesher.get_mesh(FunnyCap.new(), 0.1, 15)
-	_new_mesh.mesh = ParametricPolarMesher.get_mesh(BezierLeg.new(), 0.01, 6)
+	#_new_mesh.mesh = ParametricPolarMesher.get_mesh(BezierLeg.new(), 0.01, 6)
 	var time_end = Time.get_unix_time_from_system()
 	print("Grib henerathion time: ", (time_end - time_beginning) * 1000.0, "ms")
-	_new_mesh.material_override = load("res://new_standard_material_3d.tres")
-	add_child(_new_mesh)
+	#_new_mesh.material_override = load("res://new_standard_material_3d.tres")
+	#add_child(_new_mesh)
 	
 
 func _on_generate_and_save_button_pressed() -> void:
-	print(ResourceSaver.save(_new_mesh.mesh, "res://ParametricMeshing/saved/" + Time.get_datetime_string_from_system() + ".res"))
-	get_node("LastGribPreview").mesh = _new_mesh
+	#print(ResourceSaver.save(_new_mesh.mesh, "res://ParametricMeshing/saved/" + Time.get_datetime_string_from_system() + ".res"))
+	#get_node("LastGribPreview").mesh = _new_mesh
+	pass
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#marcher = CubeMarcher.new()

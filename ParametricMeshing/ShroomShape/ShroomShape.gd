@@ -4,7 +4,7 @@ class_name ShroomShape
 var _cap
 var _leg
 
-func _init(c_cap :Cap, c_leg :Leg):
+func _init(c_cap :Cap = null, c_leg :Leg = null):
 	set_cap(c_cap)
 	set_leg(c_leg)
 
@@ -19,3 +19,21 @@ func set_leg(c_leg :Leg):
 	
 func get_leg():
 	return _leg
+
+func commit():
+	var cap_mesh = ParametricPolarMesher.get_mesh(_cap)
+	var leg_mesh = ParametricPolarMesher.get_mesh(_leg)
+	var cap_to_leg_translation = _leg.get_cap_origin() - _cap.get_cap_origin()
+	var cap_to_leg_rotation = _leg.get_cap_direction()
+	
+	var cap_mesh_instance = MeshInstance3D.new()
+	cap_mesh_instance.mesh = cap_mesh
+	cap_mesh_instance.transform.origin = _cap.get_cap_origin()
+	var leg_mesh_instance = MeshInstance3D.new()
+	leg_mesh_instance.mesh = leg_mesh
+	
+	cap_mesh_instance.position = cap_to_leg_translation
+	#cap_mesh_instance.transform.rotated_local(Vector3(cap_to_leg_rotation.x, 0.0, cap_to_leg_rotation.z), cap_to_leg_rotation.y)
+	
+	add_child(cap_mesh_instance)
+	add_child(leg_mesh_instance)
