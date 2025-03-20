@@ -2,7 +2,7 @@
 ##
 ## The game world is made up of cells grouped into chunks, which form a square grid.
 ##
-## See: [WorldCell].
+## See: [WorldCell], [WorldGenParams].
 class_name Chunk
 
 ## The side length of a chunk.
@@ -48,7 +48,14 @@ static func _gen_biomic(noise_gen: FastNoiseLite, coords: Vector2i) -> Vector2:
 	return biomic_xy
 
 ## Generates a copy of the chunk at the given super coordinates.
-static func generate(noise_gen: FastNoiseLite, super_coords: Vector2i) -> Chunk:
+static func generate(gen_params: WorldGenParams, super_coords: Vector2i) -> Chunk:
+	var noise_gen := FastNoiseLite.new()
+	noise_gen.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	noise_gen.seed = gen_params.master_seed
+	
+	var white_gen := WhiteNoise.new()
+	white_gen.seed = gen_params.master_seed
+	
 	var chunk := Chunk.new()
 	var corner_coords := super_coords * SIZE
 	
@@ -72,14 +79,22 @@ static func generate(noise_gen: FastNoiseLite, super_coords: Vector2i) -> Chunk:
 				blurred += chunk.get_cell(xy).biomic_xy * _GAUSSIAN[i * _SIDELEN + j]
 		chunk.get_cell(rel_coords).biomic_xy = blurred
 	
-	# 3. Generate point-like strucutres -- not like this though...
+	# 3. Generate point-like strucutres
 	
-	var rng := RandomNumberGenerator.new()
-	rng.seed = hash(noise_gen.seed) ^ hash(super_coords)
+	for rel_coords in Util.vec2i_range(Vector2i(0, 0), Vector2i(SIZE, SIZE)):
+		var r := absf(white_gen.get_noise_2dv(corner_coords + rel_coords))
+		if r <= 0.03:
+			# you'd set this cell to be like a tree or something...
+			chunk.get_cell(rel_coords).biomic_xy = Vector2(0, 0)
 	
-	for i in range(20):
-		var x := rng.randi_range(0, SIZE - 1)
-		var y := rng.randi_range(0, SIZE - 1)
-		chunk.get_cell(Vector2i(x, y)).biomic_xy = Vector2(0, 0)
+	# alternative method of generation:
+	# (honestly idk if it doesn't yield better results...)
+	#var rng := RandomNumberGenerator.new()
+	#rng.seed = hash(noise_gen.seed) ^ hash(super_coords)
+	#
+	#for i in range(20):
+	#	var x := rng.randi_range(0, SIZE - 1)
+	#	var y := rng.randi_range(0, SIZE - 1)
+	#	chunk.get_cell(Vector2i(x, y)).biomic_xy = Vector2(0, 0)
 	
 	return chunk
