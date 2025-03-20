@@ -1,92 +1,55 @@
 class_name World
 extends Node2D
 
-const CHUNK_SIZE = 32
+# TODO: point-like structure generation (set frequency per chunk, then just rng)
+# TODO: figure out the biomeset we want and map the biomic coord space to it
+# TODO: river-like/road-like structures (cellular noise? OR abs(perlin) "valleys")
 
-class Cell:
-	var humidity: float
-	var temperature: float
-	
-	var tile_coords: Vector2i:
-		get:
-			#return Vector2i(humidity < 0, temperature < 0)
-			if humidity < 0:
-				if temperature < 0:
-					return Vector2i(3, 2)
-				else:
-					return Vector2i(2, 0)
-			else:
-				if temperature < 0:
-					return Vector2i(3, 1)
-				else:
-					return Vector2i(1, 1)
+var _noise := FastNoiseLite.new()
+var _chunk_cache: Dictionary[Vector2i, Chunk] = {}
+@onready var _tile_size: int = $Tiles.tile_set.tile_size.x
 
-var _noise: FastNoiseLite
-@onready var _player: CharacterBody2D = $Player
-@onready var _tiles: TileMapLayer = $Tiles
-@onready var _regen_area: Area2D = $RegenArea
-@onready var _regen_area_shape: CollisionShape2D = $RegenArea/Shape
+func _init() -> void:
+	_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
 
-var world_seed: int:
-	get:
-		return _noise.seed
-	set(value):
-		_noise.seed = value
-
-func _init():
-	_noise = FastNoiseLite.new()
-	_noise.noise_type = FastNoiseLite.TYPE_PERLIN
-
-func _get_cell(coords: Vector2i) -> Cell:
-	var x = coords.x * 2
-	var y = coords.y * 2
-	
-	var humidity: float = 0
-	var temperature: float = 0
-	
-	var R = 3
-	var STDEV = 0.80
-	var STDEV_SQ = STDEV * STDEV
-	
-	var gaussian_sum: float = 0
-	
-	for dx in range(-R, +R + 1):
-		for dy in range(-R, +R + 1):
-			var gaussian = exp(-(dx * dx + dy * dy) / (2 * STDEV_SQ)) / (TAU * STDEV_SQ)
-			gaussian_sum += gaussian
-			humidity += _noise.get_noise_3d(x + dx, y + dy, 0)
-			temperature += _noise.get_noise_3d(x + dx, y + dy, 100)
-	
-	humidity /= gaussian_sum
-	temperature /= gaussian_sum
-	
-	var wc = Cell.new()
-	wc.humidity = humidity
-	wc.temperature = temperature
-	return wc
-
-func _populate_at(point: Vector2i, cell: Cell) -> void:
-	_tiles.set_cell.call_deferred(point, 0, cell.tile_coords)
-
-func _populate_around(origin: Vector2i) -> void:
-	#print("_populate_around() start")
-	for y in range(-2 * CHUNK_SIZE, +2 * CHUNK_SIZE):
-		for x in range(-2 * CHUNK_SIZE, +2 * CHUNK_SIZE):
-			var cell = _get_cell(origin + Vector2i(x, y))
-			_populate_at(origin + Vector2i(x, y), cell)
-	_regen_area.position = origin * _tiles.tile_set.tile_size
-	#print("_populate_around() done")
+func get_chunk(super_coords: Vector2i) -> Chunk:
+	var chunk := _chunk_cache.get(super_coords) as Chunk
+	if chunk == null:
+		chunk = Chunk.generate(_noise, super_coords)
+		_chunk_cache[super_coords] = chunk
+	return chunk
 
 func _ready() -> void:
-	_regen_area_shape.scale = Vector2(CHUNK_SIZE, CHUNK_SIZE)
-	world_seed = randi()
+	$RegenArea/Shape.scale = Vector2(Chunk.SIZE, Chunk.SIZE)
+	$RegenArea.position = Vector2(0.5, 0.5) * Chunk.SIZE * _tile_size
+	var world_seed := randi()
 	print("World seed: ", world_seed)
-	_populate_around(Vector2i(0, 0))
+	_noise.seed = world_seed
+	_populate_chunks_around(Vector2i(0, 0))
 
 func _on_regen_area_body_exited(body: Node2D) -> void:
-	if body == _player:
-		print("Player exited regen area; regenerating chunks around them.")
-		var origin = Vector2i(_player.position) / _tiles.tile_set.tile_size
-		var thread = Thread.new()
-		thread.start(func(): _populate_around(origin))
-		#thread.wait_to_finish()
+	if body == $Player:
+		print("Player exited regen area; generating chunks around them.")
+		var player_coords := Vector2i($Player.position) / _tile_size
+		print("Player coords: ", player_coords)
+		var super_coords := Util.super_coords(player_coords)
+		print("Player super coords: ", super_coords)
+		$RegenArea.position = (Vector2(super_coords) + Vector2(0.5, 0.5)) * Chunk.SIZE * _tile_size
+		_populate_chunks_around(super_coords)
+
+func _populate_chunks_around(super_coords: Vector2i) -> void:
+	print("Populating chunks around super coords ", super_coords)
+	for offset in Util.vec2i_range(Vector2i(-1, -1), Vector2i(2, 2)):
+		_populate_chunk_at(super_coords + offset)
+
+func _populate_chunk_at(super_coords: Vector2i) -> void:
+	print("Populating chunk at super coords ", super_coords)
+	var chunk := get_chunk(super_coords)
+	var corner_coords := super_coords * Chunk.SIZE
+	for dy in range(Chunk.SIZE):
+		for dx in range(Chunk.SIZE):
+			var rel_coords := Vector2i(dx, dy)
+			var coords := corner_coords + rel_coords
+			var cell := chunk.get_cell(rel_coords)
+			var tile_coords := Vector2i(2.0 * (cell.biomic_xy.clampf(-0.999, 0.999) + Vector2(1, 1)))
+			$Tiles.set_cell(coords, 0, tile_coords)
