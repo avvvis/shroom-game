@@ -40,16 +40,46 @@ static func _static_init() -> void:
 		var j := xy.x + _R
 		_GAUSSIAN[i * _SIDELEN + j] = exp(-(xy.x * xy.x + xy.y * xy.y) / _2SDSQ) / (PI * _2SDSQ)
 
+static func _gen_biomic(noise_gen: FastNoiseLite, coords: Vector2i) -> Vector2:
+	var noise_xy := _NOISE_COORD_COEFF * coords
+	var biomic_x := noise_gen.get_noise_3d(noise_xy.x, noise_xy.y, 0)
+	var biomic_y := noise_gen.get_noise_3d(noise_xy.x, noise_xy.y, 100)
+	var biomic_xy := Vector2(biomic_x, biomic_y)
+	return biomic_xy
+
 ## Generates a copy of the chunk at the given super coordinates.
 static func generate(noise_gen: FastNoiseLite, super_coords: Vector2i) -> Chunk:
 	var chunk := Chunk.new()
 	var corner_coords := super_coords * SIZE
 	
+	# 1. Generate the biomic coordinates from noise
+	
 	for rel_coords in Util.vec2i_range(Vector2i(0, 0), Vector2i(SIZE, SIZE)):
-		var noise_xy := _NOISE_COORD_COEFF * (corner_coords + rel_coords)
-		var biomic_x := noise_gen.get_noise_3d(noise_xy.x, noise_xy.y, 0)
-		var biomic_y := noise_gen.get_noise_3d(noise_xy.x, noise_xy.y, 100)
-		var biomic_xy := Vector2(biomic_x, biomic_y)
+		var biomic_xy := _gen_biomic(noise_gen, corner_coords + rel_coords)
 		chunk.set_cell(rel_coords, WorldCell.new(biomic_xy))
+	
+	# 2. Make biome edges smoother using Gaussian blur
+	
+	for rel_coords in Util.vec2i_range(Vector2i(0, 0), Vector2i(SIZE, SIZE)):
+		var blurred := Vector2(0, 0)
+		for offset in Util.vec2i_range(Vector2i(-_R, -_R), Vector2i(_R + 1, _R + 1)):
+			var i := offset.y + _R
+			var j := offset.x + _R
+			var xy := rel_coords + offset
+			if xy.x < 0 or xy.y < 0 or xy.x >= SIZE or xy.y >= SIZE:
+				blurred += _gen_biomic(noise_gen, corner_coords + xy) * _GAUSSIAN[i * _SIDELEN + j]
+			else:
+				blurred += chunk.get_cell(xy).biomic_xy * _GAUSSIAN[i * _SIDELEN + j]
+		chunk.get_cell(rel_coords).biomic_xy = blurred
+	
+	# 3. Generate point-like strucutres -- not like this though...
+	
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash(noise_gen.seed) ^ hash(super_coords)
+	
+	for i in range(20):
+		var x := rng.randi_range(0, SIZE - 1)
+		var y := rng.randi_range(0, SIZE - 1)
+		chunk.get_cell(Vector2i(x, y)).biomic_xy = Vector2(0, 0)
 	
 	return chunk
