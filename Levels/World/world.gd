@@ -5,26 +5,24 @@ extends Node2D
 # TODO: figure out the biomeset we want and map the biomic coord space to it
 # TODO: river-like/road-like structures (cellular noise? OR abs(perlin) "valleys")
 
-var _noise := FastNoiseLite.new()
+var _gen_params := WorldGenParams.new()
 var _chunk_cache: Dictionary[Vector2i, Chunk] = {}
 @onready var _tile_size: int = $Tiles.tile_set.tile_size.x
 
 func _init() -> void:
-	_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	_gen_params.master_seed = randi()
+	print("World Gen Params: ", _gen_params)
 
 func get_chunk(super_coords: Vector2i) -> Chunk:
 	var chunk := _chunk_cache.get(super_coords) as Chunk
 	if chunk == null:
-		chunk = Chunk.generate(_noise, super_coords)
+		chunk = Chunk.generate(_gen_params, super_coords)
 		_chunk_cache[super_coords] = chunk
 	return chunk
 
 func _ready() -> void:
 	$RegenArea/Shape.scale = Vector2(Chunk.SIZE, Chunk.SIZE)
 	$RegenArea.position = Vector2(0.5, 0.5) * Chunk.SIZE * _tile_size
-	var world_seed := randi()
-	print("World seed: ", world_seed)
-	_noise.seed = world_seed
 	_populate_chunks_around(Vector2i(0, 0))
 
 func _on_regen_area_body_exited(body: Node2D) -> void:
