@@ -14,12 +14,12 @@ class Vector2iRange:
 		if end.x == begin.x || end.y == begin.y:
 			end = begin
 	
-	func _iter_init(iter: Array) -> bool:
+	func _iter_init(_iter: Array) -> bool:
 		#print("_iter_init: ", cur)
 		cur = begin
 		return cur.y != end.y
 	
-	func _iter_next(iter: Array) -> bool:
+	func _iter_next(_iter: Array) -> bool:
 		#print("_iter_next: ", cur)
 		cur.x += 1
 		if cur.x == end.x:
@@ -27,7 +27,7 @@ class Vector2iRange:
 			cur.y += 1
 		return cur.y != end.y
 	
-	func _iter_get(iter: Variant) -> Vector2i:
+	func _iter_get(_iter: Variant) -> Vector2i:
 		#print("_iter_get: ", cur)
 		return cur
 
@@ -36,6 +36,8 @@ static func vec2i_range(start: Vector2i, stop: Vector2i) -> Vector2iRange:
 
 static func super_coords(cell_coords: Vector2i) -> Vector2i:
 	# Integer division truncates (rounds towards zero), but we want to always round down.
+	@warning_ignore("integer_division")
 	var sx := cell_coords.x / Chunk.SIZE if cell_coords.x >= 0 else -((-cell_coords.x + Chunk.SIZE-1) / Chunk.SIZE)
+	@warning_ignore("integer_division")
 	var sy := cell_coords.y / Chunk.SIZE if cell_coords.y >= 0 else -((-cell_coords.y + Chunk.SIZE-1) / Chunk.SIZE)
 	return Vector2i(sx, sy)
