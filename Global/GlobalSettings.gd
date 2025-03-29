@@ -1,0 +1,96 @@
+extends Node
+
+var res_index
+var fullscreen
+var borderless
+var volume
+var darkmode
+var menu_open = false
+
+var resolutions = [
+	Vector2i(1280, 720),
+	Vector2i(1600, 900),
+	Vector2i(1920, 1080),
+	Vector2i(2880,1800),
+	Vector2i(3840,2160),
+]
+
+func apply_theme(theme_path):
+	# Load the theme
+	var new_theme = load(theme_path)
+	if new_theme:
+		# Apply the theme to the root of the scene tree
+		get_tree().root.theme = new_theme
+	else:
+		printerr("Failed to load theme: ", theme_path)
+
+
+func _ready():	
+	load_settings()
+	apply_settings()
+
+
+func load_settings():
+	var config = ConfigFile.new()
+	var err = config.load("user://settings.cfg")
+	
+	if err == OK:
+		# Load resolution
+		res_index = config.get_value("graphics", "resolution_index", 0)
+		
+		# Load fullscreen
+		fullscreen = config.get_value("graphics", "fullscreen", false)
+		
+		#Load borders
+		borderless = config.get_value("graphis", "borderless", false)
+	
+		# Load volume
+		volume = config.get_value("audio", "master_volume", 0.5)
+		
+		#load theme
+		darkmode = config.get_value("theme", "dark", true)
+	else:
+		#else load default values
+		res_index = 2
+		fullscreen = true
+		borderless = false
+		volume = 0.5
+		darkmode = true
+
+
+func apply_settings():	
+	# Set the new resolution
+	DisplayServer.window_set_size(resolutions[res_index])
+	
+	# Apply fullscreen setting (toggle window mode)
+	if fullscreen:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	
+	#Apply borderless
+	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, borderless)
+	
+	# Apply volume
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(volume))
+
+	#Apply theme
+	if darkmode:
+		apply_theme("res://themes/build/dark_theme.tres")
+	else:
+		apply_theme("res://themes/build/light_theme.tres")
+	
+	# Save settings
+	var config = ConfigFile.new()
+	config.set_value("graphics", "resolution_index", res_index)
+	config.set_value("graphics", "fullscreen", fullscreen)
+	config.set_value("graphics", "borderless", borderless)
+	config.set_value("audio", "master_volume", volume)
+	config.set_value("theme", "dark", darkmode)
+	config.save("user://settings.cfg")
+	
+	print("Settings applied and saved.")
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass

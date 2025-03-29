@@ -1,15 +1,19 @@
 extends Control
-@onready var game_button = $Menu/VBoxContainer/game
-@onready var options_button = $Menu/VBoxContainer/options
-@onready var creds_button = $Menu/VBoxContainer/creds
-@onready var exit_button = $Menu/VBoxContainer/ausgang
+@onready var game_button = $Menu/MarginContainer/VBoxContainer/game
+@onready var options_button = $Menu/MarginContainer/VBoxContainer/options
+@onready var creds_button = $Menu/MarginContainer/VBoxContainer/creds
+@onready var exit_button = $Menu/MarginContainer/VBoxContainer/ausgang
 @onready var menu = $Menu
-@onready var no_button = $exit_confirm/ColorRect/VBoxContainer/no
-@onready var yes_button = $exit_confirm/ColorRect/VBoxContainer/yes
+@onready var no_button = $exit_confirm/ColorRect/MarginContainer/VBoxContainer/no
+@onready var yes_button = $exit_confirm/ColorRect/MarginContainer/VBoxContainer/yes
 @onready var confirm = $exit_confirm
 @onready var logos = $logo_buttons
-var menu_open = false;
-var confirm_open = false;
+
+var menu_open = GlobalSettings.menu_open
+var confirm_open = false
+
+func _ready():
+	game_button.grab_focus()
 
 func _input(event):
 	if(event.is_action_pressed("ui_accept") && !menu_open && !confirm_open):
@@ -38,15 +42,18 @@ func toggleconfirm():
 		game_button.grab_focus()  # Return focus to the menu after closing confirm
 
 func _on_game_pressed() -> void:
+	GlobalSettings.menu_open = menu_open
 	pass # Replace with function body.
 
 
 func _on_options_pressed() -> void:
-	get_tree().change_scene_to_file("res://UI/settings.tscn")
+	GlobalSettings.menu_open = menu_open
+	get_tree().change_scene_to_file("res://Levels/UI/settings.tscn")
 
 
 func _on_creds_pressed() -> void:
-	get_tree().change_scene_to_file("res://UI/credits.tscn")
+	GlobalSettings.menu_open = menu_open
+	get_tree().change_scene_to_file("res://Levels/UI/credits.tscn")
 
 
 func _on_ausgang_pressed() -> void:
