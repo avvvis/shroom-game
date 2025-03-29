@@ -11,11 +11,34 @@ config_version=5
 [application]
 
 config/name="ui"
-run/main_scene="res://UI/main_menu.tscn"
+run/main_scene="res://Levels/UI/main_menu.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/bg_color=Color(1, 1, 1, 1)
-boot_splash/image="uid://d4s1bh5467tv"
+boot_splash/image="uid://bubjw1yoqfwga"
 config/icon="res://assets/icon.svg"
+boot_splash/minimum_display_time=1200
+
+[autoload]
+
+GlobalSettings="*res://Global/GlobalSettings.gd"
+
+[display]
+
+window/size/viewport_width=3840
+window/size/viewport_height=2160
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+
+[gui]
+
+theme/default_theme_scale=3.0
+theme/custom="uid://cd77oioeqvb0n"
+theme/custom_font="uid://dqudjewkwp14x"
+theme/default_font_antialiasing=2
+theme/default_font_hinting=2
+theme/default_font_multichannel_signed_distance_field=true
+theme/default_font_generate_mipmaps=true
+theme/lcd_subpixel_layout=3
 
 [input]
 
@@ -33,3 +56,12 @@ ui_cancel={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
+
+[rendering]
+
+textures/canvas_textures/default_texture_repeat=1
+renderer/rendering_method.web="forward_plus"
+viewport/hdr_2d=true
+anti_aliasing/quality/msaa_2d=2
+anti_aliasing/quality/screen_space_aa=1
+anti_aliasing/quality/use_taa=true
