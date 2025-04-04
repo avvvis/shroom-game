@@ -5,7 +5,6 @@ var fullscreen
 var borderless
 var volume
 var darkmode
-var menu_open = false
 
 var resolutions = [
 	Vector2i(1280, 720),
