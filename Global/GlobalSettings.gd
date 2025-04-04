@@ -20,6 +20,7 @@ func apply_theme(theme_path):
 	if new_theme:
 		# Apply the theme to the root of the scene tree
 		get_tree().root.theme = new_theme
+		
 	else:
 		printerr("Failed to load theme: ", theme_path)
 
@@ -60,16 +61,22 @@ func load_settings():
 func apply_settings():	
 	# Set the new resolution
 	DisplayServer.window_set_size(resolutions[res_index])
+	await get_tree().process_frame  # Wait one frame
 	
 	# Apply fullscreen setting (toggle window mode)
+	#setting the window to opposite of what you want and back seems to fix focus loss issues
 	if fullscreen:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		await get_tree().process_frame  # Wait one frame
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		await get_tree().process_frame  # Wait one frame
 	#Apply borderless
 	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, borderless)
-	
+	await get_tree().process_frame  # Wait one frame
+		
 	# Apply volume
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(volume))
 
