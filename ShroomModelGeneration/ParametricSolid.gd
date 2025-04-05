@@ -10,12 +10,6 @@ func get_value_at(parameter :float, angle :float) -> Vector3:
 func get_face_direction():
 	return false
 
-func _get_x(radius :float, angle :float):
-	return radius * cos(angle)
-
-func _get_y(radius :float, angle :float):
-	return radius * sin(angle)
-
 ## Retruns a point at the Bezier curve. The dimensionality of the output depends on the 
 ## type of points in the input
 static func _get_bezier(parameter :float, bezier_points :Array):
@@ -49,7 +43,7 @@ func _get_parameter_to_angle_precision_ratio():
 ## * parameter_precision[br]
 ## * angle_precision ~ the two aforementioned arguments describe the precision with which the domain is sampled,
 ## they represent the number of segments into which each axis is divided into.
-func get_mesh():
+func get_mesh() -> ArrayMesh:
 	var angle_precision = max(int(2 * precision / (1 + _get_parameter_to_angle_precision_ratio())), 3)
 	var parameter_precision = 2 * precision - angle_precision
 	assert(parameter_precision > 2, "Parameter_precision to low, try changing the ratio or increasing the precision")
