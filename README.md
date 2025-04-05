@@ -31,7 +31,7 @@ Players can experiment freely with combinations, discovering recipes through tri
 
 ## 🤝 Contributing
 
-As this is a university course project. We currently are not accpeting outside contributions.
+Due to this being a university course project, we currently do not accept any outside contributions.
 
 ## 📜 License
 
