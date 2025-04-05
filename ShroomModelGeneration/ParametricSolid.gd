@@ -1,12 +1,16 @@
 class_name ParametricSolid
 
-## * parameter in [0, 1]
-## * angle in [0, 2π)
+## This is the main function to ovveride. It is the parametric function which image from  [0, 1] x [0, 2π)
+## gets written to the resultant mesh [br]
+## * parameter in [0, 1] [br]
+## * angle in [0, 2π) [br]
 func get_value_at(parameter :float, angle :float) -> Vector3:
 	assert(false, "This is a virtual function, it may not be invoked directly")
 	return Vector3(0.0, 0.0, 0.0)
 
-## This function can be overriden to change the default direction of faces
+## This function can be overriden to change the default direction of faces [br]
+## * Set false when you generate a model from the bottom up and [br]
+## * true when you generate from the top down.
 func get_face_direction():
 	return false
 
@@ -26,9 +30,8 @@ static func _get_bezier(parameter :float, bezier_points :Array):
 	
 	return _bezier_buffer[0]
 
-var precision = 10
-func set_precision(c_precision :int):
-	precision = c_precision
+func _get_precision():
+	return 20
 
 ## Some shapes need grater angular precision while other require higher radial precision. Overriding this function
 ## you can change the ratio of one to the other
@@ -44,6 +47,7 @@ func _get_parameter_to_angle_precision_ratio():
 ## * angle_precision ~ the two aforementioned arguments describe the precision with which the domain is sampled,
 ## they represent the number of segments into which each axis is divided into.
 func get_mesh() -> ArrayMesh:
+	var precision = _get_precision()
 	var angle_precision = max(int(2 * precision / (1 + _get_parameter_to_angle_precision_ratio())), 3)
 	var parameter_precision = 2 * precision - angle_precision
 	assert(parameter_precision > 2, "Parameter_precision to low, try changing the ratio or increasing the precision")
