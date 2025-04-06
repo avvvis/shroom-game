@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bonu7tg4olind"
-path="res://.godot/imported/shroom_generation_class_diagram.jpg-cb584378fd3064257f9298f82e2d7bd7.ctex"
+uid="uid://0y7pmtvuu8np"
+path="res://.godot/imported/ingredients_generations_class_diagram(obsolete).jpg-cb16e816665026fd527f45b132cce508.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://project_design/shroom_generation_class_diagram.jpg"
-dest_files=["res://.godot/imported/shroom_generation_class_diagram.jpg-cb584378fd3064257f9298f82e2d7bd7.ctex"]
+source_file="res://project_design/ingredient-module/ingredients_generations_class_diagram(obsolete).jpg"
+dest_files=["res://.godot/imported/ingredients_generations_class_diagram(obsolete).jpg-cb16e816665026fd527f45b132cce508.ctex"]
 
 [params]
 
