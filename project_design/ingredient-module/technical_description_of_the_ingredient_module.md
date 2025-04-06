@@ -7,7 +7,7 @@ This document describes the structure and process of ingredient generation. __Be
 ### MeshComponent
 - **Description**: Interface for generating a mesh of a part of a mushroom or its whole body. The mesh is divided into parts so different materials can be applied afterwards.
 - **Methods**:
-  - `generate_mesh(parameters: Dictionary, seed: int) -> Mesh`
+  - `generate_mesh(parameters: Dictionary, seed: int) -> MeshInstance3D`
     - **parameters**: A dictionary of parameters specific to the mesh component.
     - **seed**: Seed for random generation. If not provided, a random seed should be generated and a warning prompted.
 
