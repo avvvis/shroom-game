@@ -5,7 +5,7 @@ extends CharacterBody2D
 @onready var _tile_size: int = $"../Tiles".tile_set.tile_size.x
 
 func _physics_process(delta: float) -> void:
-	var input_dir = Input.get_vector("left", "right", "up", "down")
+	var input_dir := Input.get_vector("left", "right", "up", "down")
 	velocity = input_dir * delta * speed
 	move_and_slide()
 

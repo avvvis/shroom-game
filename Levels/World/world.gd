@@ -5,7 +5,7 @@ var _gen_params := WorldGenParams.new()
 var _chunk_cache: Dictionary[Vector2i, Chunk] = {}
 
 @onready var _tiles := $Tiles
-@onready var _player := $Player
+@onready var _player := $PlayerCharacter
 @onready var _regen_area := $RegenArea
 @onready var _regen_area_shape := $RegenArea/Shape
 @onready var _tile_size: int = $Tiles.tile_set.tile_size.x
@@ -28,21 +28,15 @@ func _ready() -> void:
 
 func _on_regen_area_body_exited(body: Node2D) -> void:
 	if body == _player:
-		print("Player exited regen area; generating chunks around them.")
-		var player_coords := Vector2i(_player.position) / _tile_size
-		print("Player coords: ", player_coords)
-		var super_coords := Util.super_coords(player_coords)
-		print("Player super coords: ", super_coords)
+		var super_coords := _player.get_super_coords() as Vector2i
 		_regen_area.position = (Vector2(super_coords) + Vector2(0.5, 0.5)) * Chunk.SIZE * _tile_size
 		_populate_chunks_around(super_coords)
 
 func _populate_chunks_around(super_coords: Vector2i) -> void:
-	print("Populating chunks around super coords ", super_coords)
 	for offset in Util.vec2i_range(Vector2i(-1, -1), Vector2i(2, 2)):
 		_populate_chunk_at(super_coords + offset)
 
 func _populate_chunk_at(super_coords: Vector2i) -> void:
-	print("Populating chunk at super coords ", super_coords)
 	var chunk := get_chunk(super_coords)
 	var corner_coords := super_coords * Chunk.SIZE
 	for dy in range(Chunk.SIZE):
