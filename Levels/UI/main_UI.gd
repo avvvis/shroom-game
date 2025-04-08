@@ -56,6 +56,7 @@ var resolutions = [
 	Vector2i(3840,2160),
 ]
 var changes = false
+var last_volume_value
 
 ################################################################################
 #GODOT functions
@@ -67,6 +68,7 @@ func _ready():
 		resolution_option.add_item("%dx%d" % [res.x, res.y])
 		
 	load_settings()
+	last_volume_value = volume_slider.value
 
 func _input(event):
 	if(event.is_action_pressed("ui_cancel") && settings.visible):
@@ -98,6 +100,11 @@ func _input(event):
 	elif(event.is_action_pressed("ui_cancel") && pause.visible && !settings.visible && !exit_settings.visible):
 		togglePause()
 		toggleWorldPause()
+		
+func _process(_delta):
+	if volume_slider.value != last_volume_value:
+		last_volume_value = volume_slider.value
+		_on_sound_slide_changed()
 #############################################################################
 #panel swapping
 #######################################################################################
@@ -206,6 +213,7 @@ func load_settings():
 	volume_slider.value = GlobalSettings.volume
 	#Load theme
 	darkmode_check.button_pressed = GlobalSettings.darkmode;
+	changes = false
 	
 #########################################################################
 #Settings buttons
@@ -253,6 +261,7 @@ func _on_yes_exitSettings_pressed() -> void:
 
 
 func _on_no_Settings_pressed() -> void:
+	load_settings()
 	toggleSettingsconfirm()
 	if(!world.visible): # when adding hut change only this && !hut.visible
 		togglemenu()
