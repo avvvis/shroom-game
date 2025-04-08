@@ -1,0 +1,109 @@
+[gd_scene load_steps=2 format=3 uid="uid://5perum0whyl8"]
+
+[ext_resource type="PackedScene" uid="uid://dfuijhxr1f3uc" path="res://Levels/Mock/grzyb.tscn" id="1_emv82"]
+
+[node name="GameRunner" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="World" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="place_world_scene_as_my_child" type="SubViewport" parent="World"]
+handle_input_locally = false
+size = Vector2i(3840, 2160)
+render_target_update_mode = 4
+
+[node name="Inventory" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ListingPanel" type="PanelContainer" parent="Inventory"]
+custom_minimum_size = Vector2(1600, 1800)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1600.0
+offset_top = -900.0
+offset_bottom = 900.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Inventory/ListingPanel"]
+layout_mode = 2
+
+[node name="ItemList" type="ItemList" parent="Inventory/ListingPanel/ScrollContainer"]
+layout_mode = 2
+
+[node name="item_description" type="PanelContainer" parent="Inventory"]
+custom_minimum_size = Vector2(2000, 1800)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -800.0
+offset_right = 800.0
+offset_bottom = 800.0
+grow_vertical = 2
+
+[node name="vbox" type="VBoxContainer" parent="Inventory/item_description"]
+layout_mode = 2
+
+[node name="top_section" type="MarginContainer" parent="Inventory/item_description/vbox"]
+layout_mode = 2
+
+[node name="hbox" type="HBoxContainer" parent="Inventory/item_description/vbox/top_section"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Inventory/item_description/vbox/top_section/hbox"]
+layout_mode = 2
+
+[node name="item_inspector" type="PanelContainer" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer"]
+custom_minimum_size = Vector2(1200, 800)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer/item_inspector"]
+layout_mode = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer/item_inspector/MarginContainer"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer/item_inspector/MarginContainer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1176, 800)
+render_target_update_mode = 4
+
+[node name="Node3D" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer/item_inspector/MarginContainer/SubViewportContainer/SubViewport" instance=ExtResource("1_emv82")]
+
+[node name="MarginContainer2" type="MarginContainer" parent="Inventory/item_description/vbox/top_section/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer2"]
+layout_mode = 2
+text = "bajo jao bajo jajo"
+
+[node name="Equipables" type="ScrollContainer" parent="Inventory/item_description/vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemList" type="ItemList" parent="Inventory/item_description/vbox/Equipables"]
+layout_mode = 2
