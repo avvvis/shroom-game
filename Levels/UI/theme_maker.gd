@@ -116,8 +116,8 @@ func define_theme():
 		border_color = button_border_color.lightened(0.2),
 		content_margin_top = BUTTON_PADDING + 5,  # Increased depth when pressed
 		content_margin_bottom = BUTTON_PADDING + 5,
-		content_margin_left = BUTTON_PADDING + 5,
-		content_margin_right = BUTTON_PADDING + 5
+		content_margin_left = BUTTON_PADDING,
+		content_margin_right = BUTTON_PADDING
 	})
 	
 	# Define the Button with the various states (normal, hover, pressed)

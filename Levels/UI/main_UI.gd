@@ -3,17 +3,18 @@ extends Control
 #Node adding
 ###############################################################################
 # menu nodes
-@onready var game_button = $Menu/MarginContainer/VBoxContainer/game
-@onready var options_button = $Menu/MarginContainer/VBoxContainer/options
-@onready var creds_button = $Menu/MarginContainer/VBoxContainer/creds
-@onready var exit_button = $Menu/MarginContainer/VBoxContainer/ausgang
-@onready var menu = $Menu
+@onready var fullmenu = $Menu
+@onready var game_button = $Menu/MenuPanel/MarginContainer/VBoxContainer/game
+@onready var options_button = $Menu/MenuPanel/MarginContainer/VBoxContainer/options
+@onready var creds_button = $Menu/MenuPanel/MarginContainer/VBoxContainer/creds
+@onready var exit_button = $Menu/MenuPanel/MarginContainer/VBoxContainer/ausgang
+@onready var menu = $Menu/MenuPanel
 @onready var settings = $Settings
 # menu exit nodes
 @onready var no_button = $exit_confirm/ColorRect/MarginContainer/VBoxContainer/no
 @onready var yes_button = $exit_confirm/ColorRect/MarginContainer/VBoxContainer/yes
 @onready var confirm = $exit_confirm
-@onready var logos = $logo_buttons
+@onready var logos = $Menu/logo_buttons
 
 # settings nodes
 @onready var main_panel = $Settings
@@ -22,7 +23,7 @@ extends Control
 @onready var border_check = $Settings/MarginContainer/VBox/BorderPanel/MarginContainer/BorderCheck
 @onready var volume_slider = $Settings/MarginContainer/VBox/VolPanel/MarginContainer/SoundSlide
 @onready var darkmode_check = $Settings/MarginContainer/VBox/DarkPanel/MarginContainer/DarkCheck
-@onready var apply_button = $Settings/MarginContainer/VBox/Apply
+@onready var apply_button = $Settings/MarginContainer/VBox/HBoxContainer/MarginContainer/Apply
 #settings exit nodes
 @onready var exit_settings = $exit_settings_confirm
 @onready var exit_confirm = $exit_settings_confirm
@@ -30,17 +31,22 @@ extends Control
 @onready var exit_discard = $exit_settings_confirm/ColorRect/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/no
 
 #credits node
-@onready var credits = $Credits
+@onready var credits = $Menu/Credits
+@onready var credit_back = $Menu/Credits/Back
+
+#world node
+@onready var world = $World
+
+#inventory nodes
+@onready var inv = $Inventory
+
+#pausemenu
+@onready var pause = $Pause
+
+#pausemenu nodes
 ###############################################################
 #variables
 #################################################################
-
-#organizational
-var menu_open = true;
-var settings_open = false;
-var confirm_open = false
-var settings_confirm_open = false;
-var credit_open = false;
 
 #settings variables
 var resolutions = [
@@ -64,61 +70,84 @@ func _ready():
 	load_settings()
 
 func _input(event):
-	if(event.is_action_pressed("ui_cancel") && settings_open):
+	if(event.is_action_pressed("ui_cancel") && settings.visible):
 		if !changes:
 			toggleSettings()
 			togglemenu()
 		else:
 			togglemenu()
 			toggleSettingsconfirm()
-	elif(event.is_action_pressed("ui_cancel") && credit_open):
+	elif(event.is_action_pressed("ui_cancel") && credits.visible):
 		togglecredit()
 		togglemenu()
-	elif(event.is_action_pressed("ui_cancel") && confirm_open):
+	elif(event.is_action_pressed("ui_cancel") && confirm.visible):
 		toggleconfirm()
 		togglemenu()
-	elif(event.is_action_pressed("ui_cancel") && menu_open):
+	elif(event.is_action_pressed("ui_cancel") && menu.visible):
 		togglemenu()
 		toggleconfirm()
+	elif(event.is_action_pressed("inv_button") && world.visible):
+		toggleInv()
+	elif(event.is_action_pressed("ui_cancel") && inv.visible):
+		toggleInv()
+	elif(event.is_action_pressed("ui_cancel") && world.visible):
+		togglePause()
 	
 #############################################################################
 #panel swapping
 #######################################################################################
 func togglemenu():
-	menu_open = !menu_open
-	menu.visible = menu_open
-	logos.visible = menu_open
+	menu.visible = !menu.visible
+	logos.visible = menu.visible
 	await get_tree().process_frame
-	if(menu_open):
+	if(menu.visible):
 		game_button.grab_focus()
 		
 func toggleSettings():
-	settings_open = !settings_open
-	settings.visible = settings_open
+	settings.visible = !settings.visible
 	await get_tree().process_frame
-	if(settings_open): resolution_option.grab_focus()
+	if(settings.visible):
+		resolution_option.grab_focus()
 
 func toggleconfirm():
-	confirm_open = !confirm_open
-	confirm.visible = confirm_open
+	confirm.visible = !confirm.visible
 	await get_tree().process_frame
-	if(confirm_open): yes_button.grab_focus()
+	if(confirm.visible):
+		yes_button.grab_focus()
 
 func toggleSettingsconfirm():
-	settings_confirm_open = ! settings_confirm_open
-	exit_settings.visible = settings_confirm_open
+	exit_settings.visible = !exit_settings.visible
 	await get_tree().process_frame
-	if(settings_confirm_open): exit_discard.grab_focus()
+	if(exit_settings.visible):
+		exit_discard.grab_focus()
 
 func togglecredit():
-	credit_open = !credit_open
-	credits.visible = credit_open
+	credits.visible = !credits.visible
+	await get_tree().process_frame
+	if(credits.visible):
+		credit_back.grab_focus()
 	
+func toggleFullMenu():
+	fullmenu.visible = !fullmenu.visible
+	await get_tree().process_frame
+	if(fullmenu.visible):
+		game_button.grab_focus()
+
+func toggleWorld():
+	world.visible = !world.visible
+	
+func toggleInv():
+	inv.visible = !inv.visible
+
+func togglePause():
+	pause.visible = !pause.visible
+
 ##################################################################################################
 #main menu buttons
 ##################################################################################################
 func _on_game_pressed() -> void:
-	pass # Replace with function body.
+	toggleFullMenu()
+	toggleWorld()
 
 
 func _on_options_pressed() -> void:
@@ -167,7 +196,7 @@ func load_settings():
 #Settings buttons
 #########################################################################
 
-func _on_resolution_option_item_selected(index: int) -> void:
+func _on_resolution_option_item_selected(_index: int) -> void:
 	changes = true
 
 
@@ -204,4 +233,16 @@ func _on_yes_exitSettings_pressed() -> void:
 func _on_no_Settings_pressed() -> void:
 	toggleSettingsconfirm()
 	toggleSettings()
+	togglemenu()
+
+func _on_back_settings_pressed() -> void:
+	toggleSettings()
+	togglemenu()
+
+##################################################################
+#Credits buttons
+####################################################################
+
+func _on_back_credits_pressed() -> void:
+	togglecredit()
 	togglemenu()
