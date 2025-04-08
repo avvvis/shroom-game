@@ -1,4 +1,5 @@
 extends Control
+
 #############################################################################
 #Node adding
 ###############################################################################
@@ -15,7 +16,6 @@ extends Control
 @onready var yes_button = $exit_confirm/ColorRect/MarginContainer/VBoxContainer/yes
 @onready var confirm = $exit_confirm
 @onready var logos = $Menu/logo_buttons
-
 # settings nodes
 @onready var main_panel = $Settings
 @onready var resolution_option = $Settings/MarginContainer/VBox/ResPanel/MarginContainer/ResolutionOption
@@ -26,7 +26,6 @@ extends Control
 @onready var apply_button = $Settings/MarginContainer/VBox/HBoxContainer/MarginContainer/Apply
 #settings exit nodes
 @onready var exit_settings = $exit_settings_confirm
-@onready var exit_confirm = $exit_settings_confirm
 @onready var exit_save = $exit_settings_confirm/ColorRect/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/yes
 @onready var exit_discard = $exit_settings_confirm/ColorRect/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/no
 
@@ -40,10 +39,10 @@ extends Control
 #inventory nodes
 @onready var inv = $Inventory
 
-#pausemenu
+#Pause Menu
 @onready var pause = $Pause
-
-#pausemenu nodes
+@onready var pauseBack = $Pause/MarginContainer/VBox/Back
+@onready var pauseMenu = $Pause/MarginContainer/VBox/MainMenu
 ###############################################################
 #variables
 #################################################################
@@ -71,28 +70,34 @@ func _ready():
 
 func _input(event):
 	if(event.is_action_pressed("ui_cancel") && settings.visible):
-		if !changes:
-			toggleSettings()
-			togglemenu()
-		else:
-			togglemenu()
+		toggleSettings()
+		if changes:
 			toggleSettingsconfirm()
+		else:
+			if(!world.visible): # && !hut.visible
+				togglemenu()
+			else:
+				togglePause()
+		
 	elif(event.is_action_pressed("ui_cancel") && credits.visible):
 		togglecredit()
 		togglemenu()
 	elif(event.is_action_pressed("ui_cancel") && confirm.visible):
 		toggleconfirm()
 		togglemenu()
-	elif(event.is_action_pressed("ui_cancel") && menu.visible):
+	elif(event.is_action_pressed("ui_cancel") && menu.visible && fullmenu.visible):
 		togglemenu()
 		toggleconfirm()
-	elif(event.is_action_pressed("inv_button") && world.visible):
+	elif(event.is_action_pressed("inv") && world.visible && !pause.visible):
 		toggleInv()
 	elif(event.is_action_pressed("ui_cancel") && inv.visible):
 		toggleInv()
-	elif(event.is_action_pressed("ui_cancel") && world.visible):
+	elif(event.is_action_pressed("ui_cancel") && world.visible && !pause.visible && !settings.visible):
 		togglePause()
-	
+		toggleWorldPause()
+	elif(event.is_action_pressed("ui_cancel") && pause.visible && !settings.visible && !exit_settings.visible):
+		togglePause()
+		toggleWorldPause()
 #############################################################################
 #panel swapping
 #######################################################################################
@@ -141,6 +146,16 @@ func toggleInv():
 
 func togglePause():
 	pause.visible = !pause.visible
+	await get_tree().process_frame
+	if(pause.visible):
+		pauseBack.grab_focus()
+		if(world.visible):
+			pauseMenu.disabled = true
+		else:
+			pauseMenu.disabled = false
+	
+func toggleWorldPause():
+	get_tree().paused = !get_tree().paused
 
 ##################################################################################################
 #main menu buttons
@@ -211,6 +226,11 @@ func _on_border_check_pressed() -> void:
 func _on_dark_check_pressed() -> void:
 	changes = true
 
+
+func _on_sound_slide_changed() -> void:
+	changes = true;
+
+
 func _on_apply_pressed():
 	#update parameters of settings
 	GlobalSettings.res_index = resolution_option.get_selected()
@@ -226,18 +246,25 @@ func _on_apply_pressed():
 func _on_yes_exitSettings_pressed() -> void:
 	_on_apply_pressed()
 	toggleSettingsconfirm()
-	toggleSettings()
-	togglemenu()
+	if(!world.visible): # && !hut.visible
+		togglemenu()
+	else:
+		togglePause()
 
 
 func _on_no_Settings_pressed() -> void:
 	toggleSettingsconfirm()
-	toggleSettings()
-	togglemenu()
-
+	if(!world.visible): # when adding hut change only this && !hut.visible
+		togglemenu()
+	else:
+		togglePause()
+		
 func _on_back_settings_pressed() -> void:
 	toggleSettings()
-	togglemenu()
+	if(!world.visible):
+		togglemenu()
+	else:
+		togglePause()
 
 ##################################################################
 #Credits buttons
@@ -246,3 +273,24 @@ func _on_back_settings_pressed() -> void:
 func _on_back_credits_pressed() -> void:
 	togglecredit()
 	togglemenu()
+
+######################################################################
+#Pause buttons
+######################################################################
+
+func _on_main_menu_pressed() -> void:
+	toggleWorldPause()
+	togglePause()
+	toggleWorld()
+	toggleFullMenu()
+
+
+func _on_pause_settings_pressed() -> void:
+	togglePause()
+	toggleSettings()
+
+
+func _on_pause_back_pressed() -> void:
+	toggleWorldPause()
+	togglePause()
+	
