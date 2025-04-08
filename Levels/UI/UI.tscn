@@ -1,16 +1,16 @@
 [gd_scene load_steps=13 format=3 uid="uid://5g0ck17xo6y0"]
 
-[ext_resource type="Script" uid="uid://m0h24osf5ffj" path="res://Levels/UI/main_UI.gd" id="1_p4gpm"]
-[ext_resource type="Texture2D" uid="uid://bv58m5ar8agh6" path="res://assets/ilovethisbg.png" id="2_6fm8r"]
-[ext_resource type="Script" uid="uid://c4v1v1ymqatyg" path="res://Levels/UI/menu.gd" id="3_ffmd8"]
-[ext_resource type="Script" uid="uid://bqn40ilhg4uy1" path="res://Levels/UI/FULLmenu.gd" id="3_w15sy"]
-[ext_resource type="Script" uid="uid://dlaebbrda0pel" path="res://Levels/UI/logo_buttons.gd" id="4_w15sy"]
-[ext_resource type="Texture2D" uid="uid://3yciuak73kd2" path="res://assets/icon.svg" id="5_nmp14"]
-[ext_resource type="Script" uid="uid://dtlrtrftvhm8e" path="res://Levels/UI/exit_confirm.gd" id="6_2kj1t"]
-[ext_resource type="Script" uid="uid://bnwujv5lftxlp" path="res://Levels/UI/main_settings_panel.gd" id="7_2gfmn"]
-[ext_resource type="Script" uid="uid://b4knqokidlnwk" path="res://Levels/UI/world.gd" id="8_6fm8r"]
-[ext_resource type="PackedScene" uid="uid://dfuijhxr1f3uc" path="res://Levels/Mock/grzyb.tscn" id="8_sh7ty"]
-[ext_resource type="Script" uid="uid://brqtkg6ikben0" path="res://Levels/UI/inventory.gd" id="9_ffmd8"]
+[ext_resource type="Script" uid="uid://m0h24osf5ffj" path="res://Levels/UI/main_UI.gd" id="1_xiihc"]
+[ext_resource type="Texture2D" uid="uid://bv58m5ar8agh6" path="res://assets/ilovethisbg.png" id="2_tg0pe"]
+[ext_resource type="Script" uid="uid://bqn40ilhg4uy1" path="res://Levels/UI/FULLmenu.gd" id="3_eauwy"]
+[ext_resource type="Script" uid="uid://c4v1v1ymqatyg" path="res://Levels/UI/menu.gd" id="4_g270c"]
+[ext_resource type="Script" uid="uid://dlaebbrda0pel" path="res://Levels/UI/logo_buttons.gd" id="5_ofmst"]
+[ext_resource type="Texture2D" uid="uid://3yciuak73kd2" path="res://assets/icon.svg" id="6_quhy2"]
+[ext_resource type="Script" uid="uid://bnwujv5lftxlp" path="res://Levels/UI/main_settings_panel.gd" id="7_camxr"]
+[ext_resource type="Script" uid="uid://dtlrtrftvhm8e" path="res://Levels/UI/exit_confirm.gd" id="8_684pd"]
+[ext_resource type="Script" uid="uid://b4knqokidlnwk" path="res://Levels/UI/world.gd" id="9_qxt7c"]
+[ext_resource type="Script" uid="uid://brqtkg6ikben0" path="res://Levels/UI/inventory.gd" id="10_86i1u"]
+[ext_resource type="PackedScene" uid="uid://dfuijhxr1f3uc" path="res://Levels/Mock/grzyb.tscn" id="11_3y510"]
 
 [sub_resource type="Theme" id="Theme_k0a0m"]
 
@@ -23,7 +23,7 @@ offset_top = 1.0
 offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_p4gpm")
+script = ExtResource("1_xiihc")
 
 [node name="Menu" type="TextureRect" parent="."]
 layout_mode = 1
@@ -32,9 +32,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_6fm8r")
+texture = ExtResource("2_tg0pe")
 expand_mode = 5
-script = ExtResource("3_w15sy")
+script = ExtResource("3_eauwy")
 metadata/_edit_use_anchors_ = true
 
 [node name="MenuPanel" type="Panel" parent="Menu"]
@@ -48,7 +48,7 @@ offset_top = -322.5
 offset_right = 1500.0
 offset_bottom = 537.5
 grow_vertical = 2
-script = ExtResource("3_ffmd8")
+script = ExtResource("4_g270c")
 
 [node name="MarginContainer" type="MarginContainer" parent="Menu/MenuPanel"]
 layout_mode = 1
@@ -112,19 +112,19 @@ offset_top = 108.0
 offset_right = 618.0
 offset_bottom = 236.0
 scale = Vector2(3, 3)
-script = ExtResource("4_w15sy")
+script = ExtResource("5_ofmst")
 
 [node name="logo_button" type="TextureButton" parent="Menu/logo_buttons"]
 layout_mode = 2
 size_flags_horizontal = 0
-texture_normal = ExtResource("5_nmp14")
-texture_pressed = ExtResource("5_nmp14")
+texture_normal = ExtResource("6_quhy2")
+texture_pressed = ExtResource("6_quhy2")
 
 [node name="patreon_button" type="TextureButton" parent="Menu/logo_buttons"]
 layout_mode = 2
 size_flags_horizontal = 0
-texture_normal = ExtResource("5_nmp14")
-texture_pressed = ExtResource("5_nmp14")
+texture_normal = ExtResource("6_quhy2")
+texture_pressed = ExtResource("6_quhy2")
 
 [node name="Credits" type="PanelContainer" parent="Menu"]
 visible = false
@@ -141,7 +141,7 @@ offset_right = 1400.0
 offset_bottom = 900.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("7_2gfmn")
+script = ExtResource("7_camxr")
 
 [node name="MarginContainer" type="MarginContainer" parent="Menu/Credits"]
 layout_mode = 2
@@ -208,7 +208,7 @@ offset_right = 600.0
 offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("6_2kj1t")
+script = ExtResource("8_684pd")
 
 [node name="ColorRect" type="PanelContainer" parent="exit_confirm"]
 custom_minimum_size = Vector2(2000, 0)
@@ -260,7 +260,7 @@ offset_right = 1300.0
 offset_bottom = 900.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("7_2gfmn")
+script = ExtResource("7_camxr")
 
 [node name="MarginContainer" type="MarginContainer" parent="Settings"]
 layout_mode = 2
@@ -456,7 +456,7 @@ offset_right = 600.0
 offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("6_2kj1t")
+script = ExtResource("8_684pd")
 
 [node name="ColorRect" type="PanelContainer" parent="exit_settings_confirm"]
 custom_minimum_size = Vector2(2000, 0)
@@ -515,7 +515,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("8_6fm8r")
+script = ExtResource("9_qxt7c")
 
 [node name="place_world_scene_as_my_child" type="SubViewport" parent="World"]
 handle_input_locally = false
@@ -530,7 +530,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("9_ffmd8")
+script = ExtResource("10_86i1u")
 
 [node name="ListingPanel" type="PanelContainer" parent="Inventory"]
 custom_minimum_size = Vector2(1600, 1800)
@@ -592,7 +592,7 @@ handle_input_locally = false
 size = Vector2i(1176, 800)
 render_target_update_mode = 0
 
-[node name="Node3D" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer/item_inspector/MarginContainer/SubViewportContainer/SubViewport" instance=ExtResource("8_sh7ty")]
+[node name="Node3D" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer/item_inspector/MarginContainer/SubViewportContainer/SubViewport" instance=ExtResource("11_3y510")]
 
 [node name="MarginContainer2" type="MarginContainer" parent="Inventory/item_description/vbox/top_section/hbox"]
 layout_mode = 2
@@ -620,7 +620,7 @@ offset_top = 200.0
 offset_right = 600.0
 offset_bottom = 1044.0
 grow_horizontal = 2
-script = ExtResource("7_2gfmn")
+script = ExtResource("7_camxr")
 
 [node name="MarginContainer" type="MarginContainer" parent="Pause"]
 layout_mode = 2
