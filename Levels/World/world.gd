@@ -1,12 +1,13 @@
 class_name World
 extends Node2D
 
-# TODO: point-like structure generation (set frequency per chunk, then just rng)
-# TODO: figure out the biomeset we want and map the biomic coord space to it
-# TODO: river-like/road-like structures (cellular noise? OR abs(perlin) "valleys")
-
 var _gen_params := WorldGenParams.new()
 var _chunk_cache: Dictionary[Vector2i, Chunk] = {}
+
+@onready var _tiles := $Tiles
+@onready var _player := $Player
+@onready var _regen_area := $RegenArea
+@onready var _regen_area_shape := $RegenArea/Shape
 @onready var _tile_size: int = $Tiles.tile_set.tile_size.x
 
 func _init() -> void:
@@ -21,18 +22,18 @@ func get_chunk(super_coords: Vector2i) -> Chunk:
 	return chunk
 
 func _ready() -> void:
-	$RegenArea/Shape.scale = Vector2(Chunk.SIZE, Chunk.SIZE)
-	$RegenArea.position = Vector2(0.5, 0.5) * Chunk.SIZE * _tile_size
+	_regen_area_shape.scale = Vector2(Chunk.SIZE, Chunk.SIZE)
+	_regen_area.position = Vector2(0.5, 0.5) * Chunk.SIZE * _tile_size
 	_populate_chunks_around(Vector2i(0, 0))
 
 func _on_regen_area_body_exited(body: Node2D) -> void:
-	if body == $Player:
+	if body == _player:
 		print("Player exited regen area; generating chunks around them.")
-		var player_coords := Vector2i($Player.position) / _tile_size
+		var player_coords := Vector2i(_player.position) / _tile_size
 		print("Player coords: ", player_coords)
 		var super_coords := Util.super_coords(player_coords)
 		print("Player super coords: ", super_coords)
-		$RegenArea.position = (Vector2(super_coords) + Vector2(0.5, 0.5)) * Chunk.SIZE * _tile_size
+		_regen_area.position = (Vector2(super_coords) + Vector2(0.5, 0.5)) * Chunk.SIZE * _tile_size
 		_populate_chunks_around(super_coords)
 
 func _populate_chunks_around(super_coords: Vector2i) -> void:
@@ -50,4 +51,4 @@ func _populate_chunk_at(super_coords: Vector2i) -> void:
 			var coords := corner_coords + rel_coords
 			var cell := chunk.get_cell(rel_coords)
 			var tile_coords := Vector2i(2.0 * (cell.biomic_xy.clampf(-0.999, 0.999) + Vector2(1, 1)))
-			$Tiles.set_cell(coords, 0, tile_coords)
+			_tiles.set_cell(coords, 0, tile_coords)

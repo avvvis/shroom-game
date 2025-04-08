@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cv1v4atff4kye" path="res://Levels/World/world.gd" id="1_tipu6"]
 [ext_resource type="Texture2D" uid="uid://cljjjldja7is1" path="res://Levels/World/dumb_tileset.png" id="2_44qql"]
-[ext_resource type="Script" uid="uid://soeunyt4bqh5" path="res://Levels/World/player.gd" id="3_beiy3"]
+[ext_resource type="Script" uid="uid://soeunyt4bqh5" path="res://Levels/World/player_character.gd" id="3_beiy3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3owj8"]
 texture = ExtResource("2_44qql")
@@ -39,11 +39,10 @@ script = ExtResource("1_tipu6")
 [node name="Tiles" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_qxxuw")
 
-[node name="Camera" type="Camera2D" parent="."]
-zoom = Vector2(0.1, 0.1)
-
 [node name="Player" type="CharacterBody2D" parent="."]
 script = ExtResource("3_beiy3")
+
+[node name="Camera" type="Camera2D" parent="Player"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource("CircleShape2D_vlb38")
