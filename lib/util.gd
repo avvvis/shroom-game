@@ -15,12 +15,10 @@ class Vector2iRange:
 			end = begin
 	
 	func _iter_init(_iter: Array) -> bool:
-		#print("_iter_init: ", cur)
 		cur = begin
 		return cur.y != end.y
 	
 	func _iter_next(_iter: Array) -> bool:
-		#print("_iter_next: ", cur)
 		cur.x += 1
 		if cur.x == end.x:
 			cur.x = begin.x
@@ -28,7 +26,6 @@ class Vector2iRange:
 		return cur.y != end.y
 	
 	func _iter_get(_iter: Variant) -> Vector2i:
-		#print("_iter_get: ", cur)
 		return cur
 
 static func vec2i_range(start: Vector2i, stop: Vector2i) -> Vector2iRange:
