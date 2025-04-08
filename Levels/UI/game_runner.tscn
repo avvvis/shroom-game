@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://5perum0whyl8"]
+[gd_scene load_steps=3 format=3 uid="uid://5perum0whyl8"]
 
 [ext_resource type="PackedScene" uid="uid://dfuijhxr1f3uc" path="res://Levels/Mock/grzyb.tscn" id="1_emv82"]
+[ext_resource type="PackedScene" uid="uid://cwxxu8a2vk1hw" path="res://Levels/World/world.tscn" id="1_jfnsn"]
 
 [node name="GameRunner" type="Control"]
 layout_mode = 3
@@ -22,6 +23,8 @@ grow_vertical = 2
 handle_input_locally = false
 size = Vector2i(3840, 2160)
 render_target_update_mode = 4
+
+[node name="World" parent="World/place_world_scene_as_my_child" instance=ExtResource("1_jfnsn")]
 
 [node name="Inventory" type="Control" parent="."]
 layout_mode = 1
