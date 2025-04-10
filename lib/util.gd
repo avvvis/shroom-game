@@ -28,9 +28,12 @@ class Vector2iRange:
 	func _iter_get(_iter: Variant) -> Vector2i:
 		return cur
 
+## Returns an iterable over all integer points in the rectangle
+## from [start] (inclusive) to [stop] (exclusive).
 static func vec2i_range(start: Vector2i, stop: Vector2i) -> Vector2iRange:
 	return Vector2iRange.new(start, stop)
 
+## Calculates the super coords of the chunk the cell at the given coords is in.
 static func super_coords(cell_coords: Vector2i) -> Vector2i:
 	# Integer division truncates (rounds towards zero), but we want to always round down.
 	@warning_ignore("integer_division")
