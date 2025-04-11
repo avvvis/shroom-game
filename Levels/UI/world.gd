@@ -1,4 +1,4 @@
-extends SubViewportContainer
+extends Node
 
 
 func _ready():

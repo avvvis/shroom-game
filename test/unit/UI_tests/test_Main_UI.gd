@@ -3,7 +3,7 @@ extends GutTest
 var main_menu
 
 func before_each():
-	main_menu = load("res://Levels/UI/main_ui.tscn").instantiate()
+	main_menu = load("res://Levels/UI/UI.tscn").instantiate()
 	add_child(main_menu)
 	await get_tree().process_frame
 
@@ -30,7 +30,7 @@ func test_apply_button_updates_global_settings():
 
 
 func test_ui_cancel_from_settings_without_changes_closes_settings():
-	main_menu.settings_open = true
+	main_menu.menu.visible = false;
 	main_menu.settings.visible = true
 
 	var fake_event = InputEventAction.new()
@@ -44,7 +44,7 @@ func test_ui_cancel_from_settings_without_changes_closes_settings():
 
 
 func test_ui_cancel_from_credits_closes_credits():
-	main_menu.credit_open = true
+	main_menu.menu.visible = false;
 	main_menu.credits.visible = true
 
 	var fake_event = InputEventAction.new()

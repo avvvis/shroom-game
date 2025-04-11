@@ -150,6 +150,10 @@ func toggleWorld():
 	
 func toggleInv():
 	inv.visible = !inv.visible
+	if(inv.visible):
+		inv.populate()
+	else:
+		inv.clear()
 
 func togglePause():
 	pause.visible = !pause.visible
@@ -212,7 +216,7 @@ func load_settings():
 	# Load volume
 	volume_slider.value = GlobalSettings.volume
 	#Load theme
-	darkmode_check.button_pressed = GlobalSettings.darkmode;
+	darkmode_check.button_pressed = GlobalSettings.darkmode
 	changes = false
 	
 #########################################################################
@@ -236,7 +240,7 @@ func _on_dark_check_pressed() -> void:
 
 
 func _on_sound_slide_changed() -> void:
-	changes = true;
+	changes = true
 
 
 func _on_apply_pressed():
@@ -248,7 +252,7 @@ func _on_apply_pressed():
 	GlobalSettings.darkmode = darkmode_check.button_pressed
 	#apply parameters
 	GlobalSettings.apply_settings()
-	changes = false;	
+	changes = false
 
 
 func _on_yes_exitSettings_pressed() -> void:
@@ -303,3 +307,20 @@ func _on_pause_back_pressed() -> void:
 	toggleWorldPause()
 	togglePause()
 	
+###################################################
+#############NOT YET IMPLEMENTED
+######################################################
+@onready var health_bar = $Settings/MarginContainer/VBox/VolPanel/MarginContainer/SoundSlide
+@onready var stamina_bar = health_bar
+
+func set_max_health(val):
+	pass
+
+func update_health(val):
+	pass
+	
+func set_max_stamina(val):
+	pass
+
+func update_stamina(val):
+	pass
