@@ -21,7 +21,7 @@ boot_splash/minimum_display_time=1200
 [autoload]
 
 GlobalSettings="*res://Global/GlobalSettings.gd"
-GameState="*res://Global/GameState.gd"
+GameState="*res://Levels/UI/GameState.gd"
 
 [display]
 

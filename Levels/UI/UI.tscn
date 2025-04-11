@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://5g0ck17xo6y0"]
+[gd_scene load_steps=14 format=3 uid="uid://5g0ck17xo6y0"]
 
 [ext_resource type="Script" uid="uid://m0h24osf5ffj" path="res://Levels/UI/main_UI.gd" id="1_xiihc"]
 [ext_resource type="Texture2D" uid="uid://bv58m5ar8agh6" path="res://assets/ilovethisbg.png" id="2_tg0pe"]
 [ext_resource type="Script" uid="uid://bqn40ilhg4uy1" path="res://Levels/UI/FULLmenu.gd" id="3_eauwy"]
 [ext_resource type="Script" uid="uid://c4v1v1ymqatyg" path="res://Levels/UI/menu.gd" id="4_g270c"]
+[ext_resource type="Script" uid="uid://dupgrg2wevyir" path="res://Levels/UI/sun_clock.gd" id="4_nmp14"]
 [ext_resource type="Script" uid="uid://dlaebbrda0pel" path="res://Levels/UI/logo_buttons.gd" id="5_ofmst"]
 [ext_resource type="Texture2D" uid="uid://3yciuak73kd2" path="res://assets/icon.svg" id="6_quhy2"]
 [ext_resource type="Script" uid="uid://bnwujv5lftxlp" path="res://Levels/UI/main_settings_panel.gd" id="7_camxr"]
@@ -55,17 +56,25 @@ render_target_update_mode = 4
 [node name="World" parent="World/WorldPort/viewport" instance=ExtResource("10_nmp14")]
 
 [node name="LeftTopDisplayers" type="HBoxContainer" parent="World"]
-visible = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_top = 50.0
+offset_right = 712.0
+offset_bottom = 350.0
+
+[node name="SunClock" type="Control" parent="World/LeftTopDisplayers"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+script = ExtResource("4_nmp14")
+radius = 150.0
+day_color = Color(1, 0.933333, 0, 1)
+evening_color = Color(0.784314, 0.333333, 0, 1)
+night_color = Color(0, 0, 0.337255, 1)
+day_ratio = 0.45
+evening_ratio = 0.22
+night_ratio = 0.33
 
 [node name="HealthBar" type="TextureProgressBar" parent="World/LeftTopDisplayers"]
-custom_minimum_size = Vector2(400, 50)
-layout_mode = 2
-
-[node name="TimeBar" type="TextureProgressBar" parent="World/LeftTopDisplayers"]
-custom_minimum_size = Vector2(400, 50)
+custom_minimum_size = Vector2(800, 50)
 layout_mode = 2
 
 [node name="Menu" type="TextureRect" parent="."]
