@@ -35,9 +35,9 @@ corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xpb2v"]
-content_margin_left = 25.0
+content_margin_left = 20.0
 content_margin_top = 25.0
-content_margin_right = 25.0
+content_margin_right = 20.0
 content_margin_bottom = 25.0
 bg_color = Color(0.833333, 0.8, 0.766667, 0.643137)
 border_width_left = 8

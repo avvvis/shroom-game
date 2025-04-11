@@ -3,11 +3,13 @@ extends GutTest
 var game_ui
 
 func before_each():
-	game_ui = load("res://.../GameUI.gd").new()
-	game_ui._ready()  # Simulate the _ready() call if needed for initialization
-
+	game_ui = load("res://Levels/UI/UI.tscn").instantiate()
+	add_child(game_ui)
+	await get_tree().process_frame
+	
 func after_each():
-	game_ui = null
+	game_ui.queue_free()
+	await get_tree().process_frame
 
 func test_update_health_bar():
 	# Set initial health

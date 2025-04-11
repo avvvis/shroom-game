@@ -42,7 +42,7 @@ func load_settings():
 		fullscreen = config.get_value("graphics", "fullscreen", false)
 		
 		#Load borders
-		borderless = config.get_value("graphis", "borderless", false)
+		borderless = config.get_value("graphics", "borderless", false)
 	
 		# Load volume
 		volume = config.get_value("audio", "master_volume", 0.5)
@@ -98,5 +98,5 @@ func apply_settings():
 	print("Settings applied and saved.")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass

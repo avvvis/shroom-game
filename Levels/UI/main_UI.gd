@@ -1,20 +1,21 @@
 extends Control
+
 #############################################################################
 #Node adding
 ###############################################################################
 # menu nodes
-@onready var game_button = $Menu/MarginContainer/VBoxContainer/game
-@onready var options_button = $Menu/MarginContainer/VBoxContainer/options
-@onready var creds_button = $Menu/MarginContainer/VBoxContainer/creds
-@onready var exit_button = $Menu/MarginContainer/VBoxContainer/ausgang
-@onready var menu = $Menu
+@onready var fullmenu = $Menu
+@onready var game_button = $Menu/MenuPanel/MarginContainer/VBoxContainer/game
+@onready var options_button = $Menu/MenuPanel/MarginContainer/VBoxContainer/options
+@onready var creds_button = $Menu/MenuPanel/MarginContainer/VBoxContainer/creds
+@onready var exit_button = $Menu/MenuPanel/MarginContainer/VBoxContainer/ausgang
+@onready var menu = $Menu/MenuPanel
 @onready var settings = $Settings
 # menu exit nodes
 @onready var no_button = $exit_confirm/ColorRect/MarginContainer/VBoxContainer/no
 @onready var yes_button = $exit_confirm/ColorRect/MarginContainer/VBoxContainer/yes
 @onready var confirm = $exit_confirm
-@onready var logos = $logo_buttons
-
+@onready var logos = $Menu/logo_buttons
 # settings nodes
 @onready var main_panel = $Settings
 @onready var resolution_option = $Settings/MarginContainer/VBox/ResPanel/MarginContainer/ResolutionOption
@@ -22,25 +23,29 @@ extends Control
 @onready var border_check = $Settings/MarginContainer/VBox/BorderPanel/MarginContainer/BorderCheck
 @onready var volume_slider = $Settings/MarginContainer/VBox/VolPanel/MarginContainer/SoundSlide
 @onready var darkmode_check = $Settings/MarginContainer/VBox/DarkPanel/MarginContainer/DarkCheck
-@onready var apply_button = $Settings/MarginContainer/VBox/Apply
+@onready var apply_button = $Settings/MarginContainer/VBox/HBoxContainer/MarginContainer/Apply
 #settings exit nodes
 @onready var exit_settings = $exit_settings_confirm
-@onready var exit_confirm = $exit_settings_confirm
 @onready var exit_save = $exit_settings_confirm/ColorRect/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/yes
 @onready var exit_discard = $exit_settings_confirm/ColorRect/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/no
 
 #credits node
-@onready var credits = $Credits
+@onready var credits = $Menu/Credits
+@onready var credit_back = $Menu/Credits/Back
+
+#world node
+@onready var world = $World
+
+#inventory nodes
+@onready var inv = $Inventory
+
+#Pause Menu
+@onready var pause = $Pause
+@onready var pauseBack = $Pause/MarginContainer/VBox/Back
+@onready var pauseMenu = $Pause/MarginContainer/VBox/MainMenu
 ###############################################################
 #variables
 #################################################################
-
-#organizational
-var menu_open = true;
-var settings_open = false;
-var confirm_open = false
-var settings_confirm_open = false;
-var credit_open = false;
 
 #settings variables
 var resolutions = [
@@ -51,6 +56,7 @@ var resolutions = [
 	Vector2i(3840,2160),
 ]
 var changes = false
+var last_volume_value
 
 ################################################################################
 #GODOT functions
@@ -62,63 +68,112 @@ func _ready():
 		resolution_option.add_item("%dx%d" % [res.x, res.y])
 		
 	load_settings()
+	last_volume_value = volume_slider.value
 
 func _input(event):
-	if(event.is_action_pressed("ui_cancel") && settings_open):
-		if !changes:
-			toggleSettings()
-			togglemenu()
-		else:
-			togglemenu()
+	if(event.is_action_pressed("ui_cancel") && settings.visible):
+		toggleSettings()
+		if changes:
 			toggleSettingsconfirm()
-	elif(event.is_action_pressed("ui_cancel") && credit_open):
+		else:
+			if(!world.visible): # && !hut.visible
+				togglemenu()
+			else:
+				togglePause()
+		
+	elif(event.is_action_pressed("ui_cancel") && credits.visible):
 		togglecredit()
 		togglemenu()
-	elif(event.is_action_pressed("ui_cancel") && confirm_open):
+	elif(event.is_action_pressed("ui_cancel") && confirm.visible):
 		toggleconfirm()
 		togglemenu()
-	elif(event.is_action_pressed("ui_cancel") && menu_open):
+	elif(event.is_action_pressed("ui_cancel") && menu.visible && fullmenu.visible):
 		togglemenu()
 		toggleconfirm()
-	
+	elif(event.is_action_pressed("inv") && world.visible && !pause.visible):
+		toggleInv()
+	elif(event.is_action_pressed("ui_cancel") && inv.visible):
+		toggleInv()
+	elif(event.is_action_pressed("ui_cancel") && world.visible && !pause.visible && !settings.visible):
+		togglePause()
+		toggleWorldPause()
+	elif(event.is_action_pressed("ui_cancel") && pause.visible && !settings.visible && !exit_settings.visible):
+		togglePause()
+		toggleWorldPause()
+		
+func _process(_delta):
+	if volume_slider.value != last_volume_value:
+		last_volume_value = volume_slider.value
+		_on_sound_slide_changed()
 #############################################################################
 #panel swapping
 #######################################################################################
 func togglemenu():
-	menu_open = !menu_open
-	menu.visible = menu_open
-	logos.visible = menu_open
+	menu.visible = !menu.visible
+	logos.visible = menu.visible
 	await get_tree().process_frame
-	if(menu_open):
+	if(menu.visible):
 		game_button.grab_focus()
 		
 func toggleSettings():
-	settings_open = !settings_open
-	settings.visible = settings_open
+	settings.visible = !settings.visible
 	await get_tree().process_frame
-	if(settings_open): resolution_option.grab_focus()
+	if(settings.visible):
+		resolution_option.grab_focus()
 
 func toggleconfirm():
-	confirm_open = !confirm_open
-	confirm.visible = confirm_open
+	confirm.visible = !confirm.visible
 	await get_tree().process_frame
-	if(confirm_open): yes_button.grab_focus()
+	if(confirm.visible):
+		yes_button.grab_focus()
 
 func toggleSettingsconfirm():
-	settings_confirm_open = ! settings_confirm_open
-	exit_settings.visible = settings_confirm_open
+	exit_settings.visible = !exit_settings.visible
 	await get_tree().process_frame
-	if(settings_confirm_open): exit_discard.grab_focus()
+	if(exit_settings.visible):
+		exit_discard.grab_focus()
 
 func togglecredit():
-	credit_open = !credit_open
-	credits.visible = credit_open
+	credits.visible = !credits.visible
+	await get_tree().process_frame
+	if(credits.visible):
+		credit_back.grab_focus()
 	
+func toggleFullMenu():
+	fullmenu.visible = !fullmenu.visible
+	await get_tree().process_frame
+	if(fullmenu.visible):
+		game_button.grab_focus()
+
+func toggleWorld():
+	world.visible = !world.visible
+	
+func toggleInv():
+	inv.visible = !inv.visible
+	if(inv.visible):
+		inv.populate()
+	else:
+		inv.clear()
+
+func togglePause():
+	pause.visible = !pause.visible
+	await get_tree().process_frame
+	if(pause.visible):
+		pauseBack.grab_focus()
+		if(world.visible):
+			pauseMenu.disabled = true
+		else:
+			pauseMenu.disabled = false
+	
+func toggleWorldPause():
+	get_tree().paused = !get_tree().paused
+
 ##################################################################################################
 #main menu buttons
 ##################################################################################################
 func _on_game_pressed() -> void:
-	pass # Replace with function body.
+	toggleFullMenu()
+	toggleWorld()
 
 
 func _on_options_pressed() -> void:
@@ -161,13 +216,14 @@ func load_settings():
 	# Load volume
 	volume_slider.value = GlobalSettings.volume
 	#Load theme
-	darkmode_check.button_pressed = GlobalSettings.darkmode;
+	darkmode_check.button_pressed = GlobalSettings.darkmode
+	changes = false
 	
 #########################################################################
 #Settings buttons
 #########################################################################
 
-func _on_resolution_option_item_selected(index: int) -> void:
+func _on_resolution_option_item_selected(_index: int) -> void:
 	changes = true
 
 
@@ -182,6 +238,11 @@ func _on_border_check_pressed() -> void:
 func _on_dark_check_pressed() -> void:
 	changes = true
 
+
+func _on_sound_slide_changed() -> void:
+	changes = true
+
+
 func _on_apply_pressed():
 	#update parameters of settings
 	GlobalSettings.res_index = resolution_option.get_selected()
@@ -191,17 +252,75 @@ func _on_apply_pressed():
 	GlobalSettings.darkmode = darkmode_check.button_pressed
 	#apply parameters
 	GlobalSettings.apply_settings()
-	changes = false;	
+	changes = false
 
 
 func _on_yes_exitSettings_pressed() -> void:
 	_on_apply_pressed()
 	toggleSettingsconfirm()
-	toggleSettings()
-	togglemenu()
+	if(!world.visible): # && !hut.visible
+		togglemenu()
+	else:
+		togglePause()
 
 
 func _on_no_Settings_pressed() -> void:
+	load_settings()
 	toggleSettingsconfirm()
+	if(!world.visible): # when adding hut change only this && !hut.visible
+		togglemenu()
+	else:
+		togglePause()
+		
+func _on_back_settings_pressed() -> void:
 	toggleSettings()
+	if(!world.visible):
+		togglemenu()
+	else:
+		togglePause()
+
+##################################################################
+#Credits buttons
+####################################################################
+
+func _on_back_credits_pressed() -> void:
+	togglecredit()
 	togglemenu()
+
+######################################################################
+#Pause buttons
+######################################################################
+
+func _on_main_menu_pressed() -> void:
+	toggleWorldPause()
+	togglePause()
+	toggleWorld()
+	toggleFullMenu()
+
+
+func _on_pause_settings_pressed() -> void:
+	togglePause()
+	toggleSettings()
+
+
+func _on_pause_back_pressed() -> void:
+	toggleWorldPause()
+	togglePause()
+	
+###################################################
+#############NOT YET IMPLEMENTED
+######################################################
+@onready var health_bar = $Settings/MarginContainer/VBox/VolPanel/MarginContainer/SoundSlide
+@onready var stamina_bar = health_bar
+
+func set_max_health(val):
+	pass
+
+func update_health(val):
+	pass
+	
+func set_max_stamina(val):
+	pass
+
+func update_stamina(val):
+	pass
