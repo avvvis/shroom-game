@@ -41,6 +41,7 @@ tile_set = SubResource("TileSet_qxxuw")
 
 [node name="PlayerCharacter" type="CharacterBody2D" parent="."]
 script = ExtResource("3_beiy3")
+speed = 300
 
 [node name="Camera" type="Camera2D" parent="PlayerCharacter"]
 
