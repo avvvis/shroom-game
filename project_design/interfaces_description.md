@@ -71,8 +71,9 @@ Zwraca planszę świata obecnego dnia
 Zwraca referencję do obecnego ekwipunku gracza
 * `get_species_registry() -> SpeciesRegistry`
 Zwraca rejestr gatunków grzybów
-* `_init(game_seed: int)`
-Generuje nową rozgrywkę
+* `reset(game_seed: int)`
+Czyści dotychczasowy stan gry i inicjalizuje na nowo z podanym seedem.
+Służy również do inicjalizacji po raz pierwszy.
 #### `<<autoload>>` EnemyRegistry
 Klasa która ładuje się przy włączniu gry. Zawiera listę obiektów dziedziczących po EnemyEncounter. Jej główną funkcjonalnością jest losowanie EnemyEnounter'a dla danego biomu.
 ##### Metody:

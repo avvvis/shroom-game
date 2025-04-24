@@ -2,11 +2,13 @@
 extends Node
 
 var _day_counter := 0
-var _game_seed: int
+var _game_seed := 0
 var _board: Board = null
 
-func _init(game_seed: int) -> void:
+func reset(game_seed: int) -> void:
+	_day_counter = 0
 	_game_seed = game_seed
+	_board = null
 
 func _next_day_board() -> void:
 	var gen_params = WorldGenParams.new()
