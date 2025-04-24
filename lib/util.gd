@@ -45,7 +45,11 @@ static func super_coords(cell_coords: Vector2i) -> Vector2i:
 static func hash_int(x: int) -> int:
 	# Courtesy of this StackOverflow answer:
 	# https://stackoverflow.com/a/12996028
+	
+	# 2's complement multiplication is not sign-sensitive,
+	# but I am sort of assuming these overflows are well-defined
+	# and just truncate the result.
 	x = (x ^ (x >> 31) ^ (x >> 62)) * 0x319642b2d24d8ec3
-	x = (x ^ (x >> 27) ^ (x >> 54)) * 0x96de1b173f119089
+	x = (x ^ (x >> 27) ^ (x >> 54)) * (-7575587736534282103)
 	x = x ^ (x >> 30) ^ (x >> 60)
 	return x
