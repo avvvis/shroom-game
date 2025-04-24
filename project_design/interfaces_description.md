@@ -53,7 +53,7 @@ TODO: Nie wiem, co tu napisać, może Stasiu będzie wiedział.
 * Tutaj jakaś metoda która zwraca referencję do itemu albo jego id w inverntory czy coś
 #### Biome
 Reprezentuje konkretny biom. Na pewno musi mieć metodę która pozwala innym klasom na proceduralne generowanie obiektów w zależności od biomu. Nie wiem jak te biomu ostatecznie są zaprojektowane, czy to będzie wektor jakichś własności tych biomów, czy zwykłe ID biomu. Ogólnie nie wiem za bardzo co tu napisać, więc TODO: ktoś inny xP
-#### GameState
+#### `<<autoload>>` GameState
 Klasa reprezentuje obecną rozgrywkę, zawiera:
 * Seed'a obecnej sesji
 * Obiekt SpeciesRegistry - spis obecnych gatunków
@@ -61,15 +61,17 @@ Klasa reprezentuje obecną rozgrywkę, zawiera:
 * Ekwipunek gracza
 * Obecną planszę gry
 ##### Metody:
-* `next_day()`
+* `next_day() -> void`
 Metoda jest odpowiedzialna, za inkrementacje licznika dnia. Wygenerowanie nowych gatunków i dodanie ich do obiektu SpeciesRegistry. Wygenerowanie nowej planszy (TODO: MasFlam, opinia). 
-* `get_current_day() -> int`
+* `get_day() -> int`
 Zwraca obecny dzień rozgrywki
-* `get_current_seed() -> int`
-Zwraca obecny seed rozgrywki
-* `get_inventory_reference() -> Inventory`
+* `get_board() -> Board`
+Zwraca planszę świata obecnego dnia
+* `get_inventory() -> Inventory`
 Zwraca referencję do obecnego ekwipunku gracza
-* `new_gamestate()`
+* `get_species_registry() -> SpeciesRegistry`
+Zwraca rejestr gatunków grzybów
+* `_init(game_seed: int)`
 Generuje nową rozgrywkę
 #### `<<autoload>>` EnemyRegistry
 Klasa która ładuje się przy włączniu gry. Zawiera listę obiektów dziedziczących po EnemyEncounter. Jej główną funkcjonalnością jest losowanie EnemyEnounter'a dla danego biomu.
