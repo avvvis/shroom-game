@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://5g0ck17xo6y0"]
+[gd_scene load_steps=15 format=3 uid="uid://5g0ck17xo6y0"]
 
 [ext_resource type="Script" uid="uid://m0h24osf5ffj" path="res://Levels/UI/main_UI.gd" id="1_xiihc"]
 [ext_resource type="Texture2D" uid="uid://bv58m5ar8agh6" path="res://assets/ilovethisbg.png" id="2_tg0pe"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://b4knqokidlnwk" path="res://Levels/UI/world.gd" id="9_qxt7c"]
 [ext_resource type="Script" uid="uid://brqtkg6ikben0" path="res://Levels/UI/inventory.gd" id="10_86i1u"]
 [ext_resource type="PackedScene" uid="uid://cwxxu8a2vk1hw" path="res://Levels/World/world.tscn" id="10_nmp14"]
+[ext_resource type="Script" uid="uid://cutrt7nnkppm2" path="res://Levels/UI/item_list.gd" id="13_2kj1t"]
 
 [sub_resource type="Theme" id="Theme_k0a0m"]
 
@@ -62,6 +63,7 @@ offset_right = 712.0
 offset_bottom = 350.0
 
 [node name="SunClock" type="Control" parent="World/LeftTopDisplayers"]
+visible = false
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 script = ExtResource("4_nmp14")
@@ -625,7 +627,6 @@ size_flags_vertical = 3
 text = "Discard"
 
 [node name="Inventory" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -634,87 +635,94 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("10_86i1u")
 
+[node name="item_description" type="PanelContainer" parent="Inventory"]
+custom_minimum_size = Vector2(1400, 1800)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 100.0
+offset_top = -900.0
+offset_right = 1500.0
+offset_bottom = 900.0
+grow_vertical = 2
+size_flags_vertical = 4
+
+[node name="vbox" type="VBoxContainer" parent="Inventory/item_description"]
+layout_mode = 2
+
+[node name="item_inspector" type="PanelContainer" parent="Inventory/item_description/vbox"]
+custom_minimum_size = Vector2(1200, 800)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="preview" type="MarginContainer" parent="Inventory/item_description/vbox/item_inspector"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="Preview2d" type="TextureRect" parent="Inventory/item_description/vbox/item_inspector/preview"]
+layout_mode = 2
+
+[node name="Preview3d" type="SubViewportContainer" parent="Inventory/item_description/vbox/item_inspector/preview"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="Inventory/item_description/vbox/item_inspector/preview/Preview3d"]
+handle_input_locally = false
+size = Vector2i(1176, 800)
+render_target_update_mode = 4
+
+[node name="Name" type="MarginContainer" parent="Inventory/item_description/vbox"]
+custom_minimum_size = Vector2(10, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BigLabel" type="RichTextLabel" parent="Inventory/item_description/vbox/Name"]
+layout_mode = 2
+text = "bajo jao bajo jajo"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Description" type="MarginContainer" parent="Inventory/item_description/vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SmallLabel" type="RichTextLabel" parent="Inventory/item_description/vbox/Description"]
+layout_mode = 2
+text = "ale jajo"
+fit_content = true
+
 [node name="ListingPanel" type="PanelContainer" parent="Inventory"]
-custom_minimum_size = Vector2(1600, 1800)
+custom_minimum_size = Vector2(1450, 1800)
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -1600.0
+offset_left = -1550.0
 offset_top = -900.0
+offset_right = -100.0
 offset_bottom = 900.0
 grow_horizontal = 0
 grow_vertical = 2
+size_flags_vertical = 4
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Inventory/ListingPanel"]
+custom_minimum_size = Vector2(600, 600)
 layout_mode = 2
+follow_focus = true
 
-[node name="ItemList" type="ItemList" parent="Inventory/ListingPanel/ScrollContainer"]
+[node name="ItemList" type="GridContainer" parent="Inventory/ListingPanel/ScrollContainer"]
+custom_minimum_size = Vector2(600, 600)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-max_columns = 4
-fixed_column_width = 5
-
-[node name="item_description" type="PanelContainer" parent="Inventory"]
-custom_minimum_size = Vector2(2000, 1800)
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -800.0
-offset_right = 800.0
-offset_bottom = 800.0
-grow_vertical = 2
-
-[node name="vbox" type="VBoxContainer" parent="Inventory/item_description"]
-layout_mode = 2
-
-[node name="top_section" type="MarginContainer" parent="Inventory/item_description/vbox"]
-layout_mode = 2
-
-[node name="hbox" type="HBoxContainer" parent="Inventory/item_description/vbox/top_section"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/item_description/vbox/top_section/hbox"]
-layout_mode = 2
-
-[node name="item_inspector" type="PanelContainer" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer"]
-custom_minimum_size = Vector2(1200, 800)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 8
-
-[node name="MarginContainer" type="MarginContainer" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer/item_inspector"]
-layout_mode = 2
-
-[node name="Preview2d" type="TextureRect" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer/item_inspector/MarginContainer"]
-layout_mode = 2
-
-[node name="Preview3d" type="SubViewportContainer" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer/item_inspector/MarginContainer"]
-layout_mode = 2
-
-[node name="SubViewport" type="SubViewport" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer/item_inspector/MarginContainer/Preview3d"]
-handle_input_locally = false
-size = Vector2i(1176, 800)
-render_target_update_mode = 0
-
-[node name="MarginContainer2" type="MarginContainer" parent="Inventory/item_description/vbox/top_section/hbox"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Inventory/item_description/vbox/top_section/hbox/MarginContainer2"]
-layout_mode = 2
-text = "bajo jao bajo jajo"
-
-[node name="Equipables" type="ScrollContainer" parent="Inventory/item_description/vbox"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ItemList" type="ItemList" parent="Inventory/item_description/vbox/Equipables"]
-layout_mode = 2
+columns = 4
+script = ExtResource("13_2kj1t")
 
 [connection signal="pressed" from="Menu/MenuPanel/MarginContainer/VBoxContainer/game" to="." method="_on_game_pressed"]
 [connection signal="pressed" from="Menu/MenuPanel/MarginContainer/VBoxContainer/options" to="." method="_on_options_pressed"]

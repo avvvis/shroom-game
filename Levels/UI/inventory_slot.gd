@@ -1,22 +1,39 @@
 extends Control
 
 @onready var icon = $ItemIcon
-@onready var viewport_container = $MushroomViewportContainer
-@onready var viewport = $MushroomViewportContainer/SubViewport
+@onready var viewport_container = $Viewport
+@onready var viewport = $Viewport/SubViewport
+@onready var button = $butt
 
-func show2d(item):
-	var texture = item.GetVisual
-	icon.texture = texture
-	icon.visible = true
+signal slot_clicked(slot_data)
+signal slot_focused(slot_data)
+signal slot_unfocused(slot_data)
+
+var data:Item
+
+func show2d(item:Item):
 	viewport_container.visible = false
-
-func show3d(scene: PackedScene):
+	var temp = load("res://assets/icon.svg")#this line should be replaced when we get items and inventory working
+	icon.texture = temp
+	data = item
+	
+func show3d(item:Item):
 	icon.visible = false
-	viewport_container.visible = true
+	var temp = load("res://Levels/Mock/grzyb.tscn")#to be replaced when we work out items better
+	viewport.add_child(temp.instantiate())
+	data = item
 
-	viewport.clear()  # Clear existing children
-	for child in viewport.get_children():
-		child.queue_free()
+func _ready():
+	button.connect("pressed", self._on_pressed)
+	button.connect("focus_entered", self._on_focus_entered)
+	button.connect("focus_exited", self._on_focus_exited)
 
-	var mushroom = scene.instantiate()
-	viewport.add_child(mushroom)
+
+func _on_pressed():
+	emit_signal("slot_clicked", data)
+
+func _on_focus_entered():
+	emit_signal("slot_focused", data)
+
+func _on_focus_exited():
+	emit_signal("slot_unfocused", data)

@@ -91,9 +91,11 @@ func _input(event):
 		togglemenu()
 		toggleconfirm()
 	elif(event.is_action_pressed("inv") && world.visible && !pause.visible):
+		toggleWorldPause()
 		toggleInv()
 	elif(event.is_action_pressed("ui_cancel") && inv.visible):
 		toggleInv()
+		toggleWorldPause()
 	elif(event.is_action_pressed("ui_cancel") && world.visible && !pause.visible && !settings.visible):
 		togglePause()
 		toggleWorldPause()
