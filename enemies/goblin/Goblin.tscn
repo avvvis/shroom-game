@@ -9,9 +9,8 @@
 [ext_resource type="Script" uid="uid://cjpmmtq8k3o3w" path="res://enemies/goblin/goblin_move_component.gd" id="5_eclco"]
 [ext_resource type="Script" uid="uid://bd7bncbavntpy" path="res://enemies/goblin/states/goblin_wander_state.gd" id="5_eva66"]
 
-[sub_resource type="Animation" id="Animation_eclco"]
-resource_name = "idle_down"
-length = 0.1
+[sub_resource type="Animation" id="Animation_u46fb"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -25,8 +24,9 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_u46fb"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_eclco"]
+resource_name = "idle_down"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -89,23 +89,6 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3]
 }
 
-[sub_resource type="Animation" id="Animation_puhp6"]
-resource_name = "walk_up"
-length = 0.6
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [4, 5, 6, 7]
-}
-
 [sub_resource type="Animation" id="Animation_palr5"]
 resource_name = "walk_side"
 length = 0.6
@@ -121,6 +104,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_puhp6"]
+resource_name = "walk_up"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_puhp6"]
@@ -145,6 +145,7 @@ radius = 2.23607
 
 [node name="Goblin" type="CharacterBody2D"]
 script = ExtResource("1_u46fb")
+metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -14)
@@ -160,15 +161,19 @@ libraries = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5vjt1")
 
-[node name="StateMachine" parent="." instance=ExtResource("3_eclco")]
+[node name="StateMachine" parent="." node_paths=PackedStringArray("starting_state") instance=ExtResource("3_eclco")]
+starting_state = NodePath("IdleState")
 
 [node name="IdleState" type="Node" parent="StateMachine" node_paths=PackedStringArray("move_state")]
 script = ExtResource("4_3dt5f")
 move_state = NodePath("../WanderState")
+animation_name = "idle"
 
 [node name="WanderState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state")]
 script = ExtResource("5_eva66")
 idle_state = NodePath("../IdleState")
+move_speed = 100
+animation_name = "walk"
 
 [node name="HurtBox" parent="." instance=ExtResource("1_0hgql")]
 
