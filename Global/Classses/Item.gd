@@ -1,21 +1,19 @@
 class_name Item
 
-var name
-var description
-var type #2d or 3d
+var name = "Unknown"
+var description = "Use this item and journal results!"
+var type = "2d" #2d or 3d
 
-func _init():	
-	name = 'Unkown'
-	description = 'use this Item and journal results'
-
-func setBase(name_, description_):
-	name = name_
-	description = description_
+func is_usable():
+	return false
 
 func use():
 	return -1
 
-func getVisual():
+func create_world_entity():
+	pass
+
+func create_inventory_entity():
 	var blank
 	blank = load("res://assets/icon.svg")
 	return blank
