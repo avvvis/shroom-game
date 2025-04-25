@@ -4,6 +4,7 @@ extends Node
 @export var animation_name: String
 
 var parent: CharacterBody2D
+var move_component
 
 func enter() -> void:
 	parent.update_animation(animation_name)

@@ -1,4 +1,4 @@
-class_name Player
+class_name Goblin
 extends CharacterBody2D
 
 var face_direction = "down"
@@ -7,14 +7,10 @@ var face_direction = "down"
 @onready var sprite = $Sprite2D
 @onready var state_machine = $StateMachine
 @onready var move_component = $MoveComponent
-@onready var interactions = $Interactions
 
 func _ready() -> void:
 	state_machine.init(self, move_component)
 	
-func _unhandled_input(event: InputEvent) -> void:
-	state_machine.handle_input(event)
-
 func _process(delta: float) -> void:
 	state_machine.process(delta)
 	
@@ -37,7 +33,6 @@ func set_face_direction(target: Vector2) -> bool:
 	if new_dir == face_direction:
 		return false
 	
-	interactions.update_direction(new_dir)
 	face_direction = new_dir
 	return true
 	

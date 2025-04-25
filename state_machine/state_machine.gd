@@ -4,13 +4,16 @@ extends Node
 
 var current_state: State = null
 
-func init(parent: CharacterBody2D) -> void:
+func init(parent: CharacterBody2D, move_component) -> void:
 	for child in get_children():
 		child.parent = parent
-	
+		child.move_component = move_component
+		
 	change_state(starting_state)
 	
-func change_state(new_state: State):
+func change_state(new_state: State) -> void:
+	if current_state == new_state:
+		return
 	if current_state:
 		current_state.exit()
 	
