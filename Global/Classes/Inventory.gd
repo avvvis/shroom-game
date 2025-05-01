@@ -1,10 +1,6 @@
 class_name Inventory
 var data: Array[ItemStack]
 
-func getItemStackByArrID(ID: int):
-	pass
-
-
 func get_id_by_id(ID:String)->int:
 	for i in range(data.size()):
 		if data[i].get_item().ID == ID:
@@ -40,7 +36,7 @@ func _compare_items_by_cat_id(a:ItemStack, b:ItemStack) -> bool:
 func clear()->void:
 	data.clear()
 
-func add_item(item:Item, quantity)->void:
+func add_item(item:Item, quantity:int)->void:
 	var pos:int = get_id_by_id(item.ID)
 	if(pos != -1):
 		data[pos].quantity += quantity

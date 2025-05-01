@@ -3,13 +3,14 @@ var ID:String = "FFFF_0000" #naming like category + _ + idnumbr
 var name:String = "Unknown"
 var description:String = "Use this item and journal results!"
 var type:String = "2d" #2d or 3d
+var usable:bool = false
 var stackable:bool = false
 
 func is_stackable()->bool:
 	return stackable
 
 func is_usable():
-	return false
+	return  usable
 
 func use():
 	return -1

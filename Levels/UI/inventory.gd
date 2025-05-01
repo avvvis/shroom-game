@@ -14,6 +14,7 @@ func my_grab_focus():
 
 func populate():
 	var inv:Inventory = GameState.get_inventory()
+	inv.sort_cat()
 	for i in range(0,inv.get_size()):
 		var item:ItemStack = inv.get_obj_by_id(i)
 		var slots:int = 1
