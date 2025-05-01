@@ -4,25 +4,31 @@ extends Control
 @onready var viewport_container = $Viewport
 @onready var viewport = $Viewport/SubViewport
 @onready var button = $butt
+@onready var text = $RichTextLabel
 
 signal slot_clicked(slot_data)
 signal slot_focused(slot_data)
 signal slot_unfocused(slot_data)
 
 var data:Item
+var quantity:int
 
-func show2d(item:Item):
-	viewport_container.visible = false
-	var temp = load("res://assets/icon.svg")#this line should be replaced when we get items and inventory working
-	icon.texture = temp
+func show_item(item:Item, _quantity:int):
 	data = item
-	
-func show3d(item:Item):
-	icon.visible = false
-	var temp = load("res://Levels/Mock/grzyb.tscn")#to be replaced when we work out items better
-	viewport.add_child(temp.instantiate())
-	data = item
-
+	quantity = _quantity
+	var temp = item.create_inventory_entity()
+	if(item.type == "2d"):
+		icon.texture = temp
+		viewport_container.visible = false
+	else:
+		viewport.add_child(temp.instantiate())
+		icon.visible = false
+	if(quantity >= 2):
+		text.visible = true
+		text.clear()
+		text.add_text(str(quantity))	
+	else:
+		text.visible = false
 func _ready():
 	button.connect("pressed", self._on_pressed)
 	button.connect("focus_entered", self._on_focus_entered)

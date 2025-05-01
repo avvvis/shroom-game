@@ -4,6 +4,7 @@ extends Node
 var _day_counter := 0
 var _game_seed := 0
 var _board: Board = null
+var _inventory:Inventory = Inventory.new()
 
 func reset(game_seed: int) -> void:
 	_day_counter = 0
@@ -28,8 +29,7 @@ func get_board() -> Board:
 	return _board
 
 func get_inventory():
-	# TODO: Inventory class
-	pass
+	return _inventory
 
 func get_species_registry():
 	# TODO: SpeciesRegistry class
