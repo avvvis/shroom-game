@@ -34,7 +34,6 @@ zawiera tekstową nazwę przedmiotu
 Zawiera Opis Przedmiotu
 * `type`
 pole przyjmujące wartości "2d" lub "3d" decydujące o trybie wyświetlania itemów
-`true` to przedmiot powinien zostać usunięty po wykorzystaniu.
 * `usable`
 pole wewnętrzne dla metody is_usable()
 * `stackable`
