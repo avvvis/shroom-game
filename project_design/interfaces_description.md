@@ -23,12 +23,56 @@ Zwraca byt reprezentujący przedmiot w ekwipunku. Patrz `InventoryEntity`
 Tylko niektóre przedmioty można użyć. Ta metoda zwraca informację o tym, czy dany przedmiot jest używalny.
 * `use() -> bool`
 Zachowanie tej metody jest zależne od przedmiotu. Na przykład, mikstura lecząca przywraca punkty zdrowia. Jeżeli zwraca `true` to przedmiot powinien zostać usunięty po wykorzystaniu.
+* `is_stackable() -> bool`
+Niektóre itemy pomimo bycia identycznymi nie powinny się agregować w ekwipunku ta metoda zwraca true jezeli item można agregować ze wz na pole itemID
+##### Pola:
+* `ID`
+Zawiera identyfikator przedmiotu na podstawie którego odbywa się ich sortowanie oraz agregacja. ID ma postać dwóch członów oddzielonych symbolem `_` pierwszy człon to kategoria a drugi sluzy do rozroznienia itemów tej samej kategorii.
+* `name`
+zawiera tekstową nazwę przedmiotu
+* `description`
+Zawiera Opis Przedmiotu
+* `type`
+pole przyjmujące wartości "2d" lub "3d" decydujące o trybie wyświetlania itemów
+`true` to przedmiot powinien zostać usunięty po wykorzystaniu.
+* `usable`
+pole wewnętrzne dla metody is_usable()
+* `stackable`
+pole wewnętrzne dla metody is_stackable()
 ##### Uwagi:
 * Żeby sprawdzać, czy Item jest jakiegoś podtypu, np. składnikiem mikstury można napisać:
 ``` GDscript
 if item_object is Ingredient:
 	print("item_object jest składnikiem lub podklasą składnika.")
 ```
+#### ItemStack
+Reprezentuje agregację itemów
+##### Metody:
+* `get_item() -> Item`
+zwraca przedmiot który jest agregowany
+* `get_quantity() -> int`
+zwraca ilość agregowanych przedmiotów
+#### Inventory
+Reprezentuje ekwipunek gracza
+##### Metody:
+* `get_id_by_id(ID:String) -> int`
+zwraca numer indeksu stacku w ekwipunku agregującego item o identyfikatorze ID
+ * `get_obj_by_item_id(ID:String) -> ItemStack`
+zwraca stack agregujący w ekipunku item o identyfikatorze ID
+* `get_obj_by_id(id:int) -> ItemStack`
+zwraca obiekt ItemStack o indeksie id w ekwipunku
+* `get_array() -> Array[ItemStack]`
+zwraca obiekt tablicowy typów ItemStack który nie jest kopią tylko referencją do stanu faktycznego ekwipunku (niebezpieczne)
+* `sort_cat() -> void`
+sortuje ekwipunek zgodnie z opisem w klasie Item pole ID 
+* `clear() -> void`
+opróżnia ekwipunek
+* `add_item(item:Item, quantity:int) -> void`
+dodaje quantity itemów item do ekwipunku
+* `remove_item(item:Item, quantity:int) -> bool`
+usuwa quantity itemów Item z ekwipunku zwraca fałsz jeżeli itemu nie było w ekwipunku
+* `get_size() -> void`
+zwraca ilość indywidualnych itemów w ekwipunku (tzn get_size() add_item(x,30) get_size() wypisze dwie liczby równe sobie jezeli item x lub inny item o takim samym itemID był już w ekipunku, w przeciwnym wypadku wypisze liczby różne o 1)
 #### WorldEntity
 TODO: Ktoś kto zajmuje się światem, nie wiem co tu napisać
 #### IngredientSpecies
