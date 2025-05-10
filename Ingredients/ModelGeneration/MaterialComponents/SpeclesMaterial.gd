@@ -33,7 +33,6 @@ static func generate_material(_parameters: Dictionary, _seed: int) -> Material:
 				
 				var radius = sqrt(x * x + y * y)
 				var weight = pow(1.1- pow(radius / float(specle_radius), 2.0), 0.2)
-				print(main_texture.get_pixel(absolute_x, absolute_y))
 				main_texture.set_pixel(absolute_x, absolute_y, main_texture.get_pixel(absolute_x, absolute_y) * (1.0 - weight) + specle_color * weight)
 	
 	var texture = ImageTexture.create_from_image(main_texture)
