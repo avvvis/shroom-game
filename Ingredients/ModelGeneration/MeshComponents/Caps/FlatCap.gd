@@ -14,6 +14,19 @@ func generate_mesh(_parameters: Dictionary, _seed: int) -> MeshInstance3D:
 	result.mesh = array_mesh
 	return result
 
+static func get_default() -> Dictionary:
+	return {
+		"thickness": 0.1,
+		"radius": 1.0,
+	}
+
+static func get_default_distribution_of_distributions() -> Dictionary:
+	return {
+		"thickness": DistributionOfDistributions.new(0.05, 0.5, 0.07, 0.1),
+		"radius": DistributionOfDistributions.new(0.1, 3, 0.05, 0.1),
+	}
+
+
 func get_value_at(_parameter :float, _angle :float) -> Vector3:
 	if _parameter == 0.0:
 		return Vector3(0.0, 0.0, 0.0)
@@ -41,4 +54,4 @@ func _get_precision():
 	return 20
 
 func _get_parameter_to_angle_precision_ratio():
-	return 0.3
+	return 2.0

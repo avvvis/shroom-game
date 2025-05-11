@@ -17,17 +17,32 @@ func _next_segment(random: RandomNumberGenerator) -> Vector3:
 	var segment_height = cos(incline) * _segment_length
 	var plane_radius = sin(incline) * _segment_length
 	return Vector3(cos(rotation) * plane_radius, segment_height, sin(rotation) * plane_radius)
-	
+
+static func get_default() -> Dictionary:
+	return {
+		"segment length": 0.5,
+		"thickness": 0.3,
+		"max incline": 0.3,
+		"number of segments": 3,
+	}
+
+static func get_default_distribution_of_distributions() -> Dictionary:
+	return {
+		"segment length": DistributionOfDistributions.new(0.2, 2, 0.1, 0.4),
+		"thickness": DistributionOfDistributions.new(0.05, 0.3, 0.05, 0.25),
+		"max incline": DistributionOfDistributions.new(0.0, 1.0, 0.1, 0.11),
+		"number of segments": DistributionOfDistributions.new(2.0, 11.0, 1.0, 8.0),
+	}
 
 func generate_mesh(_parameters: Dictionary, _seed: int) -> MeshInstance3D:
 	_vector_sub_sums = [Vector3(0.0, 0.0, 0.0)]
 	
-	_length = _parameters["length"]
+	_segment_length = _parameters["segment length"]
 	_thickness = _parameters["thickness"]
 	_max_incline = _parameters["max incline"]
 	_number_of_segments = _parameters["number of segments"]
 	
-	_segment_length = _length / _number_of_segments / 3.0
+	_length = _segment_length * _number_of_segments * 3
 	
 	var random = RandomNumberGenerator.new()
 	random.set_seed(_seed)
