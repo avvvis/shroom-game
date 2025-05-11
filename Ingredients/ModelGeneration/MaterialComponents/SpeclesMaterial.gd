@@ -17,7 +17,7 @@ static func generate_material(_parameters: Dictionary, _seed: int) -> Material:
 	random.set_seed(_seed)
 	
 	for specle in range(number_of_specles):
-		var specle_radius: int = random.randf_range(min_specle_diameter, max_specle_diameter) / 2.0 * texture_resolution + 1
+		var specle_radius: int = int(random.randf_range(min_specle_diameter, max_specle_diameter) / 2.0 * texture_resolution + 1)
 		var specle_position = Vector2i(Vector2(random.randf_range(0.0, 1.0), random.randf_range(0.0, 1.0)) * texture_resolution)
 		
 		for y in range(-specle_radius, specle_radius):
@@ -25,9 +25,16 @@ static func generate_material(_parameters: Dictionary, _seed: int) -> Material:
 			if absolute_y < 0 or absolute_y > texture_resolution:
 				continue
 			
+			if absolute_y >= texture_resolution:
+				absolute_y = 0
+			
 			var width = sqrt(specle_radius * specle_radius - y * y) + 1
 			for x in range(-width, width):
 				var absolute_x = specle_position.x + x
+				
+				if absolute_x >= texture_resolution:
+					absolute_x = 0
+				
 				if absolute_x < 0 or absolute_x > texture_resolution:
 					continue
 				

@@ -30,15 +30,25 @@ func _on_generate_and_save_button_pressed() -> void:
 func _ready() -> void:
 	#var cap = BezierStipe.new()
 	#var model = cap.generate_mesh({"length": 5.0, "thickness": 0.2, "max incline": 1.0, "number of segments": 5}, 1)
+	#var model = cap.generate_mesh(BezierStipe.get_default(), 6)
+	
+	#var stipe = StraightStipe.new()
+	#var model = stipe.generate_mesh(StraightStipe.get_default(), 3)
+	
+	#var flat = FlatCap.new()
+	#var model = flat.generate_mesh(FlatCap.get_default(), 3)
 	
 	var cap = ExponentialCap.new()
-	var model = cap.generate_mesh({"thickness": 0.4, "radius": 1.4, "exponent": 0.4, "height": 0.5}, 0)
+	#var model = cap.generate_mesh({"thickness": 0.4, "radius": 1.4, "exponent": 0.4, "height": 0.5}, 0)
+	var model = cap.generate_mesh(ExponentialCap.get_default(), 5)
+	
+	#var chalice = Chalice.new()
+	#var model = chalice.generate_mesh(chalice.get_default(), 4)
 	
 	#var material = StripesMaterial.new()
 	#model.material_override = material.generate_material({"base color": Color(0.2, 0.3, 0.1), "stripe color": Color(0.4, 0.7, 0.2), "number of stripes": 3, "blend": 0.3}, 0)
 	
-	var material = SpeclesMaterial.new()
-	model.material_override = material.generate_material({"base color": Color(0.8, 0.05, 0.1), "specle color": Color(1.0, 0.95, 0.9), "number of specles": 12, "max specle diameter": 0.3, "min specle diameter": 0.05, "steepness": 0.7}, Time.get_ticks_msec())
+	model.material_override = SpeclesMaterial.generate_material({"base color": Color(0.8, 0.05, 0.1), "specle color": Color(1.0, 0.95, 0.9), "number of specles": 12, "max specle diameter": 0.3, "min specle diameter": 0.05, "steepness": 0.7}, Time.get_ticks_msec())
 	
 	add_child(model)
 	

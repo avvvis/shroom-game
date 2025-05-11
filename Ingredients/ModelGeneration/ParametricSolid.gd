@@ -27,7 +27,6 @@ func _get_parameter_to_angle_precision_ratio():
 ## Overwrite this function to specify the way your mesh is mapped to the texture. This function returns a pair of
 ## the (new parameter, new angle) in polar coordinate system, namely [0, 1.0] x [0, 2π]
 func texture_map(_parameter: float, _angle: float) -> Vector2:
-	push_warning("This function should be overwriten")
 	return Vector2(_parameter, _angle)
 	
 func _internal_texture_map(_parameter: float, _angle: float) -> Vector2:
