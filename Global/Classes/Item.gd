@@ -1,10 +1,15 @@
+extends Node
+
 class_name Item
+
 var ID:String = "FFFF_0000" #naming like category + _ + idnumbr 
-var name:String = "Unknown"
 var description:String = "Use this item and journal results!"
 var type:String = "2d" #2d or 3d
 var usable:bool = false
 var stackable:bool = false
+
+func _init():
+	name = "Unknown"
 
 func is_stackable()->bool:
 	return stackable
