@@ -50,6 +50,9 @@ func _populate_chunks_around(super_coords: Vector2i) -> void:
 		_populate_chunk_at(super_coords + offset)
 
 func _populate_chunk_at(super_coords: Vector2i) -> void:
+	if GameState.get_board().has_chunk(super_coords):
+		# It's already populated, don't waste time filling the same tiles in again
+		return
 	var chunk := GameState.get_board().get_chunk(super_coords)
 	var corner_coords := super_coords * Chunk.SIZE
 	for dy in range(Chunk.SIZE):
