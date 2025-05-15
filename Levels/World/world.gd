@@ -3,6 +3,8 @@ extends Node2D
 
 @onready var _tiles := $Tiles
 @onready var _player := $PlayerCharacter
+@onready var _camera := $PlayerCharacter/Camera
+@onready var _items_layer := $ItemsLayer
 @onready var _regen_area := $RegenArea
 @onready var _regen_area_shape := $RegenArea/Shape
 @onready var _tile_size: int = $Tiles.tile_set.tile_size.x
@@ -57,3 +59,8 @@ func _populate_chunk_at(super_coords: Vector2i) -> void:
 			var cell := chunk.get_cell(rel_coords)
 			var tile_coords := Vector2i(2.0 * (cell.biomic_xy.clampf(-0.999, 0.999) + Vector2(1, 1)))
 			_tiles.call_thread_safe("set_cell", coords, 0, tile_coords)
+
+func _place_item(position: Vector2, item: Item) -> void:
+	var item_entity = item.create_world_entity()
+	item_entity.position = position
+	_items_layer.add_child(item_entity)
