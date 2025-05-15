@@ -21,7 +21,9 @@ func use():
 	return -1
 
 func create_world_entity():
-	pass
+	var entity = preload("res://Levels/World/item_entity.tscn").instantiate()
+	entity.set_item(self)
+	return entity
 
 func create_inventory_entity():
 	var blank
