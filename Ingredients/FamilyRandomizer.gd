@@ -1,8 +1,25 @@
 extends Node
+
 class_name FamilyRandomizer
 
 var families: Array = []
 var _total_weight: float = 0
+const families_path: String = "res://Ingredients/ModelGeneration/Families/"
+
+func _init():
+	var directory = DirAccess.open(families_path)
+	if directory == null:
+		push_error("The path to SpeciesFamilies is incorrect")
+	
+	directory.list_dir_begin()
+	var family_path = directory.get_next()
+	while family_path != "":
+		if !family_path.ends_with(".gd"):
+			family_path = directory.get_next()
+			continue
+		var family_script = load(families_path.path_join(family_path))
+		add_family(family_script.new())
+		family_path = directory.get_next()
 
 func add_family(family: IngredientFamily):
 	families.append(family)

@@ -5,14 +5,30 @@ class_name FlatCap
 var _thickness: float
 var _radius: float
 
+const argument_thickness = "flat cap mesh thickness"
+const argument_radius = "flat cap mesh radius"
+
 func generate_mesh(_parameters: Dictionary, _seed: int) -> MeshInstance3D:
-	_thickness = _parameters["thickness"]
-	_radius = _parameters["radius"]
+	_thickness = _parameters[argument_thickness]
+	_radius = _parameters[argument_radius]
 	
 	var array_mesh = get_mesh()
 	var result = MeshInstance3D.new()
 	result.mesh = array_mesh
 	return result
+
+static func get_default() -> Dictionary:
+	return {
+		argument_thickness: 0.1,
+		argument_radius: 1.0,
+	}
+
+static func get_default_distribution_of_distributions() -> Dictionary:
+	return {
+		argument_thickness: DistributionOfDistributions.new(0.05, 0.5, 0.07, 0.1),
+		argument_radius: DistributionOfDistributions.new(0.1, 3, 0.05, 0.1),
+	}
+
 
 func get_value_at(_parameter :float, _angle :float) -> Vector3:
 	if _parameter == 0.0:
@@ -41,4 +57,4 @@ func _get_precision():
 	return 20
 
 func _get_parameter_to_angle_precision_ratio():
-	return 0.3
+	return 2.0

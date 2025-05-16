@@ -10,6 +10,11 @@ var _number_of_segments: int
 var _vector_sub_sums: Array
 var _segment_length: float
 
+const argument_segment_length = "bezier stipe mesh segment length"
+const argument_thickness = "bezier stipe mesh thickness"
+const argument_max_incline = "bezier stipe mesh max incline"
+const argument_number_of_segments = "bezier stipe mesh number of segments"
+
 func _next_segment(random: RandomNumberGenerator) -> Vector3:
 	var incline = random.randf_range(0.0, _max_incline * PI / 2.0)
 	var rotation = random.randf_range(0.0, 2.0 * PI)
@@ -17,17 +22,32 @@ func _next_segment(random: RandomNumberGenerator) -> Vector3:
 	var segment_height = cos(incline) * _segment_length
 	var plane_radius = sin(incline) * _segment_length
 	return Vector3(cos(rotation) * plane_radius, segment_height, sin(rotation) * plane_radius)
-	
+
+static func get_default() -> Dictionary:
+	return {
+		argument_segment_length: 0.5,
+		argument_thickness: 0.3,
+		argument_max_incline: 0.3,
+		argument_number_of_segments: 3,
+	}
+
+static func get_default_distribution_of_distributions() -> Dictionary:
+	return {
+		argument_segment_length: DistributionOfDistributions.new(0.2, 2, 0.1, 0.4),
+		argument_thickness: DistributionOfDistributions.new(0.05, 0.3, 0.05, 0.25),
+		argument_max_incline: DistributionOfDistributions.new(0.0, 1.0, 0.1, 0.11),
+		argument_number_of_segments: DistributionOfDistributions.new(2.0, 11.0, 1.0, 8.0),
+	}
 
 func generate_mesh(_parameters: Dictionary, _seed: int) -> MeshInstance3D:
 	_vector_sub_sums = [Vector3(0.0, 0.0, 0.0)]
 	
-	_length = _parameters["length"]
-	_thickness = _parameters["thickness"]
-	_max_incline = _parameters["max incline"]
-	_number_of_segments = _parameters["number of segments"]
+	_segment_length = _parameters[argument_segment_length]
+	_thickness = _parameters[argument_thickness]
+	_max_incline = _parameters[argument_max_incline]
+	_number_of_segments = _parameters[argument_number_of_segments]
 	
-	_segment_length = _length / _number_of_segments / 3.0
+	_length = _segment_length * _number_of_segments * 3
 	
 	var random = RandomNumberGenerator.new()
 	random.set_seed(_seed)
