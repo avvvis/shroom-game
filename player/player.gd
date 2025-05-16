@@ -1,11 +1,10 @@
 class_name Player
 extends CharacterBody2D
 
-var face_direction = "down"
-var health:int = 100
+var face_direction := "S"
+var health := 100
 
-@onready var animation = $AnimationPlayer
-@onready var sprite = $Sprite2D
+@onready var anim_sprite = $AnimatedSprite2D
 @onready var state_machine = $StateMachine
 @onready var move_component = $MoveComponent
 @onready var interactions = $Interactions
@@ -23,18 +22,31 @@ func _physics_process(delta: float) -> void:
 	state_machine.process_physics(delta)
 	
 func set_face_direction(target: Vector2) -> bool:
-	var new_dir = face_direction
-	
 	if target == Vector2.ZERO:
 		return false
-		
-	if abs(target.y) > abs(target.x):
-		new_dir = "down" if target.y > 0 else "up"
-	else:
-		new_dir = "right" if target.x > 0 else "left"
-		 
-	sprite.flip_h = true if new_dir == "left" else false
-		
+	
+	var angle: float = rad_to_deg(target.angle())
+	if angle < 0:
+		angle += 360
+	
+	var new_dir: String
+	if angle >= 337.5 or angle < 22.5:
+		new_dir = "E"   
+	elif angle >= 22.5 and angle < 67.5:
+		new_dir = "SE"    
+	elif angle >= 67.5 and angle < 112.5:
+		new_dir = "S"      
+	elif angle >= 112.5 and angle < 157.5:
+		new_dir = "SW"     
+	elif angle >= 157.5 and angle < 202.5:
+		new_dir = "W"      
+	elif angle >= 202.5 and angle < 247.5:
+		new_dir = "NW"     
+	elif angle >= 247.5 and angle < 292.5:
+		new_dir = "N"      
+	else:  
+		new_dir = "NE"     
+	
 	if new_dir == face_direction:
 		return false
 	
@@ -43,10 +55,7 @@ func set_face_direction(target: Vector2) -> bool:
 	return true
 	
 func update_animation(name: String) -> void:
-	var dir = face_direction
-	if dir == "right" or dir == "left":
-		dir = "side"
-	animation.play(name + "_" + dir)
+	anim_sprite.play(name + "_" + face_direction)
 	
 
 func take_damage(damage: int) -> void:
