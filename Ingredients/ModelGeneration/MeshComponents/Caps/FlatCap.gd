@@ -5,9 +5,12 @@ class_name FlatCap
 var _thickness: float
 var _radius: float
 
+const argument_thickness = "flat cap mesh thickness"
+const argument_radius = "flat cap mesh radius"
+
 func generate_mesh(_parameters: Dictionary, _seed: int) -> MeshInstance3D:
-	_thickness = _parameters["thickness"]
-	_radius = _parameters["radius"]
+	_thickness = _parameters[argument_thickness]
+	_radius = _parameters[argument_radius]
 	
 	var array_mesh = get_mesh()
 	var result = MeshInstance3D.new()
@@ -16,14 +19,14 @@ func generate_mesh(_parameters: Dictionary, _seed: int) -> MeshInstance3D:
 
 static func get_default() -> Dictionary:
 	return {
-		"thickness": 0.1,
-		"radius": 1.0,
+		argument_thickness: 0.1,
+		argument_radius: 1.0,
 	}
 
 static func get_default_distribution_of_distributions() -> Dictionary:
 	return {
-		"thickness": DistributionOfDistributions.new(0.05, 0.5, 0.07, 0.1),
-		"radius": DistributionOfDistributions.new(0.1, 3, 0.05, 0.1),
+		argument_thickness: DistributionOfDistributions.new(0.05, 0.5, 0.07, 0.1),
+		argument_radius: DistributionOfDistributions.new(0.1, 3, 0.05, 0.1),
 	}
 
 

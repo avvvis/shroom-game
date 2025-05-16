@@ -10,11 +10,16 @@ var _height: float
 
 var _middle_thickness: float
 
+const argument_beginning_thickness = "straight stipe mesh begining thickness"
+const argument_ending_thickness = "straight stipe mesh ending thickness"
+const argument_thickness_difference = "straight stipe mesh thickness difference"
+const argument_height = "straight stipe mesh height"
+
 func generate_mesh(_parameters: Dictionary, _seed: int) -> MeshInstance3D:
-	_begining_thickness = _parameters["begining thickness"]
-	_ending_thickness = _parameters["ending thickness"]
-	var thickness_difference = _parameters["thickness difference"]
-	_height = _parameters["height"]
+	_begining_thickness = _parameters[argument_beginning_thickness]
+	_ending_thickness = _parameters[argument_ending_thickness]
+	var thickness_difference = _parameters[argument_thickness_difference]
+	_height = _parameters[argument_height]
 	
 	_middle_thickness = max(_begining_thickness, _ending_thickness) + thickness_difference
 	
@@ -25,18 +30,18 @@ func generate_mesh(_parameters: Dictionary, _seed: int) -> MeshInstance3D:
 
 static func get_default() -> Dictionary:
 	return {
-		"begining thickness": 1.0,
-		"ending thickness": 0.2,
-		"thickness difference": 0.5,
-		"height": 2.0,
+		argument_beginning_thickness: 1.0,
+		argument_ending_thickness: 0.2,
+		argument_thickness_difference: 0.5,
+		argument_height: 2.0,
 	}
 
 static func get_default_distribution_of_distributions() -> Dictionary:
 	return {
-		"begining thickness": DistributionOfDistributions.new(0.2, 2, 0.1, 0.4),
-		"ending thickness": DistributionOfDistributions.new(0.05, 0.3, 0.05, 0.25),
-		"thickness difference": DistributionOfDistributions.new(0.0, 1.0, 0.1, 0.2),
-		"height": DistributionOfDistributions.new(1.0, 4.0, 1.0, 8.0),
+		argument_beginning_thickness: DistributionOfDistributions.new(0.2, 2, 0.1, 0.4),
+		argument_ending_thickness: DistributionOfDistributions.new(0.05, 0.3, 0.05, 0.25),
+		argument_thickness_difference: DistributionOfDistributions.new(0.0, 1.0, 0.1, 0.2),
+		argument_height: DistributionOfDistributions.new(1.0, 4.0, 1.0, 8.0),
 	}
 
 func get_cap_direction():
