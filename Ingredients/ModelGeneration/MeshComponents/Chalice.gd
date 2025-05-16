@@ -12,12 +12,18 @@ var _stipe_thickness: float
 # steepness, you should figure out what it should be, default is 1.5
 var _steepness: float
 
+const argument_height = "chalice mesh height"
+const argument_stipe_height = "chalice mesh stipe height"
+const argument_radius = "chalice mesh radius"
+const argument_stipe_thickness = "chalice mesh stipe thickness"
+const argument_steepness = "chalice mesh steepness"
+
 func generate_mesh(_parameters: Dictionary, _seed: int) -> MeshInstance3D:
-	_height = _parameters["height"]
-	_stipe_height = _parameters["stipe height"]
-	_radius = _parameters["radius"]
-	_stipe_thickness = _parameters["stipe thickness"]
-	_steepness = _parameters["steepness"]
+	_height = _parameters[argument_height]
+	_stipe_height = _parameters[argument_stipe_height]
+	_radius = _parameters[argument_radius]
+	_stipe_thickness = _parameters[argument_stipe_thickness]
+	_steepness = _parameters[argument_steepness]
 	
 	var array_mesh = get_mesh()
 	var result = MeshInstance3D.new()
@@ -26,20 +32,20 @@ func generate_mesh(_parameters: Dictionary, _seed: int) -> MeshInstance3D:
 
 static func get_default() -> Dictionary:
 	return {
-		"height": 2.0,
-		"stipe height": 1.0,
-		"radius": 4.0,
-		"stipe thickness": 1.0,
-		"steepness": 1.5,
+		argument_height: 2.0,
+		argument_stipe_height: 1.0,
+		argument_radius: 4.0,
+		argument_stipe_thickness: 1.0,
+		argument_steepness: 1.5,
 	}
 
 static func get_default_distribution_of_distributions() -> Dictionary:
 	return {
-		"height": DistributionOfDistributions.new(0.5, 5, 0.1, 1),
-		"stipe height": DistributionOfDistributions.new(0.1, 3, 0.05, 0.5),
-		"radius": DistributionOfDistributions.new(2, 5, 0.1, 1),
-		"stipe thickness": DistributionOfDistributions.new(0.05, 2, 0.05, 0.2),
-		"steepness": DistributionOfDistributions.new(0.01, 2, 0.05, 0.2)
+		argument_height: DistributionOfDistributions.new(0.5, 5, 0.1, 1),
+		argument_stipe_height: DistributionOfDistributions.new(0.1, 3, 0.05, 0.5),
+		argument_radius: DistributionOfDistributions.new(2, 5, 0.1, 1),
+		argument_stipe_thickness: DistributionOfDistributions.new(0.05, 2, 0.05, 0.2),
+		argument_steepness: DistributionOfDistributions.new(0.01, 2, 0.05, 0.2)
 	}
 
 func get_value_at(_parameter :float, _angle :float) -> Vector3:
