@@ -6,6 +6,14 @@ var _game_seed := 0
 var _board: Board = null
 var _inventory:Inventory = Inventory.new()
 
+##player stats
+var speed:float = 1.0
+var damage:float = 10
+var health:float = 100
+var maxhealth:float = 100
+var points:int = 0
+var attack_speed:float = 2.0
+
 func reset(game_seed: int) -> void:
 	_day_counter = 0
 	_game_seed = game_seed
