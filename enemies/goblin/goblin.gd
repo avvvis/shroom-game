@@ -7,9 +7,11 @@ var face_direction = "down"
 @onready var sprite = $Sprite2D
 @onready var state_machine = $StateMachine
 @onready var move_component = $MoveComponent
+@onready var vision  = $RayCast2D
 
 func _ready() -> void:
 	state_machine.init(self, move_component)
+	position += Vector2(400, 400)
 	
 func _process(delta: float) -> void:
 	state_machine.process(delta)
@@ -33,6 +35,7 @@ func set_face_direction(target: Vector2) -> bool:
 	if new_dir == face_direction:
 		return false
 	
+	vision.update_direction(new_dir)
 	face_direction = new_dir
 	return true
 	
