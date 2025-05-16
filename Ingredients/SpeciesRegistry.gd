@@ -16,3 +16,8 @@ func get_random_species(seed: int) -> IngredientSpecies:
 	random.seed = seed
 	
 	return generated_species[random.randi_range(0, generated_species.size() - 1)]
+
+
+func generate_shroom(seed: int) -> IngredientSpecimen:
+ # TODO
+ return ExampleShroom.new()
