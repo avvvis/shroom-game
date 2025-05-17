@@ -61,6 +61,15 @@ func _populate_chunk_at(super_coords: Vector2i) -> void:
 			var coords := corner_coords + rel_coords
 			var cell := chunk.get_cell(rel_coords)
 			var tile_coords := Vector2i(2.0 * (cell.biomic_xy.clampf(-0.999, 0.999) + Vector2(1, 1)))
+			if cell.has_shroom:
+				#GlobalSpeciesRegistry.add_species()
+				#var shroom = GlobalSpeciesRegistry.generate_shroom()
+				var shroom = ExampleShroom.new()
+				var shroom_scene = preload("res://Levels/World/shroom_entity.tscn").instantiate()
+				shroom_scene.set_shroom(shroom)
+				shroom_scene.global_position = coords * _tile_size
+				print("DUPA ", coords)
+				_items_layer.call_thread_safe("add_child", shroom_scene)
 			_tiles.call_thread_safe("set_cell", coords, 0, tile_coords)
 
 func _place_item(position: Vector2, item: Item) -> void:
