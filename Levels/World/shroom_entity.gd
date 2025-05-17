@@ -1,14 +1,18 @@
 extends Node2D
 
-var _shroom: IngredientSpecimen
-@onready var _sprite: Sprite2D = $Sprite2D
+var _pickup_cb
+var shroom: IngredientSpecimen
+@onready var pickup_area: Area2D = $Area2D
+@onready var _sprite: Sprite2D = $Area2D/Sprite2D
 @onready var _subviewport: SubViewport = $SubViewport
 
-func set_shroom(shroom: IngredientSpecimen) -> void:
-	_shroom = shroom
+func setup(shroom_: IngredientSpecimen, pickup_cb) -> void:
+	shroom = shroom_
+	_pickup_cb = pickup_cb
 
 func _ready() -> void:
-	_subviewport.add_child(_shroom)
+	_subviewport.add_child(shroom)
+	pickup_area.body_entered.connect(_pickup_cb)
 	#await RenderingServer.frame_post_draw
 	#await RenderingServer.frame_post_draw
 	#await RenderingServer.frame_post_draw
