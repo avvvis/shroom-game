@@ -22,6 +22,7 @@ func _init() -> void:
 	GameState.next_day()
 
 func _ready() -> void:
+	GlobalSpeciesRegistry.add_species()
 	_regen_area_shape.scale = Vector2(Chunk.SIZE, Chunk.SIZE)
 	_regen_area.position = Vector2(0.5, 0.5) * Chunk.SIZE * _tile_size
 	_populate_chunks_around(Vector2i(0, 0))
@@ -61,7 +62,21 @@ func _populate_chunk_at(super_coords: Vector2i) -> void:
 			var coords := corner_coords + rel_coords
 			var cell := chunk.get_cell(rel_coords)
 			var tile_coords := Vector2i(2.0 * (cell.biomic_xy.clampf(-0.999, 0.999) + Vector2(1, 1)))
+			if cell.has_shroom:
+				var shroom = GlobalSpeciesRegistry.generate_shroom()
+				#var shroom = ExampleShroom.new()
+				var shroom_scene = preload("res://Levels/World/shroom_entity.tscn").instantiate()
+				shroom_scene.setup(shroom, _on_shroom_pickup.bind(shroom_scene))
+				shroom_scene.position = coords * _tile_size
+				_items_layer.call_thread_safe("add_child", shroom_scene)
 			_tiles.call_thread_safe("set_cell", coords, 0, tile_coords)
+
+func _on_shroom_pickup(body: Node2D, shroom_scene) -> void:
+	#print("bbbbbbbbbbbbbbbbbbbbbbbbbbb ", shroom_scene, " and ", body)
+	if body == _player:
+		#print("duuuuuuuupaaaa")
+		GameState.get_inventory().add_item(shroom_scene.shroom, 1)
+		_items_layer.remove_child.call_deferred(shroom_scene)
 
 func _place_item(position: Vector2, item: Item) -> void:
 	var item_entity = item.create_world_entity()

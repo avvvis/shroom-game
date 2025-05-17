@@ -20,11 +20,6 @@ func is_usable():
 func use():
 	return -1
 
-func create_world_entity():
-	var entity = preload("res://Levels/World/item_entity.tscn").instantiate()
-	entity.set_item(self)
-	return entity
-
 func create_inventory_entity():
 	var blank
 	if(type == "2d"):
