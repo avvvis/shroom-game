@@ -5,10 +5,5 @@ func _init():
 	# Base:
 	#	 SubVieportContainer:
 	#		 SubViewport:
-	#			 Shroom
-	var container = SubViewportContainer.new()
-	var subviewport = SubViewport.new()
-	
-	subviewport.add_child(ExampleShroom.new())
-	container.add_child(subviewport)
-	add_child(container)
+	#			 Shroom	
+	self.add_child(ExampleShroom.new())
