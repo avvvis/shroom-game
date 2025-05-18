@@ -4,6 +4,7 @@ extends Control
 @onready var itemD = $item_description
 @onready var preview2d = $item_description/vbox/item_inspector/preview/Preview2d
 @onready var preview3d = $item_description/vbox/item_inspector/preview/Preview3d
+@onready var BigViewPort = $item_description/vbox/item_inspector/preview/Preview3d/SubViewport
 @onready var Biglabel = $item_description/vbox/Name/BigLabel
 @onready var Smalllabel = $item_description/vbox/Description/SmallLabel
 var slot_scene = preload("res://Levels/UI/inventory_slot.tscn")
@@ -53,9 +54,14 @@ func _on_slot_focused(data:Item):
 	if(data.type == "2d"):
 		preview3d.visible = false
 		preview2d.visible = true
+		preview2d.texture = data.create_inventory_entity()
 	else:
 		preview2d.visible = false
 		preview3d.visible = true
+		if(BigViewPort.get_child_count() != 0):
+			BigViewPort.remove_child(BigViewPort.get_child(0))
+		BigViewPort.add_child((data.create_inventory_entity()).instantiate())
+		
 	Biglabel.clear()
 	Smalllabel.clear()
 	Biglabel.add_text(data.name)
