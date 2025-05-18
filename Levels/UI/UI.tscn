@@ -684,6 +684,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="SubViewport" type="SubViewport" parent="Inventory/item_description/vbox/item_inspector/preview/Preview3d"]
+transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1176, 800)
 render_target_update_mode = 4
