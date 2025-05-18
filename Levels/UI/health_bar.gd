@@ -7,7 +7,7 @@ const BAR_HEIGHT := 100
 const OUTLINE_THICKNESS := 5
 
 func _ready():
-	var max_health := GameState.maxhealth
+	var max_health := GameState.max_health
 	var current_health := GameState.health
 
 	# Create the health bar node
@@ -52,5 +52,5 @@ func _make_colored_outline_texture(col: Color, w: int, h: int, t: int) -> ImageT
 
 func _process(delta):
 	# LIVE UPDATE from GameState (if it changes during the game)
-	healthbar.max_value = GameState.maxhealth
+	healthbar.max_value = GameState.max_health
 	healthbar.value = GameState.health
