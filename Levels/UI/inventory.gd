@@ -84,6 +84,6 @@ func _on_slot_unfocused(data):
 
 func _on_use():
 	last_data.use()
-	GameState._inventory.remove_item(last_data.ID,1)
+	GameState._inventory.remove_item(last_data.itemID,1)
 	clear()
 	populate()
