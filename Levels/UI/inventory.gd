@@ -7,7 +7,9 @@ extends Control
 @onready var BigViewPort = $item_description/vbox/item_inspector/preview/Preview3d/SubViewport
 @onready var Biglabel = $item_description/vbox/Name/BigLabel
 @onready var Smalllabel = $item_description/vbox/Description/SmallLabel
+@onready var useButton = $item_description/vbox/Button
 var slot_scene = preload("res://Levels/UI/inventory_slot.tscn")
+var last_data = null
 
 func my_grab_focus():
 	if grid.get_child_count() > 0:
@@ -42,13 +44,20 @@ func clear():
 	for child in grid.get_children():
 		grid.remove_child(child)
 		child.queue_free()
+	Biglabel.clear()
+	Smalllabel.clear()
+	useButton.disabled = true
+	preview3d.visible = false
+	preview2d.visible = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
 func _on_slot_clicked(data):
-	pass
+	if(data.usable):
+		useButton.grab_focus()
+	last_data = data
 	
 func _on_slot_focused(data:Item):
 	if(data.type == "2d"):
@@ -66,6 +75,15 @@ func _on_slot_focused(data:Item):
 	Smalllabel.clear()
 	Biglabel.add_text(data.name)
 	Smalllabel.add_text(data.description)
+	
+	useButton.disabled = !data.usable
+	last_data = data
 
 func _on_slot_unfocused(data):
 	pass
+
+func _on_use():
+	last_data.use()
+	GameState._inventory.remove_item(last_data.ID,1)
+	clear()
+	populate()

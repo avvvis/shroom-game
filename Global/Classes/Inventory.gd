@@ -46,7 +46,7 @@ func add_item(item:Item, quantity:int)->void:
 func remove_item(ID:String, quantity:int)->bool:
 	var pos:int = get_id_by_id(ID)
 	if(pos == -1): return false
-	if(data[pos].quantitStringy <= quantity):
+	if(data[pos].quantity <= quantity):
 		data.remove_at(pos)
 		return true
 	data[pos].quantity -= quantity
@@ -56,26 +56,27 @@ func get_size():
 	return data.size()
 
 func _init() ->void:
-	
-	var item := Item.new()
-	item.ID = "test_01"
-	item.name = "Item #1"
-	item.description = "This is item number %1"
-	item.type = "2d"	
-	item.stackable = true
-	add_item(item,1)
-	item = Item.new()
-	item.ID = "test_02"
-	item.name = "Item #2"
-	item.description = "This is item number %2"
-	item.type = "2d"	
-	item.stackable = true
-	add_item(item,5)
-	item = Item.new()
-	item.ID = "ates_03"
-	item.name = "Item #3"
-	item.description = "This is item number %3"
-	item.type = "3d"	
-	item.stackable = false
-	add_item(item,5)
-	print(data.size())
+	pass
+	#var item := Item.new()
+	#item.ID = "test_01"
+	#item.name = "Item #1"
+	#item.description = "This is item number %1"
+	#item.type = "2d"	
+	#item.stackable = true
+	#add_item(item,1)
+	#item = Item.new()
+	#item.ID = "test_02"
+	#item.name = "Item #2"
+	#item.description = "This is item number %2"
+	#item.type = "2d"	
+	#item.stackable = true
+	#add_item(item,5)
+	#item = Item.new()
+	#item.ID = "ates_03"
+	#item.name = "Item #3"
+	#item.description = "This is item number %3"
+	#item.usable = true
+	#item.type = "3d"	
+	#item.stackable = false
+	#add_item(item,5)
+	#print(data.size())

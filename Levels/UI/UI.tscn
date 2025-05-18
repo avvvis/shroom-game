@@ -708,6 +708,10 @@ layout_mode = 2
 text = "ale jajo"
 fit_content = true
 
+[node name="Button" type="Button" parent="Inventory/item_description/vbox"]
+layout_mode = 2
+text = "USE"
+
 [node name="ListingPanel" type="PanelContainer" parent="Inventory"]
 custom_minimum_size = Vector2(1450, 1800)
 layout_mode = 1
@@ -757,3 +761,4 @@ script = ExtResource("13_2kj1t")
 [connection signal="pressed" from="Settings/MarginContainer/VBox/HBoxContainer/MarginContainer/Apply" to="." method="_on_apply_pressed"]
 [connection signal="pressed" from="exit_settings_confirm/ColorRect/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/yes" to="." method="_on_yes_exitSettings_pressed"]
 [connection signal="pressed" from="exit_settings_confirm/ColorRect/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/no" to="." method="_on_no_Settings_pressed"]
+[connection signal="pressed" from="Inventory/item_description/vbox/Button" to="Inventory" method="_on_use"]
