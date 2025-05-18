@@ -16,3 +16,6 @@ func is_usable():
 
 func use():
 	return -1
+
+func create_inventory_entity():
+	assert(false, "Overrite this")

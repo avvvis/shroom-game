@@ -26,5 +26,11 @@ func _init():
 	
 	GameState.hamski_hack_prosze_tego_psia_krew_nie_tykac_bo_zamorduje += 1
 
+func create_inventory_entity():
+	var result = Node.new()
+	for child in get_children():
+		result.add_child(child.duplicate())
+	return result
+
 func use():
 	AlchemyStats.apply_stats(alchemy_stats)

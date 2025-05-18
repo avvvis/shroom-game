@@ -16,12 +16,14 @@ var quantity:int
 func show_item(item:Item, _quantity:int):
 	data = item
 	quantity = _quantity
+	
+	var scene = item.create_inventory_entity()
 
 	if(item.type == "2d"):
-		icon.texture = item.get_texture()
+		icon.texture = scene
 		viewport_container.visible = false
 	else:
-		viewport.add_child(item)
+		viewport.add_child(scene)
 		icon.visible = false
 	if(quantity >= 2):
 		text.visible = true

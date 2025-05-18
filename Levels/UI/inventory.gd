@@ -69,7 +69,7 @@ func _on_slot_focused(data:Item):
 		preview3d.visible = true
 		if(BigViewPort.get_child_count() != 0):
 			BigViewPort.remove_child(BigViewPort.get_child(0))
-		BigViewPort.add_child(data)
+		BigViewPort.add_child(data.create_inventory_entity())
 		
 	Biglabel.clear()
 	Smalllabel.clear()
