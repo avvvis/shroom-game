@@ -15,7 +15,7 @@ func _init():
 	
 	var camera = Camera3D.new()
 	camera.current = true
-	camera.position = Vector3(new_x, 2.0, 6.0)
+	camera.position = Vector3(new_x, 2.5, 5.0)
 	
 	if i == 0:
 		var light = DirectionalLight3D.new()
