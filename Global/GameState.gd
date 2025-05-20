@@ -12,15 +12,32 @@ var damage:float = 10
 var health:float = 100
 var max_health:float = 100
 var points:int = 0
-var attack_speed:float = 2.0
+var attack_speed:float = 1.0
 
 var hamski_hack_prosze_tego_psia_krew_nie_tykac_bo_zamorduje = 0
 
 func take_damage(damage: float):
 	health -= damage
 
+func apply_damage_change(change: int):
+	damage += change
+	if damage < 1:
+		damage = 1
+
+func apply_attack_speed_change(change: float):
+	attack_speed += change
+	if attack_speed > 2:
+		attack_speed = 2
+	if attack_speed < 0.5:
+		attack_speed = 0.5
+		
+func apply_speed_change(change: float):
+	speed += change
+	if speed < 0.5:
+		speed = 0.5
+
 func apply_max_health_change(change: float):
-	max_health -= change
+	max_health += change
 	if health > max_health:
 		take_damage(health - max_health)
 

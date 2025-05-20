@@ -8,6 +8,7 @@ var health := 100
 @onready var state_machine = $StateMachine
 @onready var move_component = $MoveComponent
 @onready var interactions = $Interactions
+@onready var _tile_size: int = $"../Tiles".tile_set.tile_size.x
 
 func _ready() -> void:
 	state_machine.init(self, move_component)
@@ -59,6 +60,12 @@ func update_animation(name: String) -> void:
 	
 
 func take_damage(damage: int) -> void:
-	health -= damage
 	print("damage has been taken: &d" %damage)
 	pass
+	
+func get_super_coords() -> Vector2i:
+	return Util.super_coords(get_coords())
+
+func get_coords() -> Vector2i:
+	var scaled := position / _tile_size
+	return Vector2i(floori(scaled.x), floori(scaled.y))

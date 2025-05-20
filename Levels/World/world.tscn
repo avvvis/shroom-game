@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwxxu8a2vk1hw"]
+[gd_scene load_steps=7 format=3 uid="uid://cwxxu8a2vk1hw"]
 
 [ext_resource type="Script" uid="uid://cv1v4atff4kye" path="res://Levels/World/world.gd" id="1_tipu6"]
 [ext_resource type="Texture2D" uid="uid://cljjjldja7is1" path="res://Levels/World/dumb_tileset.png" id="2_44qql"]
-[ext_resource type="Script" uid="uid://soeunyt4bqh5" path="res://Levels/World/player_character.gd" id="3_beiy3"]
+[ext_resource type="PackedScene" uid="uid://vl86lr0m2jow" path="res://player/Player.tscn" id="3_beiy3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3owj8"]
 texture = ExtResource("2_44qql")
@@ -28,8 +28,6 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_3owj8")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_vlb38"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_beiy3"]
 size = Vector2(64, 64)
 
@@ -41,23 +39,14 @@ tile_set = SubResource("TileSet_qxxuw")
 
 [node name="ItemsLayer" type="Node2D" parent="."]
 
-[node name="PlayerCharacter" type="CharacterBody2D" parent="."]
-script = ExtResource("3_beiy3")
-speed = 300
-
-[node name="Camera" type="Camera2D" parent="PlayerCharacter"]
-zoom = Vector2(4, 4)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCharacter"]
-shape = SubResource("CircleShape2D_vlb38")
-
-[node name="Polygon2D" type="Polygon2D" parent="PlayerCharacter"]
-polygon = PackedVector2Array(-10, 0, 0, 10, 10, 0, 0, -10)
-uv = PackedVector2Array(-441, -92.5, -355, 12.5, -262, -92.5, -367, -190.5)
-
 [node name="RegenArea" type="Area2D" parent="."]
 
 [node name="Shape" type="CollisionShape2D" parent="RegenArea"]
 shape = SubResource("RectangleShape2D_beiy3")
+
+[node name="PlayerCharacter" parent="." instance=ExtResource("3_beiy3")]
+
+[node name="Camera" type="Camera2D" parent="PlayerCharacter"]
+zoom = Vector2(4, 4)
 
 [connection signal="body_exited" from="RegenArea" to="." method="_on_regen_area_body_exited"]

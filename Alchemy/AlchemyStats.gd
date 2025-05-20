@@ -23,9 +23,9 @@ static func stats_to_strings(stats: Dictionary):
 		["points", str(AlchemyStats.calculate_points(stats))]]
 
 static func apply_stats(stats: Dictionary):
-	GameState.speed = min(0.1, stats["speed"])
-	GameState.damage = min(0.5, stats["damage"])
+	GameState.apply_speed_change(min(0.1, stats["speed"]))
+	GameState.apply_damage_change(min(0.5, stats["damage"]))
 	GameState.take_damage(-stats["health"])
 	GameState.apply_max_health_change(stats["max health"])
-	GameState.attack_speed = min(0.05, stats["attack speed"])
+	GameState.apply_attack_speed_change(min(0.05, stats["attack speed"]))
 	GameState.give_points(calculate_points(stats))

@@ -6,7 +6,7 @@ extends State
 
 @export var hit_box: HitBox
 @export var deceleration_speed: int
-
+@export var attack_speed: float
 
 var is_complete: bool
 
@@ -14,7 +14,9 @@ func enter() -> void:
 	is_complete = false
 	hit_box.monitorable = true
 	super()
-	await parent.animation.animation_finished
+	parent.anim_sprite.speed_scale = attack_speed
+	await parent.anim_sprite.animation_finished
+	parent.anim_sprite.speed_scale = 1.0
 	hit_box.monitorable = false
 	is_complete = true
 	
