@@ -38,6 +38,9 @@ func _process(delta_: float) -> void:
 	threads_to_remove.reverse()
 	for idx in threads_to_remove:
 		_threads.remove_at(idx)
+		
+func _physics_process(delta: float) -> void:
+	GameState.set_player_pos(_player.global_position)
 
 func _on_regen_area_body_exited(body: Node2D) -> void:
 	if body == _player:

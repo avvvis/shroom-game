@@ -14,6 +14,8 @@ var max_health:float = 100
 var points:int = 0
 var attack_speed:float = 1.0
 
+var player_pos: Vector2 = Vector2.ZERO
+
 var hamski_hack_prosze_tego_psia_krew_nie_tykac_bo_zamorduje = 0
 
 func take_damage(damage: float):
@@ -93,3 +95,9 @@ func save_data(slot, data):
 func load_data(slot):
 	# TODO: savefiles
 	pass
+
+func set_player_pos(pos: Vector2) -> void:
+	player_pos = pos
+	
+func get_player_pos() -> Vector2:
+	return player_pos
