@@ -4,7 +4,7 @@ extends CanvasLayer
 @onready var label = $VBoxContainer
 @onready var quit = $VBoxContainer/HBoxContainer/quit
 @onready var menu = $VBoxContainer/HBoxContainer/menu
-
+@onready var scorespot = $VBoxContainer/MarginContainer3/Label
 
 func show_finish():
 	#get_parent().process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -23,6 +23,8 @@ func fade_in_text():
 func _process(delta: float) -> void:
 	if get_parent().time_ratio >= 0.95:
 		get_parent().time_ratio = 0
+		scorespot.clear()
+		scorespot.add_text("Score: " + str(GameState.points))
 		show_finish()
 		get_tree().paused = true;
 		get_parent().process_mode = Node.PROCESS_MODE_PAUSABLE

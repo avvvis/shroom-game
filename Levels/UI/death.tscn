@@ -43,6 +43,7 @@ theme_override_font_sizes/normal_font_size = 128
 text = "PLAYER ERROR"
 fit_content = true
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -59,6 +60,7 @@ theme_override_font_sizes/normal_font_size = 256
 text = "YOU DIED"
 fit_content = true
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
