@@ -60,6 +60,17 @@ func next_day() -> void:
 	# Prepare the game state for the next day here.
 	_next_day_board()
 
+func hard_reset():
+	speed = 1.0
+	damage = 10
+	health = 100
+	max_health = 100
+	points = 0
+	attack_speed = 1.0
+	_inventory.clear()
+	#_day_counter = 0
+	#_game_seed = 0
+	
 func get_day() -> int:
 	return _day_counter
 

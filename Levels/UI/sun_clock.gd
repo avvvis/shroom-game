@@ -16,7 +16,7 @@ extends Control
 
 @export_range(0.0, 1.0, 0.001) var current_time_ratio := 0.0
 @export var advance_time := true
-@export var time_speed := 0.01
+@export var time_speed := 0.1#0.003 #0.1#0.003
 
 @onready var black := Color.BLACK
 @onready var gray := Color.hex(0xAAAAAAFF)
@@ -133,4 +133,5 @@ func _draw_time_icon(center: Vector2):
 func _process(delta):
 	if advance_time:
 		current_time_ratio = fmod(current_time_ratio + delta * time_speed, 1.0)
+		get_parent().get_parent().get_parent().time_ratio = current_time_ratio
 	queue_redraw()
