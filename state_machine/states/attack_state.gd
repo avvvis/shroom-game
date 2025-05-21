@@ -16,9 +16,11 @@ func enter() -> void:
 	super()
 	parent.anim.speed_scale = attack_speed
 	await parent.anim.animation_finished
+	is_complete = true
+
+func exit() -> void:
 	parent.anim.speed_scale = 1.0
 	hit_box.monitorable = false
-	is_complete = true
 	
 func process_physics(delta: float) -> State:
 	parent.velocity -= parent.velocity * delta * deceleration_speed

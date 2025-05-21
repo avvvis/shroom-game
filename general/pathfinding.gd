@@ -19,6 +19,7 @@ var directions: Array[Vector2] = [
 func _ready() -> void:
 	for dir in directions:
 		dir.normalized()
+	ray.enabled = false
 		
 func prev(i: int) -> int:
 	return (i - 1) % 8
@@ -27,6 +28,7 @@ func next(i: int) -> int:
 	return (i + 1) % 8
 
 func get_movment_direction(target: Vector2) -> Vector2:
+	ray.enabled = true
 	ray.rotation = 0
 	for i in 8:
 		obsticles[i] = 0;
@@ -37,6 +39,7 @@ func get_movment_direction(target: Vector2) -> Vector2:
 				obsticles[prev(i)] += 1
 				obsticles[next(i)] += 1
 	
+	ray.enabled = false	
 	if max(obsticles) == 0:
 		return target
 	

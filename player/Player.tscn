@@ -2111,7 +2111,7 @@ animation_name = "idle"
 script = ExtResource("5_x8kxw")
 idle_state = NodePath("../IdleState")
 attack_state = NodePath("../AttackState")
-move_speed = 100
+move_speed = 150
 animation_name = "walk"
 
 [node name="AttackState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "move_state", "hit_box")]

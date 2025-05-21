@@ -2,7 +2,8 @@ class_name Player
 extends CharacterBody2D
 
 var face_direction := "S"
-var health := 100
+var invulnerable := false
+var invulnerable_time := 0.1
 
 @onready var sprite = $AnimatedSprite2D
 @onready var anim = $AnimationPlayer
@@ -17,6 +18,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	state_machine.handle_input(event)
 
 func _process(delta: float) -> void:
+	if invulnerable_time > 0:
+		invulnerable_time -= delta
+	else:
+		invulnerable = false
 	state_machine.process(delta)
 	
 func _physics_process(delta: float) -> void:
@@ -59,8 +64,11 @@ func update_animation(name: String) -> void:
 	
 
 func take_damage(damage: int) -> void:
-	print("damage has been taken: &d" %damage)
-	pass
+	if invulnerable:
+		return
+	invulnerable = true;
+	invulnerable_time = 0.1;
+	GameState.take_damage(damage)
 	
 func get_super_coords() -> Vector2i:
 	return Util.super_coords(get_coords())
