@@ -14,9 +14,9 @@ func enter() -> void:
 	is_complete = false
 	hit_box.monitorable = true
 	super()
-	parent.anim_sprite.speed_scale = attack_speed
-	await parent.anim_sprite.animation_finished
-	parent.anim_sprite.speed_scale = 1.0
+	parent.anim.speed_scale = attack_speed
+	await parent.anim.animation_finished
+	parent.anim.speed_scale = 1.0
 	hit_box.monitorable = false
 	is_complete = true
 	

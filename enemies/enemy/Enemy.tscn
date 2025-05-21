@@ -1,14 +1,14 @@
 [gd_scene load_steps=21 format=3 uid="uid://0lraxp3egji5"]
 
-[ext_resource type="PackedScene" uid="uid://cwmgufs80ll6f" path="res://general/hurt_box/HurtBox.tscn" id="1_0hgql"]
-[ext_resource type="Texture2D" uid="uid://de67fpkvv6ras" path="res://enemies/goblin/goblin.png" id="1_epajg"]
-[ext_resource type="Script" uid="uid://g6d2odsxyjj" path="res://enemies/goblin/goblin.gd" id="1_u46fb"]
-[ext_resource type="PackedScene" uid="uid://ydna05wj5bdn" path="res://general/hit_box/HitBox.tscn" id="2_epajg"]
-[ext_resource type="PackedScene" uid="uid://b8lt8bwi6vwma" path="res://state_machine/StateMachine.tscn" id="3_eclco"]
-[ext_resource type="Script" uid="uid://dr7laclp5qyao" path="res://enemies/goblin/states/goblin_idle_state.gd" id="4_3dt5f"]
-[ext_resource type="Script" uid="uid://cjpmmtq8k3o3w" path="res://enemies/goblin/goblin_move_component.gd" id="5_eclco"]
-[ext_resource type="Script" uid="uid://bd7bncbavntpy" path="res://enemies/goblin/states/goblin_wander_state.gd" id="5_eva66"]
-[ext_resource type="Script" uid="uid://bybcf41i2cv81" path="res://enemies/goblin/line_of_sight.gd" id="9_puhp6"]
+[ext_resource type="Script" uid="uid://g6d2odsxyjj" path="res://enemies/enemy/enemy.gd" id="1_hlaae"]
+[ext_resource type="Texture2D" uid="uid://de67fpkvv6ras" path="res://enemies/enemy/goblin.png" id="2_hrh08"]
+[ext_resource type="PackedScene" uid="uid://b8lt8bwi6vwma" path="res://state_machine/StateMachine.tscn" id="3_fofsa"]
+[ext_resource type="Script" uid="uid://dr7laclp5qyao" path="res://enemies/enemy/states/goblin_idle_state.gd" id="4_q60wu"]
+[ext_resource type="Script" uid="uid://bd7bncbavntpy" path="res://enemies/enemy/states/goblin_wander_state.gd" id="5_weymc"]
+[ext_resource type="PackedScene" uid="uid://cwmgufs80ll6f" path="res://general/hurt_box/HurtBox.tscn" id="6_grpok"]
+[ext_resource type="PackedScene" uid="uid://ydna05wj5bdn" path="res://general/hit_box/HitBox.tscn" id="7_ywbaq"]
+[ext_resource type="Script" uid="uid://cjpmmtq8k3o3w" path="res://enemies/enemy/enemy_move_component.gd" id="8_twek0"]
+[ext_resource type="Script" uid="uid://bybcf41i2cv81" path="res://enemies/enemy/line_of_sight.gd" id="9_al01o"]
 
 [sub_resource type="Animation" id="Animation_u46fb"]
 length = 0.001
@@ -145,13 +145,13 @@ height = 32.0
 radius = 2.23607
 
 [node name="Goblin" type="CharacterBody2D"]
-script = ExtResource("1_u46fb")
+script = ExtResource("1_hlaae")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(0, -14)
-texture = ExtResource("1_epajg")
+texture = ExtResource("2_hrh08")
 hframes = 8
 vframes = 3
 
@@ -164,21 +164,21 @@ libraries = {
 visible = false
 shape = SubResource("CircleShape2D_5vjt1")
 
-[node name="StateMachine" parent="." node_paths=PackedStringArray("starting_state") instance=ExtResource("3_eclco")]
+[node name="StateMachine" parent="." node_paths=PackedStringArray("starting_state") instance=ExtResource("3_fofsa")]
 starting_state = NodePath("IdleState")
 
 [node name="IdleState" type="Node" parent="StateMachine" node_paths=PackedStringArray("move_state")]
-script = ExtResource("4_3dt5f")
+script = ExtResource("4_q60wu")
 move_state = NodePath("../WanderState")
 animation_name = "idle"
 
 [node name="WanderState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state")]
-script = ExtResource("5_eva66")
+script = ExtResource("5_weymc")
 idle_state = NodePath("../IdleState")
 move_speed = 100
 animation_name = "walk"
 
-[node name="HurtBox" parent="." instance=ExtResource("1_0hgql")]
+[node name="HurtBox" parent="." instance=ExtResource("6_grpok")]
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
@@ -186,7 +186,7 @@ position = Vector2(0, -13)
 shape = SubResource("CapsuleShape2D_j4b0n")
 debug_color = Color(0.973684, 0.0942808, 0.338275, 0.42)
 
-[node name="HitBox" parent="." instance=ExtResource("2_epajg")]
+[node name="HitBox" parent="." instance=ExtResource("7_ywbaq")]
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
@@ -194,10 +194,10 @@ shape = SubResource("CircleShape2D_lrajd")
 debug_color = Color(0.949211, 4.62055e-06, 0.574586, 0.42)
 
 [node name="MoveComponent" type="Node" parent="."]
-script = ExtResource("5_eclco")
+script = ExtResource("8_twek0")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-script = ExtResource("9_puhp6")
+script = ExtResource("9_al01o")
 angle_cone_of_vision = 50
 angle_between_rays = 10
 view_distance = 100

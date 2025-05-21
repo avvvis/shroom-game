@@ -1,4 +1,4 @@
-class_name Goblin
+class_name Enemy
 extends CharacterBody2D
 
 var face_direction = "down"

@@ -4,10 +4,10 @@ extends CharacterBody2D
 var face_direction := "S"
 var health := 100
 
-@onready var anim_sprite = $AnimatedSprite2D
+@onready var sprite = $AnimatedSprite2D
+@onready var anim = $AnimationPlayer
 @onready var state_machine = $StateMachine
 @onready var move_component = $MoveComponent
-@onready var interactions = $Interactions
 @onready var _tile_size: int = $"../Tiles".tile_set.tile_size.x
 
 func _ready() -> void:
@@ -51,12 +51,11 @@ func set_face_direction(target: Vector2) -> bool:
 	if new_dir == face_direction:
 		return false
 	
-	interactions.update_direction(new_dir)
 	face_direction = new_dir
 	return true
 	
 func update_animation(name: String) -> void:
-	anim_sprite.play(name + "_" + face_direction)
+	anim.play(name + "_" + face_direction)
 	
 
 func take_damage(damage: int) -> void:

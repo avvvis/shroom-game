@@ -8,7 +8,7 @@ var _inventory:Inventory = Inventory.new()
 
 ##player stats
 var speed:float = 1.0
-var damage:float = 10
+var damage:int = 10
 var health:float = 100
 var max_health:float = 100
 var points:int = 0
