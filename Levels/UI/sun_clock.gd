@@ -15,8 +15,8 @@ extends Control
 @export_range(0.0, 1.0, 0.01) var night_ratio := 0.5
 
 @export_range(0.0, 1.0, 0.001) var current_time_ratio := 0.0
-@export var advance_time := true
-@export var time_speed := 0.1#0.003 #0.1#0.003
+@export var advance_time := false
+@export var time_speed := 0.1 #0.003 #0.1#0.003
 
 @onready var black := Color.BLACK
 @onready var gray := Color.hex(0xAAAAAAFF)
