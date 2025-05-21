@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://5g0ck17xo6y0"]
+[gd_scene load_steps=18 format=3 uid="uid://5g0ck17xo6y0"]
 
 [ext_resource type="Script" uid="uid://m0h24osf5ffj" path="res://Levels/UI/main_UI.gd" id="1_xiihc"]
 [ext_resource type="Texture2D" uid="uid://bv58m5ar8agh6" path="res://assets/ilovethisbg.png" id="2_tg0pe"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://brqtkg6ikben0" path="res://Levels/UI/inventory.gd" id="10_86i1u"]
 [ext_resource type="PackedScene" uid="uid://cwxxu8a2vk1hw" path="res://Levels/World/world.tscn" id="10_nmp14"]
 [ext_resource type="Script" uid="uid://cutrt7nnkppm2" path="res://Levels/UI/item_list.gd" id="13_2kj1t"]
+[ext_resource type="PackedScene" uid="uid://bi5d5qdj6ns1b" path="res://Levels/UI/death.tscn" id="16_i6dmj"]
 
 [sub_resource type="Theme" id="Theme_k0a0m"]
 
@@ -741,6 +742,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 4
 script = ExtResource("13_2kj1t")
+
+[node name="DeathScreen" parent="." instance=ExtResource("16_i6dmj")]
 
 [connection signal="pressed" from="Menu/MenuPanel/MarginContainer/VBoxContainer/game" to="." method="_on_game_pressed"]
 [connection signal="pressed" from="Menu/MenuPanel/MarginContainer/VBoxContainer/options" to="." method="_on_options_pressed"]
