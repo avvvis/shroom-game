@@ -1099,7 +1099,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"sword1_E"]
+"values": [&"idle_S"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -2087,7 +2087,7 @@ script = ExtResource("1_wnvi2")
 texture_filter = 1
 position = Vector2(1, -16)
 sprite_frames = SubResource("SpriteFrames_mhpjh")
-animation = &"sword1_E"
+animation = &"idle_S"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
