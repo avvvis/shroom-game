@@ -43,6 +43,9 @@ extends Control
 @onready var pause = $Pause
 @onready var pauseBack = $Pause/MarginContainer/VBox/Back
 @onready var pauseMenu = $Pause/MarginContainer/VBox/MainMenu
+
+#Clock
+@onready var clock = $World/LeftTopDisplayers/SunClock
 ###############################################################
 #variables
 #################################################################
@@ -72,6 +75,7 @@ func _ready():
 		
 	load_settings()
 	last_volume_value = volume_slider.value
+	toggleWorldPause()
 
 func _input(event):
 	if(event.is_action_pressed("ui_cancel") && settings.visible):
@@ -101,9 +105,11 @@ func _input(event):
 		toggleWorldPause()
 	elif(event.is_action_pressed("ui_cancel") && world.visible && !pause.visible && !settings.visible):
 		togglePause()
+		toggleClockPause()
 		toggleWorldPause()
 	elif(event.is_action_pressed("ui_cancel") && pause.visible && !settings.visible && !exit_settings.visible):
 		togglePause()
+		toggleClockPause()
 		toggleWorldPause()
 		
 func _process(_delta):
@@ -173,11 +179,16 @@ func togglePause():
 func toggleWorldPause():
 	get_tree().paused = !get_tree().paused
 
+func toggleClockPause():
+		clock.advance_time = !clock.advance_time
+	
 ##################################################################################################
 #main menu buttons
 ##################################################################################################
 func _on_game_pressed() -> void:
 	toggleFullMenu()
+	toggleWorldPause()
+	toggleClockPause()
 	toggleWorld()
 
 
