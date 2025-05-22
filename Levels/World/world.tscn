@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwxxu8a2vk1hw"]
+[gd_scene load_steps=10 format=3 uid="uid://cwxxu8a2vk1hw"]
 
 [ext_resource type="Script" uid="uid://cv1v4atff4kye" path="res://Levels/World/world.gd" id="1_tipu6"]
 [ext_resource type="Texture2D" uid="uid://cljjjldja7is1" path="res://Levels/World/dumb_tileset.png" id="2_44qql"]
+[ext_resource type="Texture2D" uid="uid://cys1w6gyi2m2r" path="res://assets/Vegetation.png" id="3_4teai"]
 [ext_resource type="PackedScene" uid="uid://vl86lr0m2jow" path="res://player/Player.tscn" id="3_beiy3"]
 [ext_resource type="PackedScene" uid="uid://0lraxp3egji5" path="res://enemies/enemy/Enemy.tscn" id="4_vlb38"]
 
@@ -25,9 +26,19 @@ texture_region_size = Vector2i(32, 32)
 2:3/0 = 0
 3:3/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_37rwa"]
+texture = ExtResource("3_4teai")
+texture_region_size = Vector2i(48, 48)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 5)
+0:2/0/z_index = 1
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
 [sub_resource type="TileSet" id="TileSet_qxxuw"]
 tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_3owj8")
+sources/1 = SubResource("TileSetAtlasSource_37rwa")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_beiy3"]
 size = Vector2(64, 64)
@@ -36,6 +47,7 @@ size = Vector2(64, 64)
 script = ExtResource("1_tipu6")
 
 [node name="Tiles" type="TileMapLayer" parent="."]
+z_index = -1
 tile_set = SubResource("TileSet_qxxuw")
 
 [node name="ItemsLayer" type="Node2D" parent="."]
