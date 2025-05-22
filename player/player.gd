@@ -61,7 +61,6 @@ func set_face_direction(target: Vector2) -> bool:
 	
 func update_animation(name: String) -> void:
 	anim.play(name + "_" + face_direction)
-	
 
 func take_damage(damage: int) -> void:
 	if invulnerable:

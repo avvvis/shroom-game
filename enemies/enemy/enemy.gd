@@ -1,14 +1,15 @@
 class_name Enemy
 extends CharacterBody2D
 
-var face_direction = "down"
+var face_direction = "S"
 var invulnerable := false
-var invulnerable_time := 0.1
+var invulnerable_time := 0.0
+var attack_range := 20.0
 @export var point_value := 1
-@export var health := 30
+@export var health := 30.0
 
-@onready var animation = $AnimationPlayer
-@onready var sprite = $Sprite2D
+@onready var anim = $AnimationPlayer
+@onready var sprite = $AnimatedSprite2D
 @onready var state_machine = $StateMachine
 @onready var move_component = $MoveComponent
 
@@ -58,11 +59,8 @@ func set_face_direction(target: Vector2) -> bool:
 	return true
 	
 func update_animation(name: String) -> void:
-	var dir = face_direction
-	if dir == "right" or dir == "left":
-		dir = "side"
-	animation.play(name + "_" + dir)
-	
+	anim.play(name + "_" + face_direction)
+	print(anim.current_animation)
 
 func take_damage(damage: int) -> void:
 	if invulnerable:
@@ -76,6 +74,19 @@ func take_damage(damage: int) -> void:
 func die():
 	GameState.give_points(point_value)
 	queue_free()
+	
+func get_player_pos() -> Vector2:
+	return global_position.direction_to(GameState.get_player_pos())
+	
+func get_player_distance() -> float:
+	return global_position.distance_to(GameState.get_player_pos())
+	
+func is_player_in_range() -> bool:
+	if get_player_distance() < attack_range:
+		return true
+	else:
+		return false 
+		
 	
 	
 	

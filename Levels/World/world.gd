@@ -9,6 +9,7 @@ extends Node2D
 @onready var _regen_area_shape := $RegenArea/Shape
 @onready var _tile_size: int = $Tiles.tile_set.tile_size.x
 var _threads: Array[Thread] = []
+var timer := 5.0
 
 func _init() -> void:
 	# Resetting/initializing GameState here is not a good idea.

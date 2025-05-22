@@ -6,7 +6,7 @@ extends State
 
 @export var move_speed: int
 
-var direction: Vector2
+var direction := Vector2.ZERO
 
 func process_physics(delta: float) -> State:
 	if direction == Vector2.ZERO:

@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cwxxu8a2vk1hw"]
+[gd_scene load_steps=8 format=3 uid="uid://cwxxu8a2vk1hw"]
 
 [ext_resource type="Script" uid="uid://cv1v4atff4kye" path="res://Levels/World/world.gd" id="1_tipu6"]
 [ext_resource type="Texture2D" uid="uid://cljjjldja7is1" path="res://Levels/World/dumb_tileset.png" id="2_44qql"]
 [ext_resource type="PackedScene" uid="uid://vl86lr0m2jow" path="res://player/Player.tscn" id="3_beiy3"]
+[ext_resource type="PackedScene" uid="uid://0lraxp3egji5" path="res://enemies/enemy/Enemy.tscn" id="4_vlb38"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3owj8"]
 texture = ExtResource("2_44qql")
@@ -48,5 +49,8 @@ shape = SubResource("RectangleShape2D_beiy3")
 
 [node name="Camera" type="Camera2D" parent="PlayerCharacter"]
 zoom = Vector2(4, 4)
+
+[node name="Enemy" parent="." instance=ExtResource("4_vlb38")]
+position = Vector2(480, 268)
 
 [connection signal="body_exited" from="RegenArea" to="." method="_on_regen_area_body_exited"]

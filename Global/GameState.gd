@@ -18,6 +18,7 @@ var player_pos: Vector2 = Vector2.ZERO
 
 var hamski_hack_prosze_tego_psia_krew_nie_tykac_bo_zamorduje = 0
 
+
 func take_damage(damage: float):
 	health -= damage
 

@@ -40,7 +40,7 @@ func get_movment_direction(target: Vector2) -> Vector2:
 				obsticles[next(i)] += 1
 	
 	ray.enabled = false	
-	if max(obsticles) == 0:
+	if obsticles.max() == 0:
 		return target
 	
 	for i in 8:
