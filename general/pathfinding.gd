@@ -29,23 +29,25 @@ func next(i: int) -> int:
 
 func get_movment_direction(target: Vector2) -> Vector2:
 	ray.enabled = true
-	ray.rotation = 0
-	for i in 8:
-		obsticles[i] = 0;
-		interest[i] = directions[i].dot(target)
+	for i in range(8):
+		var dir = directions[i].normalized()
+		ray.rotation = dir.angle()  # rotate ray to direction
+		ray.force_raycast_update()  # update raycast result
+		obsticles[i] = 0
+		interest[i] = dir.dot(target)
 		if ray.is_colliding():
-			if ray.get_collider() == Enemy or ray.get_collider() == Obsticle:
+			var collider = ray.get_collider()
+			# Use `is` to check type, or check group membership
+			if collider is Enemy or collider is Obsticle:
 				obsticles[i] += 3
 				obsticles[prev(i)] += 1
 				obsticles[next(i)] += 1
-	
-	ray.enabled = false	
+	ray.enabled = false
+	print(obsticles)
 	if obsticles.max() == 0:
-		return target
-	
-	for i in 8:
-		interest[i] -= obsticles[i]	
-	
-	return directions[interest.find(interest.max())]
+		return target.normalized()  # probably you want it normalized
+	for i in range(8):
+		interest[i] -= obsticles[i]
+	return directions[interest.find(interest.max())].normalized()
 	
 	
