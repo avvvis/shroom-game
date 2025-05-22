@@ -87,10 +87,13 @@ static func generate(gen_params: WorldGenParams, super_coords: Vector2i) -> Chun
 		var y = coords.y
 		var r_shroom := absf(white_gen.get_noise_3d(x, y, 100))
 		var r_goblin := absf(white_gen.get_noise_3d(x, y, 200))
+		var r_tree := absf(white_gen.get_noise_3d(x, y, 300))
 		if r_shroom <= 0.005:
 			chunk.get_cell(rel_coords).has_shroom = true
 		if r_goblin <= 0.0005:
 			chunk.get_cell(rel_coords).has_goblin = true
+		if r_tree <= 0.005:
+			chunk.get_cell(rel_coords).has_tree = true
 	
 	# alternative method of generation:
 	# (honestly idk if it doesn't yield better results...)

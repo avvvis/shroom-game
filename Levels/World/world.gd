@@ -97,7 +97,10 @@ func _populate_chunk_at(super_coords: Vector2i) -> void:
 				var enemy_scene = preload("res://enemies/enemy/Enemy.tscn").instantiate()
 				enemy_scene.position = coords * _tile_size
 				_enemies_layer.call_thread_safe("add_child", enemy_scene)
-			_tiles.call_thread_safe("set_cell", coords, 0, tile_coords)
+			if cell.has_tree:
+				_tiles.call_thread_safe("set_cell", coords, 1, Vector2i(0, 2))
+			else:
+				_tiles.call_thread_safe("set_cell", coords, 0, tile_coords)
 
 func _on_shroom_pickup(body: Node2D, shroom_scene) -> void:
 	#print("bbbbbbbbbbbbbbbbbbbbbbbbbbb ", shroom_scene, " and ", body)
