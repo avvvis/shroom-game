@@ -23,7 +23,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fletv"]
 shader = ExtResource("3_m21ei")
 shader_parameter/time = 0.0
-shader_parameter/resolution = Vector2(0, 0)
 
 [sub_resource type="Theme" id="Theme_k0a0m"]
 
