@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://d0qh1hd4gk3p7"]
+[gd_scene load_steps=3 format=3 uid="uid://cjfgbteopd460"]
 
 [ext_resource type="Script" uid="uid://ccxi5j0b4qyea" path="res://Levels/UI/finished_demo.gd" id="1_qpkgk"]
 [ext_resource type="FontFile" uid="uid://v5wm4xvtuo2a" path="res://assets/Simpsonfont.ttf" id="2_g47e3"]

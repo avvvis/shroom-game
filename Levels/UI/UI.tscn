@@ -15,9 +15,9 @@
 [ext_resource type="Script" uid="uid://brqtkg6ikben0" path="res://Levels/UI/inventory.gd" id="10_86i1u"]
 [ext_resource type="PackedScene" uid="uid://cwxxu8a2vk1hw" path="res://Levels/World/world.tscn" id="10_nmp14"]
 [ext_resource type="Script" uid="uid://cutrt7nnkppm2" path="res://Levels/UI/item_list.gd" id="13_2kj1t"]
-[ext_resource type="PackedScene" uid="uid://bi5d5qdj6ns1b" path="res://Levels/UI/death.tscn" id="16_i6dmj"]
-[ext_resource type="PackedScene" uid="uid://d0qh1hd4gk3p7" path="res://Levels/UI/finished_demo.tscn" id="17_2np4p"]
-[ext_resource type="PackedScene" uid="uid://brqlpom4m2il8" path="res://Levels/UI/overdose.tscn" id="18_m21ei"]
+[ext_resource type="PackedScene" uid="uid://wus4yuy14a8w" path="res://Levels/UI/death.tscn" id="16_i6dmj"]
+[ext_resource type="PackedScene" uid="uid://cjfgbteopd460" path="res://Levels/UI/finished_demo.tscn" id="17_2np4p"]
+[ext_resource type="PackedScene" uid="uid://cchv2iln0qw3h" path="res://Levels/UI/overdose.tscn" id="18_m21ei"]
 
 [sub_resource type="Theme" id="Theme_k0a0m"]
 

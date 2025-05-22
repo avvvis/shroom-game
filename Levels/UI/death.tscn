@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bi5d5qdj6ns1b"]
+[gd_scene load_steps=3 format=3 uid="uid://wus4yuy14a8w"]
 
 [ext_resource type="Script" uid="uid://dvl0mbcuemfk2" path="res://Levels/UI/death_scene.gd" id="1_n0hrn"]
 [ext_resource type="FontFile" uid="uid://v5wm4xvtuo2a" path="res://assets/Simpsonfont.ttf" id="1_spql7"]

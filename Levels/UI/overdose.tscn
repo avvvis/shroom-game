@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://brqlpom4m2il8"]
+[gd_scene load_steps=4 format=3 uid="uid://cchv2iln0qw3h"]
 
 [ext_resource type="Script" uid="uid://cbhcnp4ns8g6u" path="res://Levels/UI/overdose.gd" id="1_qjbks"]
 [ext_resource type="Texture2D" uid="uid://d1t7r8t15pq0k" path="res://assets/shroomy.jpg" id="2_6sody"]
