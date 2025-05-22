@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://5g0ck17xo6y0"]
+[gd_scene load_steps=21 format=3 uid="uid://5g0ck17xo6y0"]
 
 [ext_resource type="Script" uid="uid://m0h24osf5ffj" path="res://Levels/UI/main_UI.gd" id="1_xiihc"]
 [ext_resource type="Texture2D" uid="uid://bv58m5ar8agh6" path="res://assets/ilovethisbg.png" id="2_tg0pe"]
@@ -6,14 +6,15 @@
 [ext_resource type="Script" uid="uid://c4v1v1ymqatyg" path="res://Levels/UI/menu.gd" id="4_g270c"]
 [ext_resource type="Script" uid="uid://dupgrg2wevyir" path="res://Levels/UI/sun_clock.gd" id="4_nmp14"]
 [ext_resource type="Script" uid="uid://caed4taxpimpd" path="res://Levels/UI/label.gd" id="5_2gfmn"]
-[ext_resource type="Script" uid="uid://dlaebbrda0pel" path="res://Levels/UI/logo_buttons.gd" id="5_ofmst"]
-[ext_resource type="Texture2D" uid="uid://3yciuak73kd2" path="res://assets/icon.svg" id="6_quhy2"]
 [ext_resource type="Script" uid="uid://cn52wib5gm6ks" path="res://Levels/UI/health_bar.gd" id="6_sh7ty"]
 [ext_resource type="Script" uid="uid://bnwujv5lftxlp" path="res://Levels/UI/main_settings_panel.gd" id="7_camxr"]
 [ext_resource type="Script" uid="uid://dtlrtrftvhm8e" path="res://Levels/UI/exit_confirm.gd" id="8_684pd"]
 [ext_resource type="Script" uid="uid://b4knqokidlnwk" path="res://Levels/UI/world.gd" id="9_qxt7c"]
 [ext_resource type="Script" uid="uid://brqtkg6ikben0" path="res://Levels/UI/inventory.gd" id="10_86i1u"]
+[ext_resource type="Theme" uid="uid://b1ydqaiv5c1e6" path="res://themes/build/light_theme.tres" id="10_fletv"]
+[ext_resource type="Texture2D" uid="uid://bubjw1yoqfwga" path="res://assets/Title.png" id="10_m21ei"]
 [ext_resource type="PackedScene" uid="uid://cwxxu8a2vk1hw" path="res://Levels/World/world.tscn" id="10_nmp14"]
+[ext_resource type="Texture2D" uid="uid://7ihq1ldjumgq" path="res://assets/clickme.jpg" id="12_fletv"]
 [ext_resource type="Script" uid="uid://cutrt7nnkppm2" path="res://Levels/UI/item_list.gd" id="13_2kj1t"]
 [ext_resource type="PackedScene" uid="uid://wus4yuy14a8w" path="res://Levels/UI/death.tscn" id="16_i6dmj"]
 [ext_resource type="PackedScene" uid="uid://cjfgbteopd460" path="res://Levels/UI/finished_demo.tscn" id="17_2np4p"]
@@ -96,7 +97,6 @@ layout_mode = 2
 script = ExtResource("6_sh7ty")
 
 [node name="Menu" type="TextureRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -140,7 +140,7 @@ theme_override_constants/separation = 15
 
 [node name="Label" type="Label" parent="Menu/MenuPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Hello Gamerinho,"
+text = "Hello Gamer,"
 
 [node name="game" type="Button" parent="Menu/MenuPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -178,24 +178,24 @@ text = "Ver.0.0.0.0.0.0.0.0 / build: none"
 
 [node name="logo_buttons" type="HBoxContainer" parent="Menu"]
 layout_mode = 1
-offset_left = 350.0
+offset_left = 76.0
 offset_top = 108.0
-offset_right = 618.0
-offset_bottom = 236.0
+offset_right = 366.0
+offset_bottom = 252.0
 scale = Vector2(3, 3)
-script = ExtResource("5_ofmst")
 
-[node name="logo_button" type="TextureButton" parent="Menu/logo_buttons"]
+[node name="PanelContainer" type="PanelContainer" parent="Menu/logo_buttons"]
+layout_mode = 2
+theme = ExtResource("10_fletv")
+
+[node name="logo_button" type="TextureButton" parent="Menu/logo_buttons/PanelContainer"]
+custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 size_flags_horizontal = 0
-texture_normal = ExtResource("6_quhy2")
-texture_pressed = ExtResource("6_quhy2")
-
-[node name="patreon_button" type="TextureButton" parent="Menu/logo_buttons"]
-layout_mode = 2
-size_flags_horizontal = 0
-texture_normal = ExtResource("6_quhy2")
-texture_pressed = ExtResource("6_quhy2")
+texture_normal = ExtResource("10_m21ei")
+texture_focused = ExtResource("12_fletv")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="Credits" type="PanelContainer" parent="Menu"]
 visible = false
@@ -753,15 +753,17 @@ visible = false
 visible = false
 
 [node name="OverdoseScreen" parent="." instance=ExtResource("18_m21ei")]
+visible = false
 
 [connection signal="pressed" from="Menu/MenuPanel/MarginContainer/VBoxContainer/game" to="." method="_on_game_pressed"]
 [connection signal="pressed" from="Menu/MenuPanel/MarginContainer/VBoxContainer/options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="Menu/MenuPanel/MarginContainer/VBoxContainer/creds" to="." method="_on_creds_pressed"]
 [connection signal="pressed" from="Menu/MenuPanel/MarginContainer/VBoxContainer/ausgang" to="." method="_on_ausgang_pressed"]
+[connection signal="pressed" from="Menu/logo_buttons/PanelContainer/logo_button" to="." method="_on_logo_button_pressed"]
 [connection signal="pressed" from="Menu/Credits/Back" to="." method="_on_back_credits_pressed"]
 [connection signal="pressed" from="exit_confirm/ColorRect/MarginContainer/VBoxContainer/yes" to="." method="_on_yes_pressed"]
 [connection signal="pressed" from="exit_confirm/ColorRect/MarginContainer/VBoxContainer/no" to="." method="_on_no_pressed"]
-[connection signal="pressed" from="Pause/MarginContainer/VBox/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="Pause/MarginContainer/VBox/MainMenu" to="." method="_on_pause_main_menu_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/VBox/Settings" to="." method="_on_pause_settings_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/VBox/Back" to="." method="_on_pause_back_pressed"]
 [connection signal="item_selected" from="Settings/MarginContainer/VBox/ResPanel/MarginContainer/ResolutionOption" to="." method="_on_resolution_option_item_selected"]

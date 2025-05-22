@@ -172,10 +172,7 @@ func togglePause():
 	await get_tree().process_frame
 	if(pause.visible):
 		pauseBack.grab_focus()
-		if(world.visible):
-			pauseMenu.disabled = true
-		else:
-			pauseMenu.disabled = false
+		pauseMenu.disabled = false
 	
 func toggleWorldPause():
 	get_tree().paused = !get_tree().paused
@@ -341,3 +338,16 @@ func set_max_stamina(val):
 
 func update_stamina(val):
 	pass
+
+
+func _on_pause_main_menu_pressed() -> void:
+	await get_tree().create_timer(0.2).timeout
+	get_parent().process_mode = Node.PROCESS_MODE_ALWAYS
+	GameState.hard_reset()
+	get_tree().reload_current_scene()
+	#get_tree().paused = false;
+	
+
+
+func _on_logo_button_pressed() -> void:
+	OS.shell_open("https://www.youtube.com/watch?v=dQw4w9WgXcQ&autoplay=1")
