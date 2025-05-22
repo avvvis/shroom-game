@@ -82,11 +82,15 @@ static func generate(gen_params: WorldGenParams, super_coords: Vector2i) -> Chun
 	# 3. Generate point-like strucutres
 	
 	for rel_coords in Util.vec2i_range(Vector2i(0, 0), Vector2i(SIZE, SIZE)):
-		var r := absf(white_gen.get_noise_2dv(corner_coords + rel_coords))
-		if r <= 0.005:
+		var coords := corner_coords + rel_coords
+		var x = coords.x
+		var y = coords.y
+		var r_shroom := absf(white_gen.get_noise_3d(x, y, 100))
+		var r_goblin := absf(white_gen.get_noise_3d(x, y, 200))
+		if r_shroom <= 0.005:
 			chunk.get_cell(rel_coords).has_shroom = true
-			# you'd set this cell to be like a tree or something...
-			#chunk.get_cell(rel_coords).biomic_xy = Vector2(0, 0)
+		if r_goblin <= 0.0005:
+			chunk.get_cell(rel_coords).has_goblin = true
 	
 	# alternative method of generation:
 	# (honestly idk if it doesn't yield better results...)

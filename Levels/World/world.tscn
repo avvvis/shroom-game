@@ -40,6 +40,8 @@ tile_set = SubResource("TileSet_qxxuw")
 
 [node name="ItemsLayer" type="Node2D" parent="."]
 
+[node name="EnemiesLayer" type="Node2D" parent="."]
+
 [node name="RegenArea" type="Area2D" parent="."]
 
 [node name="Shape" type="CollisionShape2D" parent="RegenArea"]
