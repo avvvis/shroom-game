@@ -5,7 +5,7 @@ var face_direction = "S"
 var invulnerable := false
 var invulnerable_time := 0.0
 var attack_range := 20.0
-@export var point_value := 1
+@export var point_value := 5
 @export var health := 30.0
 
 @onready var anim = $AnimationPlayer
@@ -60,7 +60,6 @@ func set_face_direction(target: Vector2) -> bool:
 	
 func update_animation(name: String) -> void:
 	anim.play(name + "_" + face_direction)
-	print(anim.current_animation)
 
 func take_damage(damage: int) -> void:
 	if invulnerable:

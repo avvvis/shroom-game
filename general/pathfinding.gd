@@ -3,7 +3,7 @@ extends Node2D
 
 @onready var ray = $RayCast2D
 
-var obsticles: Array[float] = [0, 0, 0, 0, 0, 0, 0, 0]
+var obstacles: Array[float] = [0, 0, 0, 0, 0, 0, 0, 0]
 var interest: Array[float] = [0, 0, 0, 0, 0, 0, 0, 0]
 var directions: Array[Vector2] = [
 	Vector2(0, -1),
@@ -17,8 +17,8 @@ var directions: Array[Vector2] = [
 ]
 
 func _ready() -> void:
-	for dir in directions:
-		dir.normalized()
+	for i in directions.size():
+		directions[i].normalized()
 	ray.enabled = false
 		
 func prev(i: int) -> int:
@@ -30,24 +30,21 @@ func next(i: int) -> int:
 func get_movment_direction(target: Vector2) -> Vector2:
 	ray.enabled = true
 	for i in range(8):
-		var dir = directions[i].normalized()
-		ray.rotation = dir.angle()  # rotate ray to direction
-		ray.force_raycast_update()  # update raycast result
-		obsticles[i] = 0
-		interest[i] = dir.dot(target)
+		ray.target_position = directions[i] * 50
+		ray.force_raycast_update()  
+		obstacles[i] = 0
+		interest[i] = directions[i].dot(target)
 		if ray.is_colliding():
 			var collider = ray.get_collider()
-			# Use `is` to check type, or check group membership
-			if collider is Enemy or collider is Obsticle:
-				obsticles[i] += 3
-				obsticles[prev(i)] += 1
-				obsticles[next(i)] += 1
+			if collider is Enemy or collider is Obstacle:
+				obstacles[i] += 5
+				obstacles[prev(i)] += 3
+				obstacles[next(i)] += 3
 	ray.enabled = false
-	print(obsticles)
-	if obsticles.max() == 0:
-		return target.normalized()  # probably you want it normalized
+	if obstacles.max() == 0:
+		return target.normalized()
 	for i in range(8):
-		interest[i] -= obsticles[i]
+		interest[i] -= obstacles[i]
 	return directions[interest.find(interest.max())].normalized()
 	
 	
