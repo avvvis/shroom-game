@@ -1,9 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://5g0ck17xo6y0"]
+[gd_scene load_steps=22 format=3 uid="uid://5g0ck17xo6y0"]
 
 [ext_resource type="Script" uid="uid://m0h24osf5ffj" path="res://Levels/UI/main_UI.gd" id="1_xiihc"]
 [ext_resource type="Texture2D" uid="uid://bv58m5ar8agh6" path="res://assets/ilovethisbg.png" id="2_tg0pe"]
 [ext_resource type="Script" uid="uid://bqn40ilhg4uy1" path="res://Levels/UI/FULLmenu.gd" id="3_eauwy"]
 [ext_resource type="Shader" uid="uid://1gdmiqpr0sb3" path="res://Levels/UI/acidity.gdshader" id="3_m21ei"]
+[ext_resource type="Script" uid="uid://bdvfmaq3hnxbe" path="res://Levels/UI/world_port.gd" id="4_fletv"]
 [ext_resource type="Script" uid="uid://c4v1v1ymqatyg" path="res://Levels/UI/menu.gd" id="4_g270c"]
 [ext_resource type="Script" uid="uid://dupgrg2wevyir" path="res://Levels/UI/sun_clock.gd" id="4_nmp14"]
 [ext_resource type="Script" uid="uid://caed4taxpimpd" path="res://Levels/UI/label.gd" id="5_2gfmn"]
@@ -16,11 +17,13 @@
 [ext_resource type="Script" uid="uid://brqtkg6ikben0" path="res://Levels/UI/inventory.gd" id="10_86i1u"]
 [ext_resource type="PackedScene" uid="uid://cwxxu8a2vk1hw" path="res://Levels/World/world.tscn" id="10_nmp14"]
 [ext_resource type="Script" uid="uid://cutrt7nnkppm2" path="res://Levels/UI/item_list.gd" id="13_2kj1t"]
-[ext_resource type="PackedScene" uid="uid://bi5d5qdj6ns1b" path="res://Levels/UI/death.tscn" id="16_i6dmj"]
-[ext_resource type="PackedScene" uid="uid://d0qh1hd4gk3p7" path="res://Levels/UI/finished_demo.tscn" id="17_2np4p"]
+[ext_resource type="PackedScene" uid="uid://wus4yuy14a8w" path="res://Levels/UI/death.tscn" id="16_i6dmj"]
+[ext_resource type="PackedScene" uid="uid://cjfgbteopd460" path="res://Levels/UI/finished_demo.tscn" id="17_2np4p"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fletv"]
 shader = ExtResource("3_m21ei")
+shader_parameter/time = 0.0
+shader_parameter/resolution = Vector2(0, 0)
 
 [sub_resource type="Theme" id="Theme_k0a0m"]
 
@@ -56,6 +59,7 @@ offset_right = 3700.0
 offset_bottom = 2090.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("4_fletv")
 
 [node name="viewport" type="SubViewport" parent="World/WorldPort"]
 process_mode = 1
