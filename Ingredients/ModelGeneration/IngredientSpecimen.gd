@@ -4,11 +4,13 @@ class_name IngredientSpecimen
 var alchemy_stats
 var new_x
 
+const box_size = 10
+
 func _init():
 	# To jest brzydkie, ale nie ma już czasu zrobić tego sensownie
 	itemID = "Shroom" + str(GameState.hamski_hack_prosze_tego_psia_krew_nie_tykac_bo_zamorduje)
 	var i = GameState.hamski_hack_prosze_tego_psia_krew_nie_tykac_bo_zamorduje
-	new_x = i * 10
+	new_x = i * box_size
 	
 	usable = true
 	type = "3d"
@@ -17,12 +19,18 @@ func _init():
 	camera.current = true
 	camera.position = Vector3(new_x, 2.5, 5.0)
 	
-	if i == 0:
-		var light = DirectionalLight3D.new()
-		light.rotate_x(0.7)
-		add_child(light)
-	
+	var environment = Environment.new()
+	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+	environment.ambient_light_color = Color(0.8, 0.6, 1.0)
+	environment.ambient_light_energy = 1.0
+	camera.environment = environment
 	add_child(camera)
+
+	var light = OmniLight3D.new()
+	light.position = Vector3(new_x - box_size / 4, box_size, box_size / 2)
+	light.omni_range = 1.5 * box_size
+	light.omni_attenuation = -0.5 
+	add_child(light)
 	
 	GameState.hamski_hack_prosze_tego_psia_krew_nie_tykac_bo_zamorduje += 1
 
