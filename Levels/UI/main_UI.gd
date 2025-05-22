@@ -75,7 +75,8 @@ func _ready():
 		
 	load_settings()
 	last_volume_value = volume_slider.value
-	toggleWorldPause()
+	#toggleWorldPause()
+	get_tree().paused = true
 
 func _input(event):
 	if(event.is_action_pressed("ui_cancel") && settings.visible):
