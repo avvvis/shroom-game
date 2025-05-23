@@ -9,6 +9,10 @@ extends CanvasLayer
 
 # Called when you want to show death screen
 func show_death():
+	var UI = get_parent()
+	if(UI.inv.visible):
+		UI.toggleInv()
+	UI.lefttop.visible = false
 	#get_parent().process_mode = Node.PROCESS_MODE_PAUSABLE
 	fade_rect.modulate.a = 0
 	label.modulate.a = 0

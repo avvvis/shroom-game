@@ -8,6 +8,10 @@ extends CanvasLayer
 @onready var patience = $FadeRect/PanelContainer
 
 func show_finish():
+	var UI = get_parent()
+	if(UI.inv.visible):
+		UI.toggleInv()
+	UI.lefttop.visible = false
 	#get_parent().process_mode = Node.PROCESS_MODE_PAUSABLE
 	fade_rect.modulate.a = 0
 	label.modulate.a = 0

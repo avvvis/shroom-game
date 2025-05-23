@@ -35,7 +35,7 @@ extends Control
 
 #world node
 @onready var world = $World
-
+@onready var lefttop = $World/LeftTopDisplayers
 #inventory nodes
 @onready var inv = $Inventory
 

@@ -30,6 +30,46 @@ vec3 scramble(float f, float s) {
 	return vec3(x, y, z);
 }
 
+// ----------------------------------------------------------------------------
+// RGB ↔ HWB
+// ----------------------------------------------------------------------------
+vec3 rgb2hwb(vec3 c){
+    float maxc = max(max(c.r,c.g),c.b);
+    float minc = min(min(c.r,c.g),c.b);
+    float whiteness = minc;
+    float blackness = 1.0 - maxc;
+    // compute hue like in HSV
+    float hue = 0.0;
+    if(maxc > minc){
+        float d = maxc - minc;
+        if(maxc == c.r) hue = mod((c.g - c.b) / d, 6.0);
+        else if(maxc == c.g) hue = (c.b - c.r) / d + 2.0;
+        else                      hue = (c.r - c.g) / d + 4.0;
+        hue = hue / 6.0;
+        if(hue < 0.0) hue += 1.0;
+    }
+    return vec3(hue, whiteness, blackness);
+}
+
+vec3 hwb2rgb(vec3 hwb){
+    float h = hwb.x * 6.0;
+    float w = hwb.y;
+    float b = hwb.z;
+    float v = 1.0 - b;
+    int   i = int(floor(h)) % 6;
+    float f = fract(h);
+    if((i & 1)==1) f = 1.0 - f;
+    float n = w + f * (v - w);
+
+    if(i==0) return vec3(v,n,w);
+    if(i==1) return vec3(n,v,w);
+    if(i==2) return vec3(w,v,n);
+    if(i==3) return vec3(w,n,v);
+    if(i==4) return vec3(n,w,v);
+             return vec3(v,w,n);
+}
+
+
 void fragment() {
 	float effective_time = time / 100.0;
 
@@ -60,10 +100,18 @@ void fragment() {
 	vec3 m_3 = scramble(noise(SCREEN_UV + effective_time * vec2(1.0, 0.5) + vec2(30.0, 40.0)), noise(SCREEN_UV + effective_time * vec2(0.8, 0.3) + vec2(50.0, 60.0)));
 	vec3 shifted_color = mat3(m_1, m_2, m_3) * inflated_color.xyz;
 
+	vec3 hwb_shift = rgb2hwb(shifted_color);
+
+	hwb_shift.x += 0.6*acidity;
+	hwb_shift.y = clamp(hwb_shift.y * (1.0 - acidity*0.5), 0.0, 1.0);
+	hwb_shift.z = clamp(hwb_shift.z * (1.0 - acidity*0.5), 0.0, 1.0);
+
+	shifted_color = hwb2rgb(hwb_shift);
+
 	vec3 unburnt_color = mix(COLOR.xyz, shifted_color, acidity_colors);
 
 	// BURN
-#define burn_density 5.0
+#define burn_density 3.0
 #define burn_speed 10.0
 
 #define hue_density 5.0
@@ -117,6 +165,14 @@ void fragment() {
 	}
 
 	vec3 burned_color = mix(unburnt_color, burning_color, burned);
+	
+	vec3 hwb_burn = rgb2hwb(burned_color);
+
+	hwb_burn.x += 0.4*acidity;
+	hwb_burn.y = clamp(hwb_burn.y * (1.0 - acidity*0.5), 0.0, 1.0);
+	hwb_burn.z = clamp(hwb_burn.z * (1.0 - acidity*0.5), 0.0, 1.0);
+
+	burned_color = hwb2rgb(hwb_burn);
 
 	COLOR.xyz = burned_color;
 
