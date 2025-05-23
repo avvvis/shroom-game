@@ -111,7 +111,7 @@ void fragment() {
 	vec3 unburnt_color = mix(COLOR.xyz, shifted_color, acidity_colors);
 
 	// BURN
-#define burn_density 3.0
+#define burn_density 5.0
 #define burn_speed 10.0
 
 #define hue_density 5.0
@@ -168,7 +168,7 @@ void fragment() {
 	
 	vec3 hwb_burn = rgb2hwb(burned_color);
 
-	hwb_burn.x += 0.4*acidity;
+	hwb_burn.x += 0.4*acidity*sin(time);
 	hwb_burn.y = clamp(hwb_burn.y * (1.0 - acidity*0.5), 0.0, 1.0);
 	hwb_burn.z = clamp(hwb_burn.z * (1.0 - acidity*0.5), 0.0, 1.0);
 
