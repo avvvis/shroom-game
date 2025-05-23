@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
 uniform float time;
+uniform float acidity;
 
 // Code from https://godotshaders.com/snippet/2d-noise/
 vec2 random(vec2 uv){
@@ -30,7 +31,6 @@ vec3 scramble(float f, float s) {
 }
 
 void fragment() {
-	float acidity = time / 50.0;
 	float effective_time = time / 100.0;
 	
 	float acidity_inflation = acidity;

@@ -3,12 +3,12 @@ class_name AlchemyStats
 
 static func get_distribution_of_distributions():
 	return {
-		"speed": DistributionOfDistributions.new(-0.5, 0.5, 0.05, 0.1),
-		"damage": DistributionOfDistributions.new(-2, 2, 0.2, 0.4),
-		"health": DistributionOfDistributions.new(-50, 50, 5, 20),
-		"max health": DistributionOfDistributions.new(-30, 30, 5, 10),
-		"attack speed": DistributionOfDistributions.new(-0.5, 0.5, 0.05, 0.1),
-		"acidity": DistributionOfDistributions.new(-5.0, 10.0, 3.0, 3.1)
+		"speed": DistributionOfDistributions.new(-0.5, 1.0, 0.05, 0.1),
+		"damage": DistributionOfDistributions.new(-2, 4, 0.2, 0.4),
+		"health": DistributionOfDistributions.new(-50, 100, 5, 20),
+		"max health": DistributionOfDistributions.new(-30, 60, 5, 10),
+		"attack speed": DistributionOfDistributions.new(-0.5, 1.0, 0.05, 0.1),
+		"acidity": DistributionOfDistributions.new(-5.0, 15.0, 3.0, 3.1)
 	}
 
 static func calculate_points(stats: Dictionary):

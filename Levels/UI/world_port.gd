@@ -9,6 +9,8 @@ func _ready():
 		push_error("No ShaderMaterial assigned to SubViewportContainer.material")
 
 	sub_viewport = $viewport
+	
+	GameState.acidity_changed.connect(_on_acidity_changed)
 
 func _process(delta):
 	if not shader_material:
@@ -16,3 +18,6 @@ func _process(delta):
 
 	var time_sec = Time.get_ticks_msec() / 1000.0
 	shader_material.set_shader_parameter("time", time_sec)
+
+func _on_acidity_changed(acidity):
+	shader_material.set_shader_parameter("acidity", acidity / GameState.max_acidity)
