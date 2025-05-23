@@ -1,6 +1,9 @@
 ## Holds the global state of a game.
 extends Node
 
+signal overdosed
+signal acidity_changed
+
 var _day_counter := 0
 var _game_seed := 0
 var _board: Board = null
@@ -13,11 +16,20 @@ var health:float = 100
 var max_health:float = 100
 var points:int = 0
 var attack_speed:float = 1.0
+var acidity:float = 0.0
+const max_acidity = 100.0
 
 var player_pos: Vector2 = Vector2.ZERO
 
 var hamski_hack_prosze_tego_psia_krew_nie_tykac_bo_zamorduje = 0
 
+func apply_acidity(change: float):
+	acidity += change
+	
+	acidity_changed.emit(acidity)
+	
+	if acidity >= max_acidity:
+		overdosed.emit()
 
 func take_damage(damage: float):
 	health -= damage
