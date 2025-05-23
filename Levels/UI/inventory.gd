@@ -38,6 +38,8 @@ func populate():
 	my_grab_focus()
 
 func _ready():
+	Biglabel.clear()
+	Smalllabel.clear()
 	self.visible = false
 
 func clear():
