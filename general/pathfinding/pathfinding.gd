@@ -4,11 +4,12 @@ extends Node2D
 @onready var ray = $RayCast2D
 @export var vec_length := 20
 var number_of_dir := 8
-var old_interest_importance := 0.1
+var old_interest_importance := 0.2
 
 var obstacles: Array[float] = [0, 0, 0, 0, 0, 0, 0, 0]
 var interest: Array[float] = [0, 0, 0, 0, 0, 0, 0, 0]
 var old_interest: Array[float] = [0, 0, 0, 0, 0, 0, 0, 0]
+var outcome: Array[float] = [0, 0, 0, 0, 0, 0, 0, 0]
 var directions: Array[Vector2] = [
 	Vector2(0, -1),
 	Vector2(1, -1),
@@ -45,14 +46,14 @@ func get_movment_direction(target: Vector2) -> Vector2:
 			var collider = ray.get_collider()
 			if collider is not Player:
 				obstacles[i] += 5
-				obstacles[prev(i)] += 2
-				obstacles[next(i)] += 2
+				obstacles[prev(i)] += 3
+				obstacles[next(i)] += 3
 	ray.enabled = false
 	if obstacles.max() == 0:
 		return target.normalized()
 	for i in range(number_of_dir):
 		interest[i] -= obstacles[i]
-		interest[i] +=  old_interest_importance * old_interest[i]
-	return directions[interest.find(interest.max())].normalized()
+		outcome[i] = interest[i] + old_interest_importance * old_interest[i]
+	return directions[outcome.find(outcome.max())].normalized()
 	
 	

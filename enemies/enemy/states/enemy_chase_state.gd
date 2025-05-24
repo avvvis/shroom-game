@@ -9,5 +9,6 @@ func process_physics(delta: float) -> State:
 		direction,
 		move_component.get_movment_direction(parent.get_player_pos()),
 		turn_rate * delta )
+	direction.normalized()
 	
 	return super(delta)
