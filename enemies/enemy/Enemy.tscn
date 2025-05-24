@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://y8ympb15vnrv" path="res://assets/enemy_walk.png" id="4_apspl"]
 [ext_resource type="Script" uid="uid://blpwqkwi48uka" path="res://enemies/enemy/states/enemy_chase_state.gd" id="4_x0mq0"]
 [ext_resource type="Script" uid="uid://ifsq1yrdvprc" path="res://enemies/enemy/states/enemy_recovery_state.gd" id="5_xqp4j"]
-[ext_resource type="PackedScene" uid="uid://c0qg4pfagx8q1" path="res://general/pathfinding.tscn" id="6_4djib"]
+[ext_resource type="PackedScene" uid="uid://c0qg4pfagx8q1" path="res://general/pathfinding/pathfinding.tscn" id="6_4djib"]
 [ext_resource type="PackedScene" uid="uid://cwmgufs80ll6f" path="res://general/hurt_box/HurtBox.tscn" id="6_grpok"]
 [ext_resource type="Script" uid="uid://c2a4lkn26k1sa" path="res://enemies/enemy/states/enemy_attack_state.gd" id="6_xqp4j"]
 [ext_resource type="PackedScene" uid="uid://ydna05wj5bdn" path="res://general/hit_box/HitBox.tscn" id="7_ywbaq"]

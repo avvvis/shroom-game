@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0qg4pfagx8q1"]
-
-[ext_resource type="Script" uid="uid://dakfhrmb10bhu" path="res://general/pathfinding.gd" id="1_5bvbi"]
-
-[node name="Pathfinding" type="Node2D"]
-script = ExtResource("1_5bvbi")
-
-[node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(0, -50)
