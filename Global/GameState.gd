@@ -83,6 +83,7 @@ func hard_reset():
 	points = 0
 	attack_speed = 1.0
 	acidity = 0;
+	acidity_changed.emit(acidity)
 	_inventory.clear()
 	#_day_counter = 0
 	#_game_seed = 0
