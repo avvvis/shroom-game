@@ -82,6 +82,7 @@ func hard_reset():
 	max_health = 100
 	points = 0
 	attack_speed = 1.0
+	acidity = 0;
 	_inventory.clear()
 	#_day_counter = 0
 	#_game_seed = 0
