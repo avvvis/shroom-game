@@ -1,0 +1,18 @@
+1.2. rozpoczęcie nowej gry przerwane przez wyłączenie systemu
+
+* Stan początkowy aplikacji:
+  - Włączony komputer
+  - Aplikacja wyłączona
+* Kroki testowe
+  1. Włączyć grę
+  2. W trakcie, gry aplikacja się uruchamia wyłączyć komputer
+  3. Włączyć komputer
+  4. Uruchomić grę
+* Oczekiwany rezultat:
+  - Uruchomiona gra
+* Rzeczywisty rezultat:
+  [PLACE HOLDER]
+* Rezultat testu
+  [ZALICZONY / NIEZALICZONY]
+* Stan końcowy aplikacji
+  Aplikacja znajduje się w stanie main menu
