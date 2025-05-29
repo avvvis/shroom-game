@@ -1,0 +1,17 @@
+6.1. Zmiana ustawień Happy path
+
+* Stan początkowy aplikacji:
+  - Main menu  
+* Kroki testowe
+  1. Naciśnij guzik settings
+  2. Zmień ustawienia
+  3. potwierdź swoje decyzje
+  4. poczekaj na przeładowanie okna
+* Oczekiwany rezultat:
+  - ustawienia się zmieniły, gra pozostała uruchomiona
+* Rzeczywisty rezultat:
+  [PLACE HOLDER]
+* Rezultat testu
+  [ZALICZONY / NIEZALICZONY]
+* Stan końcowy aplikacji
+ Aplikacja pozostaje uruchomiona z ustawieniami zadawalającymi gracza :O
