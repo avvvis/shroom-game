@@ -15,14 +15,14 @@
    4.1. Gracz odkrywa 10 nowych gatunków grzybów\
    4.2. Postać gracza umiera przed zebraniem grzybów 10 nowych gatunków w następnej grze są inne
 
-6. Powrót do eksploracji w poszukiwaniu nowych okazów.\
+5. Powrót do eksploracji w poszukiwaniu nowych okazów.\
    5.1. Gracz poruszając się w jednym kierunku zbiera przez 10 minut nowe grzyby\
    5.2. Postać gracza umiera przed upływem dziesięciu minut, w następnej grze grzyby są na innych pozycjach
    
-7. Zmiana ustawień, key bindingów, etc.\
-   7.1. Gracz zmienia rozdzielczość ekranu\
-   7.2. Rodzielczość ustawiona jest większa od rozdzielczości ekranu gracza
+6. Zmiana ustawień, key bindingów, etc.\
+   6.1. Gracz zmienia rozdzielczość ekranu\
+   6.2. Rodzielczość ustawiona jest większa od rozdzielczości ekranu gracza
 
-8. Gracz gra, otwiera menu i wychodzi z gry.\
-   8.1. Gracz wychodzi z gry przez menu\
-   8.2. Gracz klika "wyjdź z gry" i zamyka okno krzyżykiem
+7. Gracz gra, otwiera menu i wychodzi z gry.\
+   7.1. Gracz wychodzi z gry przez menu\
+   7.2. Gracz klika "wyjdź z gry" i zamyka okno krzyżykiem
