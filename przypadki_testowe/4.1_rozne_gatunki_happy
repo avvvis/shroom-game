@@ -1,0 +1,17 @@
+4.1 roznorodne gatunki grzybow happy path
+
+* Stan początkowy aplikacji:
+  - Plansza gry z graczem
+* Kroki testowe
+  1. Przemierzaj swiat w jednym ustalonym kierunku 
+  2. Omijaj napotkane przeszkody ( drzewa )
+  3. Zbieraj grzyby w zasiegu wzroku
+  4. Powtarzaj dopoki nie skonczy sie dzien 
+* Oczekiwany rezultat:
+  - przed uplywem czasu napotkano conajmniej 5 roznych (inaczej wygldających )  gatunkow grzybow 
+* Rzeczywisty rezultat:
+  [PLACE HOLDER]
+* Rezultat testu
+  [ZALICZONY / NIEZALICZONY]
+* Stan końcowy aplikacji
+  Wyswietla sie  menu koncowe 
