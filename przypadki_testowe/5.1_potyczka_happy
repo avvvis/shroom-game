@@ -1,0 +1,16 @@
+5.1 potyczka z przeciwnikami happy
+
+* Stan początkowy aplikacji:
+  - Plansza gry z graczem
+* Kroki testowe
+  1. Przemierzaj swiat az do napotkania przeciwnika
+  2. Po zauwazaniu przeciwnika idz w jego strone
+  3. Znajdujac sie w bliskim otoczeniu przeciwnika zacnij uzywac akcji atak dopoki nie pokonasz przeciwnika
+* Oczekiwany rezultat:
+  - Pokonany przeciwnik znika z planszy i licznik score zostaje zinkrementowany
+* Rzeczywisty rezultat:
+  [PLACE HOLDER]
+* Rezultat testu
+  [ZALICZONY / NIEZALICZONY]
+* Stan końcowy aplikacji
+  Plansza gry z graczem z zwiekszonym licznikiem score
