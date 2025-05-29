@@ -1,0 +1,17 @@
+6.2. Opuszczenie gry Happy path
+
+* Stan początkowy aplikacji:
+  - Otwarte menu główne
+* Kroki testowe
+  1. Naciśnij guzik settings
+  2. Wybierz rozdzielczość większą od twojego monitora
+  3. Zatwierdzić zmiany
+  4. poczekać aż okno się przeładuje
+* Oczekiwany rezultat:
+  - rozmiar okienka dostosowuje się do rozmiaru monitora
+* Rzeczywisty rezultat:
+  [PLACE HOLDER]
+* Rezultat testu
+  [ZALICZONY / NIEZALICZONY]
+* Stan końcowy aplikacji
+ Okno aplikacji w grywalnym rozmiarze
