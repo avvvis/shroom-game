@@ -1,0 +1,14 @@
+1.1. rozpoczęcie nowej gry (z sukcesem)
+
+* Stan początkowy aplikacji:
+  - Otwarte main menu
+* Kroki testowe
+  1. Naciśnij guzik nowa gra
+* Oczekiwany rezultat:
+  - Otwarta plansza świata
+* Rzeczywisty rezultat:
+  [PLACE HOLDER]
+* Rezultat testu
+  [ZALICZONY / NIEZALICZONY]
+* Stan końcowy aplikacji
+  Aplikacja znajduje się w stanie planszy
