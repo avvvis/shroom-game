@@ -1,0 +1,21 @@
+4.2 roznorodne gatunki grzybow alt path
+
+* Stan początkowy aplikacji:
+  - Plansza gry z graczem
+* Kroki testowe
+  1. Przemierzaj swiat w jednym ustalonym kierunku 
+  2. Omijaj napotkane przeszkody ( drzewa )
+  3. Zbieraj grzyby w zasiegu wzroku
+  4. Po minieciu jednej minuty pozwol sie pokonac przeciwnikom lub przedawkuj zebrane grzyby
+  5. W menu koncowym wybierz opcje main menu
+  6. Czekaj cierpliwie na main menu
+  7. Wybierz opcje start game
+  8. Poruszaj sie w jednym ustalonym kierunku przez minute
+* Oczekiwany rezultat:
+  - Spotkano inne gatunki grzybow wzgledem poprzedniej rozgrywki 
+* Rzeczywisty rezultat:
+  [PLACE HOLDER]
+* Rezultat testu
+  [ZALICZONY / NIEZALICZONY]
+* Stan końcowy aplikacji
+  Plansza gry z graczem
