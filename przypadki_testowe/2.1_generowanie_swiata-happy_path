@@ -1,0 +1,16 @@
+2.1. Generowanie świata (Happy path)
+
+* Stan początkowy aplikacji:
+  - Main menu
+* Kroki testowe
+  1. Naciśnij guzik play
+  2. Przez około 10 sekund idź w jednym kierunku
+  3. Zatrzymaj się i odczekaj około 10 sekund
+* Oczekiwany rezultat:
+  - wygenerowane zostały wszystkie widoczne chunki terenu wraz z grzybami i przeciwnikami
+* Rzeczywisty rezultat:
+  [PLACE HOLDER]
+* Rezultat testu
+  [ZALICZONY / NIEZALICZONY]
+* Stan końcowy aplikacji
+  Na ekranie widoczne są teren, grzyby oraz potwory.

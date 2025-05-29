@@ -1,0 +1,16 @@
+2.2. Generowanie świata (Alternative path)
+
+* Stan początkowy aplikacji:
+  - Main menu
+* Kroki testowe
+  1. Naciśnij guzik play
+  2. Przez około 10 sekund idź w jednym kierunku
+  3. Zatrzymaj się i odczekaj około 10 sekund
+* Oczekiwany rezultat:
+  - wygenerowane zostały wszystkie widoczne chunki terenu, ale brakuje grzybów lub przeciwników
+* Rzeczywisty rezultat:
+  [PLACE HOLDER]
+* Rezultat testu
+  [ZALICZONY / NIEZALICZONY]
+* Stan końcowy aplikacji
+  Na ekranie widoczny jest teren gry.

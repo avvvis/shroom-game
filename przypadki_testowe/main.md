@@ -9,7 +9,7 @@
 
 3. Eksperymentowanie z grzybami w warsztacie alchemicznym w celu tworzenia mikstur.\
    3.1. Zebranie grzyba (sukces)\
-   3.2.  Zebranie grzyba, gracz ma dużą szybkość
+   3.2. Zebranie grzyba nie powodzi się
 
 4. Odkrywanie rzadkich gatunków, które mogą mieć cenne lub toksyczne właściwości.\
    4.1. Gracz odkrywa 10 nowych gatunków grzybów\

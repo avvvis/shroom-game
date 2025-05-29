@@ -1,0 +1,14 @@
+3.2. Zebranie grzyba (Alternative path)
+
+* Stan początkowy aplikacji:
+  - Plansza gry z grzybem na polu, na którym jest drzewo
+* Kroki testowe
+  1. Wejdź w drzewo
+* Oczekiwany rezultat:
+  - grzyb nie zostaje zebrany z powodu kolizji gracza z drzewem
+* Rzeczywisty rezultat:
+  [PLACE HOLDER]
+* Rezultat testu
+  [ZALICZONY / NIEZALICZONY]
+* Stan końcowy aplikacji
+  Na polu z drzewem nadal jest niezebrany grzyb

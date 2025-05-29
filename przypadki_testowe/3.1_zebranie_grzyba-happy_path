@@ -1,0 +1,15 @@
+3.1. Zebranie grzyba (Happy path)
+
+* Stan początkowy aplikacji:
+  - Plansza gry z grzybem na polu bez drzewa
+* Kroki testowe
+  1. Wejdź na pole z grzybem
+  2. Otwórz ekwipunek
+* Oczekiwany rezultat:
+  - grzyb znika z planszy i pojawia się w ekwipunku
+* Rzeczywisty rezultat:
+  [PLACE HOLDER]
+* Rezultat testu
+  [ZALICZONY / NIEZALICZONY]
+* Stan końcowy aplikacji
+  W ekwipunku znajduje się (między innymi) nowy grzyb.
