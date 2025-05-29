@@ -1,0 +1,16 @@
+5.2 potyczka z przeciwnikami alt
+
+* Stan początkowy aplikacji:
+  - Plansza gry z graczem
+* Kroki testowe
+  1. Przemierzaj swiat az do napotkania przeciwnika
+  2. Po zauwazaniu przeciwnika idz w jego strone
+  3. Znajdujac sie w bliskim otoczeniu przeciwnika stoj w bezruchu i pozwol sie atakowac 
+* Oczekiwany rezultat:
+  - Zycie gracza spada do zera i wlacza sie menu koncowe
+* Rzeczywisty rezultat:
+  [PLACE HOLDER]
+* Rezultat testu
+  [ZALICZONY / NIEZALICZONY]
+* Stan końcowy aplikacji
+  menu koncowe gry
