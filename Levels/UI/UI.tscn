@@ -56,9 +56,8 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -100.0
-offset_top = -30.0
 offset_right = 3700.0
-offset_bottom = 2090.0
+offset_bottom = 2120.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_fletv")
@@ -66,7 +65,7 @@ script = ExtResource("4_fletv")
 [node name="viewport" type="SubViewport" parent="World/WorldPort"]
 process_mode = 1
 handle_input_locally = false
-size = Vector2i(3840, 2160)
+size = Vector2i(4200, 2400)
 render_target_update_mode = 4
 
 [node name="World" parent="World/WorldPort/viewport" instance=ExtResource("10_nmp14")]
@@ -274,7 +273,6 @@ size_flags_vertical = 10
 text = "Back"
 
 [node name="exit_confirm" type="GridContainer" parent="."]
-visible = false
 custom_minimum_size = Vector2(1600, 600)
 layout_mode = 1
 anchors_preset = 8
@@ -326,7 +324,6 @@ text = "No
 "
 
 [node name="Pause" type="PanelContainer" parent="."]
-visible = false
 custom_minimum_size = Vector2(1200, 0)
 layout_mode = 1
 anchors_preset = 8
@@ -334,10 +331,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -601.0
-offset_top = -900.0
-offset_right = 599.0
-offset_bottom = -56.0
+offset_left = -1413.0
+offset_top = -980.0
+offset_right = 1411.0
+offset_bottom = 844.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("7_camxr")
@@ -385,6 +382,62 @@ text = "Help"
 [node name="Back" type="Button" parent="Pause/MarginContainer/VBox"]
 layout_mode = 2
 size_flags_vertical = 8
+text = "Back"
+
+[node name="Help" type="PanelContainer" parent="Pause"]
+custom_minimum_size = Vector2(2800, 1800)
+layout_mode = 2
+script = ExtResource("7_camxr")
+
+[node name="MarginContainer" type="MarginContainer" parent="Pause/Help"]
+layout_mode = 2
+theme_override_constants/margin_left = 220
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 220
+theme_override_constants/margin_bottom = 80
+
+[node name="VBox" type="VBoxContainer" parent="Pause/Help/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="MarginContainer" type="MarginContainer" parent="Pause/Help/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 100
+
+[node name="Label" type="Label" parent="Pause/Help/MarginContainer/VBox/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "HELP"
+
+[node name="ResPanel" type="Panel" parent="Pause/Help/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_k0a0m")
+
+[node name="Label" type="Label" parent="Pause/Help/MarginContainer/VBox/ResPanel"]
+layout_mode = 0
+offset_right = 2246.0
+offset_bottom = 1091.0
+text = "Movement
+    Use W / A / S / D or the Arrow Keys to move your character.
+
+Inventory
+    Press Tab to open or close your inventory.
+
+Combat
+    Press Spacebar or Left Mouse Button to perform an attack.
+ 
+"
+autowrap_mode = 3
+
+[node name="Back" type="Button" parent="Pause/Help"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
 text = "Back"
 
 [node name="Settings" type="PanelContainer" parent="."]
@@ -774,7 +827,9 @@ visible = false
 [connection signal="pressed" from="exit_confirm/ColorRect/MarginContainer/VBoxContainer/no" to="." method="_on_no_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/VBox/MainMenu" to="." method="_on_pause_main_menu_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/VBox/Settings" to="." method="_on_pause_settings_pressed"]
+[connection signal="pressed" from="Pause/MarginContainer/VBox/Help" to="." method="_on_pause_help_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/VBox/Back" to="." method="_on_pause_back_pressed"]
+[connection signal="pressed" from="Pause/Help/Back" to="." method="_on_pause_help_back_pressed"]
 [connection signal="item_selected" from="Settings/MarginContainer/VBox/ResPanel/MarginContainer/ResolutionOption" to="." method="_on_resolution_option_item_selected"]
 [connection signal="pressed" from="Settings/MarginContainer/VBox/FullscreenPanel/MarginContainer/FullscreenCheck" to="." method="_on_fullscreen_check_pressed"]
 [connection signal="pressed" from="Settings/MarginContainer/VBox/BorderPanel/MarginContainer/BorderCheck" to="." method="_on_border_check_pressed"]

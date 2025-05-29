@@ -43,6 +43,8 @@ extends Control
 @onready var pause = $Pause
 @onready var pauseBack = $Pause/MarginContainer/VBox/Back
 @onready var pauseMenu = $Pause/MarginContainer/VBox/MainMenu
+@onready var pauseHelp = $Pause/Help
+@onready var pauseHelpBack = $Pause/Help/Back
 
 #Clock
 @onready var clock = $World/LeftTopDisplayers/SunClock
@@ -108,10 +110,13 @@ func _input(event):
 		togglePause()
 		toggleClockPause()
 		toggleWorldPause()
-	elif(event.is_action_pressed("ui_cancel") && pause.visible && !settings.visible && !exit_settings.visible):
+	elif(event.is_action_pressed("ui_cancel") && pause.visible && !settings.visible && !exit_settings.visible && !pauseHelp.visible):
 		togglePause()
 		toggleClockPause()
 		toggleWorldPause()
+	elif(event.is_action_pressed("ui_cancel") && pauseHelp.visible && !settings.visible && !exit_settings.visible):
+		togglePauseHelp()
+	
 		
 func _process(_delta):
 	if volume_slider.value != last_volume_value:
@@ -179,6 +184,14 @@ func toggleWorldPause():
 
 func toggleClockPause():
 		clock.advance_time = !clock.advance_time
+	
+func togglePauseHelp():
+	pauseHelp.visible = !pauseHelp.visible
+	await get_tree().process_frame
+	if pauseHelp.visible:
+		pauseHelpBack.grab_focus()
+	else:
+		pauseBack.grab_focus()
 	
 ##################################################################################################
 #main menu buttons
@@ -320,6 +333,12 @@ func _on_pause_settings_pressed() -> void:
 func _on_pause_back_pressed() -> void:
 	toggleWorldPause()
 	togglePause()
+	
+func _on_pause_help_pressed()-> void:
+	togglePauseHelp()
+	
+func  _on_pause_help_back_pressed()->void:
+	togglePauseHelp()
 	
 ###################################################
 #############NOT YET IMPLEMENTED
