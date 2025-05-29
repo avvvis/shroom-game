@@ -1,0 +1,18 @@
+1.1. Opuszczenie gry Happy path
+
+* Stan początkowy aplikacji:
+  - Otwarta plansza świata 
+* Kroki testowe
+  1. Naciśnij guzik escape aby otworzyć menu pauzy
+  2. Wybrać opcję menu
+  3. poczekać aż menu się załaduje
+  4. wybrać opcję exit
+  5. potwierdzić wybór w okienku dialogowym
+* Oczekiwany rezultat:
+  - gra wyłącza się
+* Rzeczywisty rezultat:
+  [PLACE HOLDER]
+* Rezultat testu
+  [ZALICZONY / NIEZALICZONY]
+* Stan końcowy aplikacji
+ Aplikacja wyłączona
