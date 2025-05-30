@@ -1,3 +1,5 @@
+[Download our game here](https://shroomerzzz.itch.io/shroomer-adventure-2025)
+
 # 🍄 Shroom-game
 
 A mystical arcade game centered around exploration, alchemy, and the magical properties of mushrooms.
